@@ -762,6 +762,8 @@ class XML_RPC_Client extends XML_RPC_Base {
         if ($this->proxy) {
             if ($this->proxy_protocol == 'http://') {
                 $protocol = '';
+            } else {
+                $protocol = $this->proxy_protocol;
             }
             if ($timeout > 0) {
                 $fp = @fsockopen($protocol . $this->proxy, $this->proxy_port,
@@ -773,6 +775,8 @@ class XML_RPC_Client extends XML_RPC_Base {
         } else {
             if ($this->protocol == 'http://') {
                 $protocol = '';
+            } else {
+                $protocol = $this->protocol;
             }
             if ($timeout > 0) {
                 $fp = @fsockopen($protocol . $server, $port,
