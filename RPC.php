@@ -361,50 +361,6 @@ function XML_RPC_dh($parser, $data)
 }
 
 
-// date helpers
-function XML_RPC_iso8601_encode($timet, $utc=0)
-{
-    // return an ISO8601 encoded string
-    // really, timezones ought to be supported
-    // but the XML-RPC spec says:
-    //
-    // "Don't assume a timezone. It should be specified by the server in its
-    // documentation what assumptions it makes about timezones."
-    // 
-    // these routines always assume localtime unless 
-    // $utc is set to 1, in which case UTC is assumed
-    // and an adjustment for locale is made when encoding
-    if (!$utc) {
-        $t=strftime("%Y%m%dT%H:%M:%S", $timet);
-    } else {
-        if (function_exists("gmstrftime")) {
-            // gmstrftime doesn't exist in some versions
-            // of PHP
-            $t=gmstrftime("%Y%m%dT%H:%M:%S", $timet);
-        } else {
-            $t=strftime("%Y%m%dT%H:%M:%S", $timet-date("Z"));
-        }
-    }
-    return $t;
-}
-
-
-function XML_RPC_iso8601_decode($idate, $utc=0)
-{
-    // return a timet in the localtime, or UTC
-    $t=0;
-    if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",
-             $idate, $regs)) {
-        if ($utc) {
-            $t=gmmktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        } else {
-            $t=mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
-        }
-    } 
-    return $t;
-}
-
-
 class XML_RPC_Client
 {
     var $path;
@@ -997,7 +953,7 @@ class XML_RPC_Value
 /**
  * date helpers
  */
-function iso8601_encode($timet, $utc=0) {
+function XML_RPC_iso8601_encode($timet, $utc=0) {
     // return an ISO8601 encoded string
     // really, timezones ought to be supported
     // but the XML-RPC spec says:
@@ -1023,7 +979,7 @@ function iso8601_encode($timet, $utc=0) {
     return $t;
 }
 
-function iso8601_decode($idate, $utc=0) {
+function XML_RPC_iso8601_decode($idate, $utc=0) {
     // return a timet in the localtime, or UTC
     $t=0;
     if (ereg("([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})",$idate, $regs)) {
