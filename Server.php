@@ -181,7 +181,8 @@ class XML_RPC_Server
         $payload = "<?xml version=\"1.0\"?>\n" . 
             $this->serializeDebug() .
             $r->serialize();
-        Header("Content-type: text/xml\nContent-length: " . strlen($payload));
+        header('Content-Length: ' . strlen($payload));
+        header('Content-Type: text/xml');
         print $payload;
     }
 
