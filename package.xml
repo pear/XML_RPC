@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.25 2004-12-30 21:35:47 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.26 2004-12-31 03:41:01 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -26,29 +26,11 @@
   </maintainers>
 
   <release>
-    <version>1.2.0RC1</version>
+    <version>1.2.0</version>
     <date>2004-12-30</date>
-    <state>beta</state>
+    <state>stable</state>
     <notes><![CDATA[
-- Make things work with SSL.  Bug 2489.  (nkukard lbsd net)
-- Allow array function callbacks (Matt Kane)
-- Some minor speed-ups (Matt Kane)
-- Add Dump.php to the package (Christian Weiske)
-- Replace all line endings with \r\n.  Had only done replacements on \n.  Bug 2521.
-- Silence fsockopen() errors.  Bug 1714.
-- Encode empty arrays as an array. Bug 1493.  (danielc)
-- Eliminate undefined index notice when submitting empty arrays to XML_RPC_Encode().  Bug 1819.  (danielc)
-- Speed up check for enumerated arrays in XML_RPC_Encode().  (danielc)
-- Prepend "XML_RPC_" to ERROR_NON_NUMERIC_FOUND, eliminating problem when eval()'ing error messages.  (danielc)
-- Use XML_RPC_Base::raiseError() instead of PEAR::raiseError() in XML_RPC_ee() because PEAR.php is lazy loaded.  (danielc)
-- Allow raiseError() to be called statically.  (danielc)
-- Stop double escaping of character entities.  Bug 987.  (danielc)
-  NOTICE: the following have been removed:
-    * XML_RPC_dh()
-    * $GLOBALS['XML_RPC_entities']
-    * XML_RPC_entity_decode()
-    * XML_RPC_lookup_entity()
-- Determine the XML's encoding via the encoding attribute in the XML declaration.  Bug 52.  (danielc)
+- Enhance debugging in the server.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
@@ -64,6 +46,33 @@
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.0RC1</version>
+      <date>2004-12-30</date>
+      <state>beta</state>
+      <notes>
+- Make things work with SSL.  Bug 2489.  (nkukard lbsd net)
+- Allow array function callbacks (Matt Kane)
+- Some minor speed-ups (Matt Kane)
+- Add Dump.php to the package (Christian Weiske)
+- Replace all line endings with \r\n.  Had only done replacements on \n.  Bug 2521.  (danielc)
+- Silence fsockopen() errors.  Bug 1714.  (danielc)
+- Encode empty arrays as an array. Bug 1493.  (danielc)
+- Eliminate undefined index notice when submitting empty arrays to XML_RPC_Encode().  Bug 1819.  (danielc)
+- Speed up check for enumerated arrays in XML_RPC_Encode().  (danielc)
+- Prepend "XML_RPC_" to ERROR_NON_NUMERIC_FOUND, eliminating problem when eval()'ing error messages.  (danielc)
+- Use XML_RPC_Base::raiseError() instead of PEAR::raiseError() in XML_RPC_ee() because PEAR.php is lazy loaded.  (danielc)
+- Allow raiseError() to be called statically.  (danielc)
+- Stop double escaping of character entities.  Bug 987.  (danielc)
+  NOTICE: the following have been removed:
+    * XML_RPC_dh()
+    * $GLOBALS['XML_RPC_entities']
+    * XML_RPC_entity_decode()
+    * XML_RPC_lookup_entity()
+- Determine the XML's encoding via the encoding attribute in the XML declaration.  Bug 52.  (danielc)
+      </notes>
+    </release>
+
     <release>
       <version>1.1.0</version>
       <date>2004-03-15</date>
