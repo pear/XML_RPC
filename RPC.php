@@ -727,7 +727,7 @@ class XML_RPC_Message extends XML_RPC_Base
         }
         $this->payload .= "</params>\n";
         $this->payload .= $this->xml_footer();
-        $this->payload = str_replace("\n", "\r\n", $this->payload);
+        $this->payload = ereg_replace("[\r\n]+", "\r\n", $this->payload);
     }
 
     function method($meth = '')
