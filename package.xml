@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.26 2004-12-31 03:41:01 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.27 2005-01-02 00:24:26 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -30,6 +30,7 @@
     <date>2004-12-30</date>
     <state>stable</state>
     <notes><![CDATA[
+- Default to port 445 for https:// connections.  (danielc)
 - Enhance debugging in the server.  (danielc)
     ]]></notes>
     <filelist>
