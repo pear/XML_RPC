@@ -34,6 +34,8 @@ function XML_RPC_Dump($value)
 /**
  * Class which generates a dump of a XML_RPC_Value object
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Christian Weiske <cweiske@php.net>
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC

@@ -201,6 +201,8 @@ function XML_RPC_Server_debugmsg($m)
 /**
  *
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>

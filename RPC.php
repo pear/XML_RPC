@@ -443,6 +443,8 @@ function XML_RPC_cd($parser, $data)
  *
  * This class provides common functions for all of the XML_RPC classes.
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
@@ -483,6 +485,8 @@ class XML_RPC_Base {
 /**
  *
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
@@ -795,6 +799,8 @@ class XML_RPC_Client extends XML_RPC_Base {
 /**
  *
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
@@ -868,6 +874,8 @@ class XML_RPC_Response extends XML_RPC_Base
 /**
  *
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
@@ -1091,6 +1099,8 @@ class XML_RPC_Message extends XML_RPC_Base
 /**
  *
  *
+ * @category   Web Services
+ * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
