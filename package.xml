@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- do not use the "Type" attribute here, that one is only for
+     generated package.xml files -->
+<Package>
+ <Name>XML_RPC</Name>
+ <Summary>A PEAR-ified version of Useful inc's xmlrpc implementation for PHP.</Summary>
+ <Maintainer>
+  <Initials>SSB</Initials>
+  <Name>Stig Sæther Bakken</Name>
+  <Email>stig@php.net</Email>
+ </Maintainer>
+ <Release>
+  <Version>1.0b9</Version>
+  <Date>2001-08-14</Date>
+  <Notes>
+   This is the initial independent PEAR release.
+  </Notes>
+ </Release>
+ <FileList>
+  <Dir Name="/" BaseInstallDir="XML">
+   <File Role="php">RPC.php</File>
+    <Dir Name="RPC">
+     <File Role="php">Server.php</File>
+    </Dir>
+   </Dir>
+  </FileList>
+</Package>
