@@ -76,6 +76,7 @@ $GLOBALS['XML_RPC_defencoding'] = "UTF-8";
 
 // let user errors start at 800
 $GLOBALS['XML_RPC_erruser'] = 800;
+
 // let XML parse errors start at 100
 $GLOBALS['XML_RPC_errxml'] = 100;
 
@@ -84,6 +85,7 @@ $GLOBALS['XML_RPC_backslash'] = chr(92) . chr(92);
 
 $GLOBALS['XML_RPC_twoslash'] = $GLOBALS['XML_RPC_backslash'] . $GLOBALS['XML_RPC_backslash'];
 $GLOBALS['XML_RPC_twoslash'] = "2SLS";
+
 // used to store state during parsing
 // quick explanation of components:
 //   st - used to build up a string for evaluation
@@ -109,10 +111,11 @@ function XML_RPC_entity_decode($string)
                                 XML_RPC_lookup_entity($regs[1]),
                                 $top[$i]);
         } else {
-            if ($i == 0)
+            if ($i == 0) {
                 $op = $top[$i];
-            else
+            } else {
                 $op .= "&" . $top[$i];
+            }
         }
 
         $i++;
@@ -125,11 +128,13 @@ function XML_RPC_lookup_entity($ent)
 {
     global $XML_RPC_entities;
 
-    if ($XML_RPC_entities[strtolower($ent)])
+    if ($XML_RPC_entities[strtolower($ent)]) {
         return $XML_RPC_entities[strtolower($ent)];
+    }
 
-    if (ereg("^#([0-9]+)$", $ent, $regs))
+    if (ereg("^#([0-9]+)$", $ent, $regs)) {
         return chr($regs[1]);
+    }
 
     return "?";
 }
@@ -149,16 +154,20 @@ function XML_RPC_se($parser, $name, $attrs)
         // simply get a bit of whitespace in the eval
         $XML_RPC_xh[$parser]['qt'] = 0;
         break;
+
     case "NAME":
         $XML_RPC_xh[$parser]['st'] .= "'";
         $XML_RPC_xh[$parser]['ac'] = "";
         break;
+
     case "FAULT":
         $XML_RPC_xh[$parser]['isf'] = 1;
         break;
+
     case "PARAM":
         $XML_RPC_xh[$parser]['st'] = "";
         break;
+
     case "VALUE":
         $XML_RPC_xh[$parser]['st'] .= "new XML_RPC_Value(";
         $XML_RPC_xh[$parser]['lv'] = 1;
@@ -182,8 +191,9 @@ function XML_RPC_se($parser, $name, $attrs)
         if ($name == "DATETIME.ISO8601" || $name == "STRING") {
             $XML_RPC_xh[$parser]['qt'] = 1;
 
-            if ($name == "DATETIME.ISO8601")
+            if ($name == "DATETIME.ISO8601") {
                 $XML_RPC_xh[$parser]['vt'] = $XML_RPC_DateTime;
+            }
 
         } elseif ($name == "BASE64") {
             $XML_RPC_xh[$parser]['qt'] = 2;
@@ -198,6 +208,7 @@ function XML_RPC_se($parser, $name, $attrs)
     case "MEMBER":
         $XML_RPC_xh[$parser]['ac'] = "";
         break;
+
     default:
         break;
     }
@@ -231,10 +242,11 @@ function XML_RPC_ee($parser, $name)
     case "BOOLEAN":
         // special case here: we translate boolean 1 or 0 into PHP
         // constants true or false
-        if ($XML_RPC_xh[$parser]['ac'] == '1')
+        if ($XML_RPC_xh[$parser]['ac'] == '1') {
             $XML_RPC_xh[$parser]['ac'] = "true";
-        else
+        } else {
             $XML_RPC_xh[$parser]['ac'] = "false";
+        }
 
         $XML_RPC_xh[$parser]['vt'] = strtolower($name);
         // Drop through intentionally.
@@ -309,10 +321,11 @@ function XML_RPC_ee($parser, $name)
     case "BOOLEAN":
         // special case here: we translate boolean 1 or 0 into PHP
         // constants true or false
-        if ($XML_RPC_xh[$parser]['ac'] == '1')
+        if ($XML_RPC_xh[$parser]['ac'] == '1') {
             $XML_RPC_xh[$parser]['ac'] = "true";
-        else
+        } else {
             $XML_RPC_xh[$parser]['ac'] = "false";
+        }
 
         $XML_RPC_xh[$parser]['vt'] = strtolower($name);
         break;
@@ -320,6 +333,7 @@ function XML_RPC_ee($parser, $name)
     default:
         break;
     }
+
     // if it's a valid type name, set the type
     if (isset($XML_RPC_Types[strtolower($name)])) {
         $XML_RPC_xh[$parser]['vt'] = strtolower($name);
@@ -330,9 +344,6 @@ function XML_RPC_ee($parser, $name)
 function XML_RPC_cd($parser, $data)
 {
     global $XML_RPC_xh, $XML_RPC_backslash;
-
-    //if (ereg("^[\n\r \t]+$", $data)) return;
-    // print "adding [${data}]\n";
 
     if ($XML_RPC_xh[$parser]['lv'] != 3) {
         // "lookforvalue==3" means that we've found an entire value
@@ -358,6 +369,7 @@ function XML_RPC_cd($parser, $data)
 function XML_RPC_dh($parser, $data)
 {
     global $XML_RPC_xh;
+
     if (substr($data, 0, 1) == "&" && substr($data, -1, 1) == ";") {
         if ($XML_RPC_xh[$parser]['lv'] == 1) {
             $XML_RPC_xh[$parser]['qt'] = 1;
@@ -374,8 +386,7 @@ function XML_RPC_dh($parser, $data)
  *
  * This class provides common functions for all of the XML_RPC classes.
  */
-class XML_RPC_Base
-{
+class XML_RPC_Base {
     function raiseError($msg, $code)
     {
         include_once 'PEAR.php';
@@ -383,8 +394,7 @@ class XML_RPC_Base
     }
 }
 
-class XML_RPC_Client extends XML_RPC_Base
-{
+class XML_RPC_Client extends XML_RPC_Base {
     var $path;
     var $server;
     var $port;
@@ -438,16 +448,13 @@ class XML_RPC_Client extends XML_RPC_Base
         if ($this->proxy){
             if ($timeout > 0) {
                 $fp = fsockopen($this->proxy, $this->proxy_port, $this->errno, $this->errstr, $timeout);
-            }
-            else {
+            } else {
                 $fp = fsockopen($this->proxy, $this->proxy_port, $this->errno, $this->errstr);
             }
-        }
-        else {
+        } else {
             if ($timeout > 0) {
                 $fp = fsockopen($server, $port, $this->errno, $this->errstr, $timeout);
-            }
-            else {
+            } else {
                 $fp = fsockopen($server, $port, $this->errno, $this->errstr);
             }
         }
@@ -456,8 +463,7 @@ class XML_RPC_Client extends XML_RPC_Base
             $this->raiseError(
                 "Connection to proxy server " . $this->proxy . ":" . $this->proxy_port . " failed",
                 XML_RPC_ERROR_CONNECTION_FAILED);
-        }
-        elseif (!$fp) {
+        } elseif (!$fp) {
             $this->raiseError(
                 "Connection to RPC server " . $this->server . " failed",
                 XML_RPC_ERROR_CONNECTION_FAILED);
@@ -482,8 +488,7 @@ class XML_RPC_Client extends XML_RPC_Base
             if ($this->proxy_port) {
                 $op .= ":" . $this->port;
             }
-        }
-        else {
+        } else {
            $op = "POST ";
         }
 
@@ -530,16 +535,25 @@ class XML_RPC_Response extends XML_RPC_Base
 
     function faultCode()
     {
-        if (isset($this->fn))
+        if (isset($this->fn)) {
             return $this->fn;
-        else
+        } else {
             return 0;
+        }
     }
 
-    function faultString() { return $this->fs; }
-    function value() { return $this->xv; }
+    function faultString() 
+    { 
+        return $this->fs;
+    }
 
-    function serialize() {
+    function value() 
+    { 
+        return $this->xv; 
+    }
+
+    function serialize()
+    {
         $rs = "<methodResponse>\n";
         if ($this->fn) {
             $rs .= "<fault>
@@ -577,8 +591,9 @@ class XML_RPC_Message extends XML_RPC_Base
     {
         $this->methodname = $meth;
         if (is_array($pars) && sizeof($pars)>0) {
-            for($i = 0; $i < sizeof($pars); $i++)
+            for($i = 0; $i < sizeof($pars); $i++) {
                 $this->addParam($pars[$i]);
+            }
         }
     }
 
@@ -596,14 +611,12 @@ class XML_RPC_Message extends XML_RPC_Base
     {
         $this->payload = $this->xml_header();
         $this->payload .= "<methodName>" . $this->methodname . "</methodName>\n";
-        //  if (sizeof($this->params)) {
-            $this->payload .= "<params>\n";
-            for($i = 0; $i < sizeof($this->params); $i++) {
-                $p = $this->params[$i];
-                $this->payload .= "<param>\n" . $p->serialize() . "</param>\n";
-            }
-            $this->payload .= "</params>\n";
-        // }
+        $this->payload .= "<params>\n";
+        for($i = 0; $i < sizeof($this->params); $i++) {
+            $p = $this->params[$i];
+            $this->payload .= "<param>\n" . $p->serialize() . "</param>\n";
+        }
+        $this->payload .= "</params>\n";
         $this->payload .= $this->xml_footer();
         $this->payload = str_replace("\n", "\r\n", $this->payload);
     }
@@ -622,9 +635,20 @@ class XML_RPC_Message extends XML_RPC_Base
         return $this->payload;
     }
 
-    function addParam($par) { $this->params[] = $par; }
-    function getParam($i) { return $this->params[$i]; }
-    function getNumParams() { return sizeof($this->params); }
+    function addParam($par)
+    {
+        $this->params[] = $par;
+    }
+
+    function getParam($i) 
+    {
+        return $this->params[$i];
+    }
+
+    function getNumParams()
+    {
+        return sizeof($this->params);
+    }
 
     function parseResponseFile($fp)
     {
@@ -663,6 +687,7 @@ class XML_RPC_Message extends XML_RPC_Base
             print isset($_SERVER['SERVER_PROTOCOL']) ? htmlspecialchars($data) : $data;
             print "\n---END---\n</PRE>";
         }
+
         // see if we got an HTTP 200 OK, else bomb
         // but only do this if we're using the HTTP protocol.
         if (ereg("^HTTP",$data) &&
@@ -690,12 +715,13 @@ class XML_RPC_Message extends XML_RPC_Base
 
         if (!xml_parse($parser, $data, sizeof($data))) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
-            if ((xml_get_current_line_number($parser)) == 1)
+            if ((xml_get_current_line_number($parser)) == 1) {
                 $errstr = "XML error at line 1, check URL";
-            else
+            } else {
                 $errstr = sprintf("XML error: %s at line %d",
                                   xml_error_string(xml_get_error_code($parser)),
                                   xml_get_current_line_number($parser));
+            }
             error_log($errstr);
             $r = new XML_RPC_Response(0, $XML_RPC_err["invalid_return"],
                                       $XML_RPC_str["invalid_return"]);
@@ -826,29 +852,30 @@ class XML_RPC_Value extends XML_RPC_Base
     function dump($ar)
     {
         reset($ar);
-        while ( list( $key, $val ) = each( $ar ) ) {
+        while (list( $key, $val ) = each($ar)) {
             echo "$key => $val<br>";
-            if ($key == 'array')
+            if ($key == 'array') {
                 while ( list( $key2, $val2 ) = each( $val ) ) {
                     echo "-- $key2 => $val2<br>";
                 }
+            }
         }
     }
 
     function kindOf()
     {
         switch ($this->mytype) {
-            case 3:
-                return "struct";
-                break;
-            case 2:
-                return "array";
-                break;
-            case 1:
-                return "scalar";
-                break;
-            default:
-                return "undef";
+        case 3:
+            return "struct";
+            break;
+        case 2:
+            return "array";
+            break;
+        case 1:
+            return "scalar";
+            break;
+        default:
+            return "undef";
         }
     }
 
@@ -857,42 +884,42 @@ class XML_RPC_Value extends XML_RPC_Base
         $rs = "";
         global $XML_RPC_Types, $XML_RPC_Base64, $XML_RPC_String, $XML_RPC_Boolean;
         switch ($XML_RPC_Types[$typ]) {
-            case 3:
-                // struct
-                $rs .= "<struct>\n";
-                reset($val);
-                while(list($key2, $val2) = each($val)) {
-                    $rs .= "<member><name>${key2}</name>\n";
-                    $rs .= $this->serializeval($val2);
-                    $rs .= "</member>\n";
-                }
-                $rs .= "</struct>";
+        case 3:
+            // struct
+            $rs .= "<struct>\n";
+            reset($val);
+            while(list($key2, $val2) = each($val)) {
+                $rs .= "<member><name>${key2}</name>\n";
+                $rs .= $this->serializeval($val2);
+                $rs .= "</member>\n";
+            }
+            $rs .= "</struct>";
+            break;
+        case 2:
+            // array
+            $rs .= "<array>\n<data>\n";
+            for($i = 0; $i < sizeof($val); $i++) {
+                $rs .= $this->serializeval($val[$i]);
+            }
+            $rs .= "</data>\n</array>";
+            break;
+        case 1:
+            switch ($typ) {
+            case $XML_RPC_Base64:
+                $rs .= "<${typ}>" . base64_encode($val) . "</${typ}>";
                 break;
-            case 2:
-                // array
-                $rs .= "<array>\n<data>\n";
-                for($i = 0; $i < sizeof($val); $i++) {
-                    $rs .= $this->serializeval($val[$i]);
-                }
-                $rs .= "</data>\n</array>";
+            case $XML_RPC_Boolean:
+                $rs .= "<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
                 break;
-            case 1:
-                switch ($typ) {
-                    case $XML_RPC_Base64:
-                        $rs .= "<${typ}>" . base64_encode($val) . "</${typ}>";
-                        break;
-                    case $XML_RPC_Boolean:
-                        $rs .= "<${typ}>" . ($val ? "1" : "0") . "</${typ}>";
-                        break;
-                    case $XML_RPC_String:
-                        $rs .= "<${typ}>" . htmlspecialchars($val). "</${typ}>";
-                        break;
-                    default:
-                        $rs .= "<${typ}>${val}</${typ}>";
-                }
+            case $XML_RPC_String:
+                $rs .= "<${typ}>" . htmlspecialchars($val). "</${typ}>";
                 break;
             default:
-                break;
+                $rs .= "<${typ}>${val}</${typ}>";
+            }
+            break;
+        default:
+            break;
         }
         return $rs;
     }
@@ -942,14 +969,14 @@ class XML_RPC_Value extends XML_RPC_Base
         // i've created a new method here, so as to
         // preserve back compatibility
 
-        if (is_array($b))    {
+        if (is_array($b)) {
             foreach ($b as $id => $cont) {
                 $b[$id] = $cont->scalarval();
             }
         }
 
         // add support for structures directly encoding php objects
-        if (is_object($b))  {
+        if (is_object($b)) {
             $t = get_object_vars($b);
             foreach ($t as $id => $cont) {
                 $t[$id] = $cont->scalarval();
@@ -976,8 +1003,9 @@ class XML_RPC_Value extends XML_RPC_Base
         global $XML_RPC_I4, $XML_RPC_Int;
         reset($this->me);
         list($a,$b) = each($this->me);
-        if ($a == $XML_RPC_I4)
+        if ($a == $XML_RPC_I4) {
             $a = $XML_RPC_Int;
+        }
         return $a;
     }
 
@@ -1013,11 +1041,11 @@ function XML_RPC_iso8601_encode($timet, $utc = 0) {
     if (!$utc) {
         $t = strftime("%Y%m%dT%H:%M:%S", $timet);
     } else {
-        if (function_exists("gmstrftime"))
+        if (function_exists("gmstrftime")) {
             // gmstrftime doesn't exist in some versions
             // of PHP
             $t = gmstrftime("%Y%m%dT%H:%M:%S", $timet);
-        else {
+        } else {
             $t = strftime("%Y%m%dT%H:%M:%S", $timet - date("Z"));
         }
     }
@@ -1050,8 +1078,8 @@ function XML_RPC_decode($XML_RPC_val) {
 
    if ($kind == "scalar") {
       return $XML_RPC_val->scalarval();
-   }
-   elseif ($kind == "array") {
+
+   } elseif ($kind == "array") {
       $size = $XML_RPC_val->arraysize();
       $arr = array();
 
@@ -1059,8 +1087,8 @@ function XML_RPC_decode($XML_RPC_val) {
          $arr[] = XML_RPC_decode($XML_RPC_val->arraymem($i));
       }
       return $arr;
-   }
-   elseif ($kind == "struct") {
+
+   } elseif ($kind == "struct") {
       $XML_RPC_val->structreset();
       $arr = array();
 
@@ -1090,59 +1118,64 @@ function XML_RPC_encode($php_val) {
    $XML_RPC_val = new XML_RPC_Value;
 
    switch ($type) {
-      case "array":
-        $keys = array_keys($php_val);
-        $count = count($php_val);
-        $firstkey = $keys[0];
-        $lastkey = $keys[$count - 1];
-        if ($firstkey === 0 && is_int($lastkey) && ($lastkey + 1) == $count) {
-            $is_continuous = true;
-            $expected = 0;
-            foreach ($keys as $actual) {
-                if ($actual != $expected) {
-                    $is_continuous = false;
-                    break;
-                }
-                $expected++;
-            }
+   case "array":
+       $keys = array_keys($php_val);
+       $count = count($php_val);
+       $firstkey = $keys[0];
+       $lastkey = $keys[$count - 1];
+       if ($firstkey === 0 && is_int($lastkey) && ($lastkey + 1) == $count) {
+           $is_continuous = true;
+           $expected = 0;
+           foreach ($keys as $actual) {
+               if ($actual != $expected) {
+                   $is_continuous = false;
+                   break;
+               }
+               $expected++;
+           }
 
-            if ($is_continuous) {
-                $arr = array();
-                foreach ($php_val as $k => $v) {
-                    $arr[$k] = XML_RPC_encode($v);
-                }
-                $XML_RPC_val->addArray($arr);
-                break;
-            }
-        }
-        // fall though if not numerical and continuous
-      case "object":
-         $arr = array();
-         foreach ($php_val as $k => $v) {
-            $arr[$k] = XML_RPC_encode($v);
-         }
-         $XML_RPC_val->addStruct($arr);
-         break;
-      case "integer":
-         $XML_RPC_val->addScalar($php_val, $XML_RPC_Int);
-         break;
-      case "double":
-         $XML_RPC_val->addScalar($php_val, $XML_RPC_Double);
-         break;
-      case "string":
-      case "NULL":
-         $XML_RPC_val->addScalar($php_val, $XML_RPC_String);
-         break;
-// <G_Giunta_2001-02-29>
-// Add support for encoding/decoding of booleans, since they are supported in PHP
-      case "boolean":
-         $XML_RPC_val->addScalar($php_val, $XML_RPC_Boolean);
-         break;
-// </G_Giunta_2001-02-29>
-      case "unknown type":
-      default:
-         $XML_RPC_val = false;
-         break;
+           if ($is_continuous) {
+               $arr = array();
+               foreach ($php_val as $k => $v) {
+                   $arr[$k] = XML_RPC_encode($v);
+               }
+               $XML_RPC_val->addArray($arr);
+               break;
+           }
+       }
+       // fall though if not numerical and continuous
+   case "object":
+       $arr = array();
+       foreach ($php_val as $k => $v) {
+           $arr[$k] = XML_RPC_encode($v);
+       }
+       $XML_RPC_val->addStruct($arr);
+       break;
+
+   case "integer":
+       $XML_RPC_val->addScalar($php_val, $XML_RPC_Int);
+       break;
+
+   case "double":
+       $XML_RPC_val->addScalar($php_val, $XML_RPC_Double);
+       break;
+
+   case "string":
+   case "NULL":
+       $XML_RPC_val->addScalar($php_val, $XML_RPC_String);
+       break;
+
+   // <G_Giunta_2001-02-29>
+   // Add support for encoding/decoding of booleans, since they are supported in PHP
+   case "boolean":
+       $XML_RPC_val->addScalar($php_val, $XML_RPC_Boolean);
+       break;
+   // </G_Giunta_2001-02-29>
+
+   case "unknown type":
+   default:
+       $XML_RPC_val = false;
+       break;
    }
    return $XML_RPC_val;
 }
