@@ -30,6 +30,7 @@
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
+ * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1999-2001 Edd Dumbill
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/XML_RPC
@@ -431,8 +432,18 @@ class XML_RPC_Base {
  * @link       http://pear.php.net/package/XML_RPC
  */
 class XML_RPC_Client extends XML_RPC_Base {
-    var $path;
-    var $server;
+
+    /**
+     * The path and name of the RPC server script you want the request to go to
+     * @var string
+     */
+    var $path = '';
+
+    /**
+     * The name of the remote server to connect to
+     * @var string
+     */
+    var $server = '';
 
     /**
      * The port for connecting to the remote server
@@ -445,48 +456,132 @@ class XML_RPC_Client extends XML_RPC_Base {
     var $port = 80;
 
     /**
-     * Did the user manaully select a port when creating the object?
-     * @var boolean
+     * A user name for accessing the RPC server
+     * @var string
+     * @see XML_RPC_Client::setCredentials()
      */
-    var $_port_manual = false;
-    var $errno;
-    var $errstring;
-    var $debug = 0;
     var $username = '';
+
+    /**
+     * A password for accessing the RPC server
+     * @var string
+     * @see XML_RPC_Client::setCredentials()
+     */
     var $password = '';
+
+    /**
+     * The URL of the proxy server to use, if any
+     * @var string
+     */
+    var $proxy = '';
+
+    /**
+     * The port for connecting to the proxy server
+     *
+     * The default is 8080 for http:// connections
+     * and 443 for https:// and ssl:// connections.
+     *
+     * @var integer
+     */
+    var $proxy_port = 8080;
+
+    /**
+     * A user name for accessing the proxy server
+     * @var string
+     */
+    var $proxy_user = '';
+
+    /**
+     * A password for accessing the proxy server
+     * @var string
+     */
+    var $proxy_pass = '';
+
+    /**
+     * The error number, if any
+     * @var integer
+     */
+    var $errno = 0;
+
+    /**
+     * The error message, if any
+     * @var string
+     */
+    var $errstring = '';
+
+    /**
+     * The current debug mode (1 = on, 0 = off)
+     * @var integer
+     */
+    var $debug = 0;
+
 
     /**
      * Sets the object's properties
      *
      * @param string  $path        the path and name of the RPC server script
      *                              you want the request to go to
-     * @param string  $server      the name of the remote server to connect to
+     * @param string  $server      the URL of the remote server to connect to
      * @param integer $port        a port for connecting to the remote server.
      *                              Defaults to 80 for http:// connections and
      *                              443 for https:// and ssl:// connections.
-     * @param string  $proxy        a name of the proxy server to use, if any
-     * @param integer $proxy_port  a port number for accessing the proxy server
+     * @param string  $proxy       the URL of the proxy server to use, if any
+     * @param integer $proxy_port  a port for connecting to the remote server.
+     *                              Defaults to 8080 for http:// connections and
+     *                              443 for https:// and ssl:// connections.
      * @param string  $proxy_user  a user name for accessing the proxy server
      * @param string  $proxy_pass  a password for accessing the proxy server
      *
      * @return void
      */
     function XML_RPC_Client($path, $server, $port = 0,
-                            $proxy = '', $proxy_port = 8080,
+                            $proxy = '', $proxy_port = 0,
                             $proxy_user = '', $proxy_pass = '')
     {
-        if ($port) {
-            $this->port = $port;
-            $this->_port_manual = true;
-        }
-        $this->server = $server;
-        $this->path = $path;
-        $this->proxy = $proxy;
-        $this->proxy_port = $proxy_port;
+        $this->path       = $path;
         $this->proxy_user = $proxy_user;
         $this->proxy_pass = $proxy_pass;
+
+        preg_match('@^(http://|https://|ssl://)?(.*)$@', $server, $match);
+        if ($match[1] == '' || $match[1] == 'http://') {
+            $this->server = $match[2];
+            if ($port) {
+                $this->port = $port;
+            }
+        } else {
+            $this->server = 'ssl://' . $match[2];
+            if ($port) {
+                $this->port = $port;
+            } else {
+                $this->port = 443;
+            }
+        }
+
+        if ($proxy) {
+            preg_match('@^(http://|https://|ssl://)?(.*)$@', $proxy, $match);
+            if ($match[1] == '' || $match[1] == 'http://') {
+                $this->proxy = $match[2];
+                if ($proxy_port) {
+                    $this->proxy_port = $proxy_port;
+                }
+            } else {
+                $this->proxy = 'ssl://' . $match[2];
+                if ($port) {
+                    $this->proxy_port = $proxy_port;
+                } else {
+                    $this->proxy_port = 443;
+                }
+            }
+        }
     }
 
+    /**
+     * Change the current debug mode
+     *
+     * @param int $in  1 = on, 0 = off
+     *
+     * @return void
+     */
     function setDebug($in)
     {
         if ($in) {
@@ -496,22 +591,62 @@ class XML_RPC_Client extends XML_RPC_Base {
         }
     }
 
+    /**
+     * Set username and password properties for connecting to the RPC server
+     *
+     * @param string $u  the user name
+     * @param string $p  the password
+     *
+     * @return void
+     *
+     * @see XML_RPC_Client::$username, XML_RPC_Client::$password
+     */
     function setCredentials($u, $p)
     {
         $this->username = $u;
         $this->password = $p;
     }
 
+    /**
+     * Transmit the RPC request via HTTP 1.0 protocol
+     *
+     * @param object $msg       the XML_RPC_Message object
+     * @param int    $timeout   how many seconds to wait for the request
+     *
+     * @return object  an XML_RPC_Response object.  0 is returned if any
+     *                  problems happen.
+     *
+     * @see XML_RPC_Message, XML_RPC_Client::XML_RPC_Client(),
+     *      XML_RPC_Client::setCredentials()
+     */
     function send($msg, $timeout = 0)
     {
-        // where msg is an xmlrpcmsg
         $msg->debug = $this->debug;
         return $this->sendPayloadHTTP10($msg, $this->server, $this->port,
                                         $timeout, $this->username,
                                         $this->password);
     }
 
-    function sendPayloadHTTP10($msg, $server, $port, $timeout=0,
+    /**
+     * Transmit the RPC request via HTTP 1.0 protocol
+     *
+     * Requests should be sent using XML_RPC_Client send() rather than
+     * calling this method directly.
+     *
+     * @param object $msg       the XML_RPC_Message object
+     * @param string $server    the server to send the request to
+     * @param int    $port      the server port send the request to
+     * @param int    $timeout   how many seconds to wait for the request
+     *                           before giving up
+     * @param string $username  a user name for accessing the RPC server
+     * @param string $password  a password for accessing the RPC server
+     *
+     * @return object  an XML_RPC_Response object.  0 is returned if any
+     *                  problems happen.
+     *
+     * @see XML_RPC_Client::send()
+     */
+    function sendPayloadHTTP10($msg, $server, $port, $timeout = 0,
                                $username = '', $password = '')
     {
         /*
@@ -519,45 +654,19 @@ class XML_RPC_Client extends XML_RPC_Base {
          * instead to the xml-rpc server
          */
         if ($this->proxy) {
-            $proxy_server = $this->proxy;
-            $proxy_proto = '';
-            if (preg_match('@^(https://|ssl://)(.*)$@', $proxy_server, $match)) {
-                $proxy_server = $match[2];
-                $proxy_proto = 'ssl://';
-                if (!$this->_port_manual) {
-                    $port = 443;
-                    $this->port = 443;
-                }
-            }
-            // Backward compatibility
-            if (!strstr($proxy_server, 'http://')) {
-                $server = 'http://' . $server;
-            }
             if ($timeout > 0) {
-                $fp = @fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
+                $fp = @fsockopen($this->proxy, $this->proxy_port,
                                  $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = @fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
+                $fp = @fsockopen($this->proxy, $this->proxy_port,
                                  $this->errno, $this->errstr);
             }
         } else {
-            $server_proto = '';
-            if (preg_match('@^(https://|ssl://)(.*)$@', $server, $match)) {
-                $server = $match[2];
-                $server_proto = 'ssl://';
-                if (!$this->_port_manual) {
-                    $port = 443;
-                    $this->port = 443;
-                }
-            } elseif (strstr($server, 'http://')) {
-                $server = substr($server, 7);
-            }
             if ($timeout > 0) {
-                $fp = @fsockopen($server_proto . $server, $port, $this->errno,
-                                 $this->errstr, $timeout);
+                $fp = @fsockopen($server, $port, $this->errno, $this->errstr,
+                                 $timeout);
             } else {
-                $fp = @fsockopen($server_proto . $server, $port, $this->errno,
-                                 $this->errstr);
+                $fp = @fsockopen($server, $port, $this->errno, $this->errstr);
             }
         }
 
