@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.39 2005-02-22 06:16:44 danielc Exp $ -->
+
+  <!-- $Id: package.xml,v 1.40 2005-02-27 00:25:59 danielc Exp $ -->
+
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
-   A PEAR-ified version of Useful Inc's XML-RPC for PHP.
-   It has support for HTTP transport, proxies and authentication.
+A PEAR-ified version of Useful Inc&apos;s XML-RPC for PHP.
+
+It has support for HTTP/HTTPS transport, proxies and authentication.
   </description>
   <license>PHP License</license>
 
@@ -26,20 +29,16 @@
   </maintainers>
 
   <release>
-    <version>1.2.0RC7</version>
-    <date>2005-02-22</date>
-    <state>beta</state>
+
+    <version>1.2.0</version>
+    <date>2005-02-27</date>
+    <state>stable</state>
     <notes><![CDATA[
-- Add the setSendEncoding() method and $send_encoding
-  property to XML_RPC_Message.  Request 3537.
-- Allow class methods to be mapped using either syntax:
-     'function' => 'hello::sayHello',
-     or
-     'function' => array('hello', 'sayhello'),
-  Bug 3363.
-- Use 8192 instead of 32768 for bytes in fread()
-  in parseResponseFile().  Bug 3340.
+* Provide the "stable" release.
+* Add package2.xml for compatibility with PEAR 1.4.0.
+* For changes since 1.1.0, see the changelogs for the various RC releases.
     ]]></notes>
+
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
         <replace from="@package_version@" to="version" type="package-info" />
@@ -63,11 +62,28 @@
 
   <changelog>
     <release>
+      <version>1.2.0RC7</version>
+      <date>2005-02-22</date>
+      <state>beta</state>
+      <notes><![CDATA[
+* Add the setSendEncoding() method and $send_encoding
+  property to XML_RPC_Message.  Request 3537.
+* Allow class methods to be mapped using either syntax:
+     'function' => 'hello::sayHello',
+     or
+     'function' => array('hello', 'sayhello'),
+  Bug 3363.
+* Use 8192 instead of 32768 for bytes in fread()
+  in parseResponseFile().  Bug 3340.
+      ]]></notes>
+    </release>
+
+    <release>
       <version>1.2.0RC6</version>
       <date>2005-01-25</date>
       <state>beta</state>
       <notes><![CDATA[
-- Don't put the protocol in the Host field of the POST data.  (danielc)
+* Don't put the protocol in the Host field of the POST data.  (danielc)
       ]]></notes>
     </release>
 
@@ -76,7 +92,7 @@
       <date>2005-01-24</date>
       <state>beta</state>
       <notes><![CDATA[
-- If $port is 443 but a protocol isn't specified in $server, assume ssl:// is the protocol.
+* If $port is 443 but a protocol isn't specified in $server, assume ssl:// is the protocol.
       ]]></notes>
     </release>
 
@@ -85,11 +101,11 @@
       <date>2005-01-24</date>
       <state>beta</state>
       <notes><![CDATA[
-- When a connection attempt fails, have the method return 0.  (danielc)
-- Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
-- Add tests for setting the client properties.  (danielc)
-- Remove $GLOBALS['XML_RPC_twoslash'] since it's not used.  (danielc)
-- Bundle the tests with the package.  (danielc)
+* When a connection attempt fails, have the method return 0.  (danielc)
+* Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
+* Add tests for setting the client properties.  (danielc)
+* Remove $GLOBALS['XML_RPC_twoslash'] since it's not used.  (danielc)
+* Bundle the tests with the package.  (danielc)
       ]]></notes>
     </release>
 
@@ -98,7 +114,7 @@
       <date>2005-01-19</date>
       <state>beta</state>
       <notes><![CDATA[
-- ssl uses port 443, not 445.
+* ssl uses port 443, not 445.
       ]]></notes>
     </release>
 
@@ -107,90 +123,90 @@
       <date>2005-01-11</date>
       <state>beta</state>
       <notes><![CDATA[
-- Handle ssl:// in the $server string.  (danielc)
-- Also default to port 445 for ssl:// requests as well.  (danielc)
-- Enhance debugging in the server.  (danielc)
+* Handle ssl:// in the $server string.  (danielc)
+* Also default to port 445 for ssl:// requests as well.  (danielc)
+* Enhance debugging in the server.  (danielc)
       ]]></notes>
     </release>
     <release>
       <version>1.2.0RC1</version>
       <date>2004-12-30</date>
       <state>beta</state>
-      <notes>
-- Make things work with SSL.  Bug 2489.  (nkukard lbsd net)
-- Allow array function callbacks (Matt Kane)
-- Some minor speed-ups (Matt Kane)
-- Add Dump.php to the package (Christian Weiske)
-- Replace all line endings with \r\n.  Had only done replacements on \n.  Bug 2521.  (danielc)
-- Silence fsockopen() errors.  Bug 1714.  (danielc)
-- Encode empty arrays as an array. Bug 1493.  (danielc)
-- Eliminate undefined index notice when submitting empty arrays to XML_RPC_Encode().  Bug 1819.  (danielc)
-- Speed up check for enumerated arrays in XML_RPC_Encode().  (danielc)
-- Prepend "XML_RPC_" to ERROR_NON_NUMERIC_FOUND, eliminating problem when eval()'ing error messages.  (danielc)
-- Use XML_RPC_Base::raiseError() instead of PEAR::raiseError() in XML_RPC_ee() because PEAR.php is lazy loaded.  (danielc)
-- Allow raiseError() to be called statically.  (danielc)
-- Stop double escaping of character entities.  Bug 987.  (danielc)
+      <notes><![CDATA[
+* Make things work with SSL.  Bug 2489.  (nkukard lbsd net)
+* Allow array function callbacks (Matt Kane)
+* Some minor speed-ups (Matt Kane)
+* Add Dump.php to the package (Christian Weiske)
+* Replace all line endings with \r\n.  Had only done replacements on \n.  Bug 2521.  (danielc)
+* Silence fsockopen() errors.  Bug 1714.  (danielc)
+* Encode empty arrays as an array. Bug 1493.  (danielc)
+* Eliminate undefined index notice when submitting empty arrays to XML_RPC_Encode().  Bug 1819.  (danielc)
+* Speed up check for enumerated arrays in XML_RPC_Encode().  (danielc)
+* Prepend "XML_RPC_" to ERROR_NON_NUMERIC_FOUND, eliminating problem when eval()'ing error messages.  (danielc)
+* Use XML_RPC_Base::raiseError() instead of PEAR::raiseError() in XML_RPC_ee() because PEAR.php is lazy loaded.  (danielc)
+* Allow raiseError() to be called statically.  (danielc)
+* Stop double escaping of character entities.  Bug 987.  (danielc)
   NOTICE: the following have been removed:
     * XML_RPC_dh()
     * $GLOBALS['XML_RPC_entities']
     * XML_RPC_entity_decode()
     * XML_RPC_lookup_entity()
-- Determine the XML's encoding via the encoding attribute in the XML declaration.  Bug 52.  (danielc)
-      </notes>
+* Determine the XML's encoding via the encoding attribute in the XML declaration.  Bug 52.  (danielc)
+      ]]></notes>
     </release>
 
     <release>
       <version>1.1.0</version>
       <date>2004-03-15</date>
       <state>stable</state>
-      <notes>
-- Added support for sequential arrays to XML_RPC_encode() (mroch)
-- Cleaned up new XML_RPC_encode() changes a bit (mroch, pierre)
-- Remove "require_once 'PEAR.php'", include only when needed to raise an error
-- Replace echo and error_log() with raiseError() (mroch)
-- Make all classes extend XML_RPC_Base, which will handle common functions  (mroch)
-- be tolerant of junk after methodResponse (Luca Mariano, mroch)
-- Silent notice even in the error log (pierre)
-- fix include of shared xml extension on win32 (pierre)
-      </notes>
+      <notes><![CDATA[
+* Added support for sequential arrays to XML_RPC_encode() (mroch)
+* Cleaned up new XML_RPC_encode() changes a bit (mroch, pierre)
+* Remove "require_once 'PEAR.php'", include only when needed to raise an error
+* Replace echo and error_log() with raiseError() (mroch)
+* Make all classes extend XML_RPC_Base, which will handle common functions  (mroch)
+* be tolerant of junk after methodResponse (Luca Mariano, mroch)
+* Silent notice even in the error log (pierre)
+* fix include of shared xml extension on win32 (pierre)
+      ]]></notes>
     </release>
 
     <release>
       <version>1.0.4</version>
       <date>2002-10-02</date>
       <state>stable</state>
-      <notes>
+      <notes><![CDATA[
 * added HTTP proxy authorization support (thanks to Arnaud Limbourg)
-      </notes>
+      ]]></notes>
     </release>
 
     <release>
       <version>1.0.3</version>
       <date>2002-05-19</date>
       <state>stable</state>
-      <notes>
+      <notes><![CDATA[
 * fix bug when parsing responses with boolean types
-      </notes>
+      ]]></notes>
     </release>
 
     <release>
       <version>1.0.2</version>
       <date>2002-04-16</date>
       <state>stable</state>
-      <notes>
+      <notes><![CDATA[
 * E_ALL fixes
 * fix HTTP response header parsing
-      </notes>
+      ]]></notes>
     </release>
 
     <release>
       <version>1.0.1</version>
       <date>2001-09-25</date>
       <state>stable</state>
-      <notes>
+      <notes><![CDATA[
 This is a PEAR-ified version of Useful Inc's 1.0.1 release.
-Includes an urgent security fix identified by Dan Libby &lt;dan@libby.com>.
-      </notes>
+Includes an urgent security fix identified by Dan Libby <dan@libby.com>.
+      ]]></notes>
     </release>
   </changelog>
 </package>
