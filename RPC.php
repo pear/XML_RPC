@@ -1606,7 +1606,7 @@ function XML_RPC_iso8601_decode($idate, $utc = 0) {
  * Takes a message in PHP XML_RPC object format and translates it into
  * native PHP types
  *
- * @return
+ * @return mixed
  *
  * @author Dan Libby <dan@libby.com>
  */
@@ -1636,11 +1636,11 @@ function XML_RPC_decode($XML_RPC_val)
 }
 
 /**
- * Takes native php types and encodes them into XML_RPC PHP object format.
+ * Takes native php types and encodes them into XML_RPC PHP object format
  *
  * Feature creep -- could support more types via optional type argument.
  *
- * @return
+ * @return string
  *
  * @author Dan Libby <dan@libby.com>
  */
