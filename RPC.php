@@ -684,6 +684,10 @@ class XML_RPC_Message extends XML_RPC_Base
             $hdrfnd = 1;
         }
 
+        // be tolerant of junk after methodResponse (e.g. javascript automatically inserted by free hosts)
+        // thanks to Luca Mariano <luca.mariano@email.it>
+        $data = substr($data, 0, strpos($data, "</methodResponse>") + 17);
+
         if (!xml_parse($parser, $data, sizeof($data))) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
             if ((xml_get_current_line_number($parser)) == 1)
