@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.36 2005-02-08 16:20:01 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.37 2005-02-21 21:49:14 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -25,13 +25,13 @@
     </maintainer>
   </maintainers>
 
-
   <release>
-    <version>1.2.0RC6</version>
-    <date>2005-01-25</date>
+    <version>1.2.0RC7</version>
+    <date>2005-02-21</date>
     <state>beta</state>
     <notes><![CDATA[
-- Don't put the protocol in the Host field of the POST data.  (danielc)
+- Add the setSendEncoding() method and $send_encoding
+  property to XML_RPC_Message.  Request 3537.
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
@@ -55,6 +55,15 @@
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.0RC6</version>
+      <date>2005-01-25</date>
+      <state>beta</state>
+      <notes><![CDATA[
+- Don't put the protocol in the Host field of the POST data.  (danielc)
+      ]]></notes>
+    </release>
+
     <release>
       <version>1.2.0RC5</version>
       <date>2005-01-24</date>

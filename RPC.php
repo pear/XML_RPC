@@ -154,7 +154,7 @@ $GLOBALS['XML_RPC_str'] = array(
 
 
 /**
- * Default XML encoding
+ * Default XML encoding (ISO-8859-1, UTF-8 or US-ASCII)
  * @global string $GLOBALS['XML_RPC_defencoding']
  */
 $GLOBALS['XML_RPC_defencoding'] = 'UTF-8';
@@ -947,6 +947,7 @@ class XML_RPC_Response extends XML_RPC_Base
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
+ * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1999-2001 Edd Dumbill
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
@@ -954,10 +955,21 @@ class XML_RPC_Response extends XML_RPC_Base
 class XML_RPC_Message extends XML_RPC_Base
 {
     /**
-     * The XML message being generated
-     * @var string
+     * The current debug mode (1 = on, 0 = off)
+     * @var integer
      */
-    var $payload = '';
+    var $debug = 0;
+
+    /**
+     * The encoding to be used for outgoing messages
+     *
+     * Defaults to the value of <var>$GLOBALS['XML_RPC_defencoding']</var>
+     *
+     * @var string
+     * @see XML_RPC_Message::setSendEncoding(),
+     *      $GLOBALS['XML_RPC_defencoding'], XML_RPC_Message::xml_header()
+     */
+    var $send_encoding = '';
 
     /**
      * The method presently being evaluated
@@ -971,10 +983,10 @@ class XML_RPC_Message extends XML_RPC_Base
     var $params = array();
 
     /**
-     * The current debug mode (1 = on, 0 = off)
-     * @var integer
+     * The XML message being generated
+     * @var string
      */
-    var $debug = 0;
+    var $payload = '';
 
     /**
      * @return void
@@ -990,11 +1002,25 @@ class XML_RPC_Message extends XML_RPC_Base
     }
 
     /**
+     * Produces the XML declaration including the encoding attribute
+     *
+     * The encoding is determined by this class' <var>$send_encoding</var>
+     * property.  If the <var>$send_encoding</var> property is not set, use
+     * <var>$GLOBALS['XML_RPC_defencoding']</var>.
+     *
      * @return string  the XML declaration and <methodCall> element
+     *
+     * @see XML_RPC_Message::setSendEncoding(),
+     *      XML_RPC_Message::$send_encoding, $GLOBALS['XML_RPC_defencoding']
      */
     function xml_header()
     {
-        return "<?xml version=\"1.0\"?>\n<methodCall>\n";
+        global $XML_RPC_defencoding;
+        if (!$this->send_encoding) {
+            $this->send_encoding = $XML_RPC_defencoding;
+        }
+        return '<?xml version="1.0" encoding="' . $this->send_encoding . '"?>'
+               . "\n<methodCall>\n";
     }
 
     /**
@@ -1007,6 +1033,8 @@ class XML_RPC_Message extends XML_RPC_Base
 
     /**
      * @return void
+     *
+     * @uses XML_RPC_Message::xml_header(), XML_RPC_Message::xml_footer()
      */
     function createPayload()
     {
@@ -1064,6 +1092,21 @@ class XML_RPC_Message extends XML_RPC_Base
     function getNumParams()
     {
         return sizeof($this->params);
+    }
+
+    /**
+     * Sets the XML declaration's encoding attribute
+     *
+     * @param string $type  the encoding type (ISO-8859-1, UTF-8 or US-ASCII)
+     *
+     * @return void
+     *
+     * @see XML_RPC_Message::$send_encoding, XML_RPC_Message::xml_header()
+     * @since Method available since Release 1.2.0
+     */
+    function setSendEncoding($type)
+    {
+        $this->send_encoding = $type;
     }
 
     /**
