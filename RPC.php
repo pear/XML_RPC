@@ -270,7 +270,7 @@ function XML_RPC_ee($parser, $name)
             // we have an I4, INT or a DOUBLE
             // we must check that only 0123456789-.<space> are characters here
             if (!ereg("^\-?[0123456789 \t\.]+$", $XML_RPC_xh[$parser]['ac'])) {
-                PEAR::raiseError("Non-numeric value received in INT or DOUBLE", XML_RPC_ERROR_NON_NUMERIC_FOUND);
+                PEAR::raiseError("Non-numeric value recieved in INT or DOUBLE", XML_RPC_ERROR_NON_NUMERIC_FOUND);
                 $XML_RPC_xh[$parser]['st'] .= "ERROR_NON_NUMERIC_FOUND";
             } else {
                 // it's ok, add it on
@@ -431,89 +431,6 @@ class XML_RPC_Client extends XML_RPC_Base {
         }
     }
 
-
-    /**
-     * return associative array with all the available methods from the server
-     * and add the signature and doc string informations ('docstring')
-     *
-     * @access public
-     * @return array associative array of the discovered methods
-     */
-    function discover()
-    {
-        $methods           = $this->listMethods();
-        $number_of_methods = sizeof($methods);
-
-        for ( $i= 0; $i < $number_of_methods; $i++){
-            $method                       = $methods[$i];
-            $return[$method]['docstring'] = $this->methodHelp($method);
-            $return[$method]['signature'] = $this->methodSignature($method);
-        }
-        return $return;
-    }
-
-    /**
-     * list all available remote RPC methods
-     * 
-     * @access public
-     * @return array an array of available method
-     */
-    function listMethods(){
-        $response = $this->send(new XML_RPC_Message('system.listMethods'));
-
-        if(!$response->faultcode()){
-            $method_value = $response->value();
-            return XML_RPC_Decode($method_value);
-        }
-    }
-
-    /**
-     * get doc string describing the method purpose
-     *
-     * @access public
-     * @param string method name
-     * @return string contains the description or an error message is something went wrong
-     */
-    function methodHelp($method){
-        // request method doc
-        $doc_response = $this->send(new XML_RPC_Message("system.methodHelp",
-                                                       array(XML_RPC_Encode($method))));
-        if ($doc_response == 0) {
-            return "Error occured : " . $this->errno() . $this->errstring();
-        }
-
-        if ($doc_response->faultcode()) {
-            return $doc_response->faultString();
-        }
-        return XML_RPC_Decode($doc_response->value());
-    }
-
-    /**
-     * return the signature for a given method
-     *
-     * @access public
-     * @param string method name
-     * @return array all availables signatures or a string describing the error
-     */
-    function methodSignature($method)
-    {
-        // request method signature
-        $sig_response = $this->send(new XML_RPC_Message("system.methodSignature",
-                                    array(XML_RPC_Encode($method))));
-
-        // be sure there isn't any I/O trouble
-        if ($sig_response == 0) {
-            return "Error occured : " . $this->errno() . $this->errstring();
-        }
-        // signature stuff
-        if ($sig_response->faultcode()){
-            return $sig_response->faultString();
-        }
-        $sig_value = $sig_response->value();
-        $sig_array = XML_RPC_Decode($sig_response->value());
-        return $sig_array[0];
-    }
-
     function setCredentials($u, $p)
     {
         $this->username = $u;
@@ -643,7 +560,7 @@ class XML_RPC_Response extends XML_RPC_Base
     function serialize()
     {
         $rs = "<methodResponse>\n";
-        if (!empty($this->fn)) {
+        if ($this->fn) {
             $rs .= "<fault>
   <value>
     <struct>
