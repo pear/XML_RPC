@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.45 2005-04-06 16:35:50 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.46 2005-04-06 22:53:25 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -36,6 +36,8 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
     <notes><![CDATA[
 * Improve timeout handling for situations where connection to server is made but no response is not received in time. Accomplished via stream_set_timeout().  Request 3963.
 * Add Fault Code 6: "The requested method didn't return an XML_RPC_Response object."  Request 4032.
+* Add the createServerPayload() and createServerHeaders() methods and the $server_payload and $server_headers properties.  Request 3121.
+* As in earlier versions, if the $serviceNow parameter to XML_RPC_Server() is 0, no data will be returned, but now the new $server_payload and $server_headers properties will be set.
 * Convert the parser handle to an integer before using it as an index for $XML_RPC_xh[$parser].  Reduces E_STRICT notices.  Bug 3782.
     ]]></notes>
 
