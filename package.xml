@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.30 2005-01-22 07:38:32 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.31 2005-01-22 18:36:57 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -33,6 +33,7 @@
 - When a connection attempt fails, have the method return 0.  (danielc)
 - Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
 - Add tests for setting the client properties.  (danielc)
+- Remove $GLOBALS['XML_RPC_twoslash'] since it's not used.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
