@@ -38,9 +38,8 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
     <version>1.0.4</version>
     <date>2002-10-02</date>
     <state>stable</state>
-    <notes>
-* added HTTP proxy authorization support (thanks to Arnaud Limbourg)
-</notes>
+    <notes>* added HTTP proxy authorization support (thanks to Arnaud Limbourg)</notes>
+    </release>
     <release>
       <version>1.0.3</version>
       <date>2002-05-19</date>
