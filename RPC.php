@@ -624,9 +624,11 @@ class XML_RPC_Message
         $xmlrpc_value = new XML_RPC_Value;
 
         $hdrfnd=0;
-        if ($this->debug)
-            print "<PRE>---GOT---\n" . htmlspecialchars($data) .
-            "\n---END---\n</PRE>";
+        if ($this->debug) {
+            print "<PRE>---GOT---\n";
+            print isset($_SERVER['SERVER_PROTOCOL']) ? htmlspecialchars($data) : $data;
+            print "\n---END---\n</PRE>";
+        }
         // see if we got an HTTP 200 OK, else bomb
         // but only do this if we're using the HTTP protocol.
         if (ereg("^HTTP",$data) &&
