@@ -212,10 +212,17 @@ class XML_RPC_Server
 {
     var $dmap = array();
     var $encoding = '';
+    var $debug = 0;
 
-    function XML_RPC_Server($dispMap, $serviceNow = 1)
+    function XML_RPC_Server($dispMap, $serviceNow = 1, $debug = 0)
     {
         global $HTTP_RAW_POST_DATA;
+
+        if ($debug) {
+            $this->debug = 1;
+        } else {
+            $this->debug = 0;
+        }
 
         // dispMap is a despatch array of methods
         // mapped to function names and signatures
@@ -230,12 +237,18 @@ class XML_RPC_Server
 
     function serializeDebug()
     {
-        global $XML_RPC_Server_debuginfo;
+        global $XML_RPC_Server_debuginfo, $HTTP_RAW_POST_DATA;
+
+        if ($this->debug) {
+            XML_RPC_Server_debugmsg('vvv POST DATA RECEIVED BY SERVER vvv' . "\n"
+                                    . $HTTP_RAW_POST_DATA
+                                    . "\n" . '^^^ END POST DATA ^^^');
+        }
 
         if ($XML_RPC_Server_debuginfo != '') {
-            return "<!-- DEBUG INFO:\n\n"
-                   . preg_replace('/-(?=-)/', '- ',
-                                  $XML_RPC_Server_debuginfo) . "\n-->\n";
+            return "<!-- PEAR XML_RPC SERVER DEBUG INFO:\n\n"
+                   . preg_replace('/-(?=-)/', '- ', $XML_RPC_Server_debuginfo)
+                   . "-->\n";
         } else {
             return '';
         }
@@ -384,7 +397,7 @@ class XML_RPC_Server
     function echoInput() {
         global $HTTP_RAW_POST_DATA;
 
-        $r = new XML_RPC_Response;
+        $r = new XML_RPC_Response(0);
         $r->xv = new XML_RPC_Value("'Aha said I: '" . $HTTP_RAW_POST_DATA, 'string');
         print $r->serialize();
     }
