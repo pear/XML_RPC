@@ -78,12 +78,6 @@ $GLOBALS['XML_RPC_Types'] = array($GLOBALS['XML_RPC_I4']       => 1,
                                   $GLOBALS['XML_RPC_Array']    => 2,
                                   $GLOBALS['XML_RPC_Struct']   => 3);
 
-$GLOBALS['XML_RPC_entities'] = array('quot' => '"',
-                                     'amp'  => '&',
-                                     'lt'   => '<',
-                                     'gt'   => '>',
-                                     'apos' => '\'');
-
 /**#@+
  * Error messages
  */
@@ -135,47 +129,6 @@ $GLOBALS['XML_RPC_twoslash'] = '2SLS';
  *   + method = stores method name
  */
 $GLOBALS['XML_RPC_xh'] = array();
-
-function XML_RPC_entity_decode($string)
-{
-    $top = split('&', $string);
-    $op = '';
-    $i = 0;
-    while($i < sizeof($top)) {
-        if (ereg('^([#a-zA-Z0-9]+);', $top[$i], $regs)) {
-            $op .= ereg_replace('^[#a-zA-Z0-9]+;',
-                                XML_RPC_lookup_entity($regs[1]),
-                                $top[$i]);
-        } else {
-            if ($i == 0) {
-                $op = $top[$i];
-            } else {
-                $op .= '&' . $top[$i];
-            }
-        }
-
-        $i++;
-    }
-    return $op;
-}
-
-/**
- *
- */
-function XML_RPC_lookup_entity($ent)
-{
-    global $XML_RPC_entities;
-
-    if ($XML_RPC_entities[strtolower($ent)]) {
-        return $XML_RPC_entities[strtolower($ent)];
-    }
-
-    if (ereg("^#([0-9]+)$", $ent, $regs)) {
-        return chr($regs[1]);
-    }
-
-    return '?';
-}
 
 /**
  *
@@ -414,24 +367,6 @@ function XML_RPC_cd($parser, $data)
         $XML_RPC_xh[$parser]['ac'] .= str_replace('$', '\$',
             str_replace('"', '\"', str_replace(chr(92),
             $XML_RPC_backslash, $data)));
-    }
-}
-
-/**
- *
- */
-function XML_RPC_dh($parser, $data)
-{
-    global $XML_RPC_xh, $XML_RPC_backslash;
-
-    if (substr($data, 0, 1) == '&' && substr($data, -1, 1) == ';') {
-        if ($XML_RPC_xh[$parser]['lv'] == 1) {
-            $XML_RPC_xh[$parser]['qt'] = 1;
-            $XML_RPC_xh[$parser]['lv'] = 2;
-        }
-        $XML_RPC_xh[$parser]['ac'] .= str_replace('$', '\$',
-            str_replace('"', '\"',
-                        str_replace(chr(92), $XML_RPC_backslash, $data)));
     }
 }
 
@@ -792,7 +727,6 @@ class XML_RPC_Message extends XML_RPC_Base
         xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
         xml_set_element_handler($parser, 'XML_RPC_se', 'XML_RPC_ee');
         xml_set_character_data_handler($parser, 'XML_RPC_cd');
-        xml_set_default_handler($parser, 'XML_RPC_dh');
         $xmlrpc_value = new XML_RPC_Value;
 
         $hdrfnd = 0;

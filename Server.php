@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -306,7 +307,6 @@ class XML_RPC_Server
         xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
         xml_set_element_handler($parser, 'XML_RPC_se', 'XML_RPC_ee');
         xml_set_character_data_handler($parser, 'XML_RPC_cd');
-        xml_set_default_handler($parser, 'XML_RPC_dh');
         if (!xml_parse($parser, $data, 1)) {
             // return XML error as a faultCode
             $r = new XML_RPC_Response(0,
