@@ -58,7 +58,7 @@ function XML_RPC_Server_methodSignature($server, $m)
 
     $methName = $m->getParam(0);
     $methName = $methName->scalarval();
-    if (ereg("^system\.", $methName)) {
+    if (strpos($methName, "system.") === 0) {
         $dmap = $XML_RPC_Server_dmap;
         $sysCall = 1;
     } else {
@@ -100,7 +100,7 @@ function XML_RPC_Server_methodHelp($server, $m)
 
     $methName = $m->getParam(0);
     $methName = $methName->scalarval();
-    if (ereg("^system\.", $methName)) {
+    if (strpos($methName, "system.") === 0) {
         $dmap = $XML_RPC_Server_dmap;
         $sysCall = 1;
     } else {
@@ -261,14 +261,14 @@ class XML_RPC_Server
             XML_RPC_Server_debugmsg($plist);
             // now to deal with the method
             $methName = $XML_RPC_xh[$parser]['method'];
-            if (ereg("^system\.", $methName)) {
+            if (strpos($methName, "system.") === 0) {
                 $dmap = $XML_RPC_Server_dmap;
                 $sysCall = 1;
             } else {
                 $dmap = $this->dmap;
                 $sysCall = 0;
             }
-            if (isset($dmap[$methName]['function'])) {
+            if (isset($dmap[$methName]['function']) && is_callable($dmap[$methName]['function'])) {
                 // dispatch if exists
                 if (isset($dmap[$methName]['signature'])) {
                     $sr = $this->verifySignature($m,
@@ -277,9 +277,9 @@ class XML_RPC_Server
                 if ( (!isset($dmap[$methName]['signature'])) || $sr[0]) {
                     // if no signature or correct signature
                     if ($sysCall) {
-                        eval('$r=' . $dmap[$methName]['function'] . '($this, $m);');
+                        $r = call_user_func($dmap[$methName]['function'], $this, $m);
                     } else {
-                        eval('$r=' . $dmap[$methName]['function'] . '($m);');
+                        $r = call_user_func($dmap[$methName]['function'], $m);
                     }
                 } else {
                     $r = new XML_RPC_Response(0, $XML_RPC_err["incorrect_params"],
