@@ -245,11 +245,45 @@ function XML_RPC_Server_debugmsg($m)
  */
 class XML_RPC_Server
 {
+    /**
+     * The dispatch map, listing the methods this server provides.
+     * @var array
+     */
     var $dmap = array();
+
+    /**
+     * The present response's encoding
+     * @var string
+     * @see XML_RPC_Message::getEncoding()
+     */
     var $encoding = '';
+
+    /**
+     * Debug mode (0 = off, 1 = on)
+     * @var integer
+     */
     var $debug = 0;
 
     /**
+     * The response's HTTP headers
+     * @var string
+     */
+    var $server_headers = '';
+
+    /**
+     * The response's XML payload
+     * @var string
+     */
+    var $server_payload = '';
+
+
+    /**
+     * @param array $dispMap   the dispatch map
+     * @param int $serviceNow  should the HTTP response be sent now?
+     *                          (1 = yes, 0 = no)
+     * @param int $debug       should debug output be displayed?
+     *                          (1 = yes, 0 = no)
+     *
      * @return void
      */
     function XML_RPC_Server($dispMap, $serviceNow = 1, $debug = 0)
@@ -268,8 +302,12 @@ class XML_RPC_Server
         // doesn't appear in the map then an unknown
         // method error is generated
         $this->dmap = $dispMap;
+
         if ($serviceNow) {
             $this->service();
+        } else {
+            $this->createServerPayload();
+            $this->createServerHeaders();
         }
     }
 
@@ -296,25 +334,59 @@ class XML_RPC_Server
     }
 
     /**
-     * Print out the result
+     * Sends the response
      *
      * The encoding and content-type are determined by
      * XML_RPC_Message::getEncoding()
      *
      * @return void
      *
-     * @see XML_RPC_Message::getEncoding()
+     * @uses XML_RPC_Server::createServerPayload(),
+     *       XML_RPC_Server::createServerHeaders()
      */
     function service()
     {
+        $this->createServerPayload();
+        $this->createServerHeaders();
+        header($this->server_headers);
+        print $this->server_payload;
+    }
+
+    /**
+     * Generates the payload and puts it in the $server_payload property
+     *
+     * @return void
+     *
+     * @uses XML_RPC_Server::parseRequest(), XML_RPC_Server::$encoding,
+     *       XML_RPC_Response::serialize(), XML_RPC_Server::serializeDebug()
+     */
+    function createServerPayload()
+    {
         $r = $this->parseRequest();
-        $payload = '<?xml version="1.0" encoding="'
-                 . $this->encoding . '"?>' . "\n"
-                 . $this->serializeDebug()
-                 . $r->serialize();
-        header('Content-Length: ' . strlen($payload));
-        header('Content-Type: text/xml; charset=' . $this->encoding);
-        print $payload;
+        $this->server_payload = '<?xml version="1.0" encoding="'
+                              . $this->encoding . '"?>' . "\n"
+                              . $this->serializeDebug()
+                              . $r->serialize();
+    }
+
+    /**
+     * Determines the headers and puts it in the $server_payload property
+     *
+     * @return boolean  TRUE if okay, FALSE if $server_payload isn't set.
+     *
+     * @uses XML_RPC_Server::createServerPayload(),
+     *       XML_RPC_Server::$server_headers
+     */
+    function createServerHeaders()
+    {
+        if (!$this->server_payload) {
+            return false;
+        }
+        $this->server_headers = 'Content-Length: '
+                              . strlen($this->server_payload) . "\r\n"
+                              . 'Content-Type: text/xml;'
+                              . ' charset=' . $this->encoding;
+        return true;
     }
 
     /**
@@ -354,6 +426,8 @@ class XML_RPC_Server
 
     /**
      * @return object  a new XML_RPC_Response object
+     *
+     * @uses XML_RPC_Message::getEncoding(), XML_RPC_Server::$encoding
      */
     function parseRequest($data = '')
     {
