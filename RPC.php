@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -89,7 +90,7 @@ $GLOBALS['XML_RPC_entities'] = array('quot' => '"',
 $GLOBALS['XML_RPC_err']['unknown_method']     = 1;
 $GLOBALS['XML_RPC_str']['unknown_method']     = 'Unknown method';
 $GLOBALS['XML_RPC_err']['invalid_return']     = 2;
-$GLOBALS['XML_RPC_str']['invalid_return']     = 'Invalid return payload: enabling debugging to examine incoming payload';
+$GLOBALS['XML_RPC_str']['invalid_return']     = 'Invalid return payload: enable debugging to examine incoming payload';
 $GLOBALS['XML_RPC_err']['incorrect_params']   = 3;
 $GLOBALS['XML_RPC_str']['incorrect_params']   = 'Incorrect parameters passed to method';
 $GLOBALS['XML_RPC_err']['introspect_unknown'] = 4;
