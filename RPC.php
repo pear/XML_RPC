@@ -138,6 +138,7 @@ $GLOBALS['XML_RPC_err'] = array(
     'incorrect_params'    => 3,
     'introspect_unknown'  => 4,
     'http_error'          => 5,
+    'not_response_object' => 6,
 );
 
 /**
@@ -150,6 +151,7 @@ $GLOBALS['XML_RPC_str'] = array(
     'incorrect_params'    => 'Incorrect parameters passed to method',
     'introspect_unknown'  => 'Can\'t introspect: method unknown',
     'http_error'          => 'Didn\'t receive 200 OK from remote server.',
+    'not_response_object' => 'The requested method didn\'t return an XML_RPC_Response object.',
 );
 
 

@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.43 2005-03-11 22:07:38 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.44 2005-04-06 14:56:44 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -31,10 +31,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <release>
 
     <version>1.2.3</version>
-    <date>pending</date>
+    <date>2005-04-06</date>
     <state>stable</state>
     <notes><![CDATA[
 * When using a proxy, add the protocol to the Request-URI, making it an "absoluteURI" as per the HTTP 1.0 spec.  Bug 3679.
+* Add Fault Code 6: "The requested method didn't return an XML_RPC_Response object."  Request 4032.
     ]]></notes>
 
     <filelist>
