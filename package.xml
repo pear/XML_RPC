@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.19 2004-12-29 17:26:18 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.20 2004-12-29 17:36:57 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -35,6 +35,7 @@
 - Some minor speed-ups (Matt Kane)
 - Add Dump.php to the package (Christian Weiske)
 - Replace all line endings with \r\n.  Had only done replacements on \n.  Bug 2521.
+- Silence fsockopen() errors.  Bug 1714.
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">

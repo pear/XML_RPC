@@ -530,11 +530,11 @@ class XML_RPC_Client extends XML_RPC_Base {
                 $server = 'http://' . $server;
             }
             if ($timeout > 0) {
-                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
-                                $this->errno, $this->errstr, $timeout);
+                $fp = @fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
+                                 $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
-                                $this->errno, $this->errstr);
+                $fp = @fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
+                                 $this->errno, $this->errstr);
             }
         } else {
             $server_proto = '';
@@ -545,11 +545,11 @@ class XML_RPC_Client extends XML_RPC_Base {
                 $server = substr($server, 7);
             }
             if ($timeout > 0) {
-                $fp = fsockopen($server_proto . $server, $port, $this->errno,
-                                $this->errstr, $timeout);
+                $fp = @fsockopen($server_proto . $server, $port, $this->errno,
+                                 $this->errstr, $timeout);
             } else {
-                $fp = fsockopen($server_proto . $server, $port, $this->errno,
-                                $this->errstr);
+                $fp = @fsockopen($server_proto . $server, $port, $this->errno,
+                                 $this->errstr);
             }
         }
 
