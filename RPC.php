@@ -469,19 +469,18 @@ class XML_RPC_Client
            $op = "POST ";
         }
 
-        $op .= $this->path. " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n" .
-            "Host: " . $this->server . "\r\n";
+        $op .= $this->path. " HTTP/1.0\r\n" .
+               "User-Agent: PEAR XML_RPC\r\n" .
+               "Host: " . $this->server . "\r\n";
         if ($this->proxy && $this->proxy_user != '') {
             $op .= 'Proxy-Authorization: Basic ' .
                 base64_encode($this->proxy_user . ':' . $this->proxy_pass) .
                 "\r\n";
         }
         $op .= $credentials .
-            "Content-Type: text/xml\r\nContent-Length: " .
-            strlen($msg->payload) . "\r\n\r\n" .
-            $msg->payload;
-
-        // print($op);
+               "Content-Type: text/xml\r\n" .
+               "Content-Length: " . strlen($msg->payload) . "\r\n\r\n" .
+               $msg->payload;
 
         if (!fputs($fp, $op, strlen($op))) {
             $this->errstr = "Write error";
@@ -1052,9 +1051,6 @@ function XML_RPC_decode($XML_RPC_val) {
 /*****************************************************************
 * XML_RPC_encode takes native php types and encodes them into    *
 * XML_RPC PHP object format.                                     *
-* BUG: All sequential arrays are turned into structs.  I don't   *
-* know of a good way to determine if an array is sequential      *
-* only.                                                          *
 *                                                                *
 * feature creep -- could support more types via optional type    *
 * argument.                                                      *
@@ -1074,6 +1070,32 @@ function XML_RPC_encode($php_val) {
 
    switch ($type) {
       case "array":
+        reset($php_val);
+        $firstkey = key($php_val);
+        end($php_val);
+        $lastkey = key($php_val);
+        if ($firstkey === 0 && is_int($lastkey) &&
+            ($lastkey + 1) == count($php_val)) {
+            $is_continuous = true;
+            reset($php_val);
+            $size = count($php_val);
+            for ($expect = 0; $expect < $size; $expect++, next($php_val)) {
+                if (key($php_val) !== $expect) {
+                    $is_continuous = false;
+                    break;
+                }
+            }
+            if ($is_continuous) {
+                reset($php_val);
+                $arr = array();
+                while (list($k, $v) = each($php_val)) {
+                    $arr[$k] = XML_RPC_encode($v);
+                }
+                $XML_RPC_val->addArray($arr);
+                break;
+            }
+        }
+        // fall though if not numerical and continuous
       case "object":
          $arr = array();
          while (list($k,$v) = each($php_val)) {
