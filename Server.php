@@ -428,7 +428,7 @@ class XML_RPC_Server
                     $sr = $this->verifySignature($m,
                                                  $dmap[$methName]['signature'] );
                 }
-                if ( (!isset($dmap[$methName]['signature'])) || $sr[0]) {
+                if (!isset($dmap[$methName]['signature']) || $sr[0]) {
                     // if no signature or correct signature
                     if ($sysCall) {
                         $r = call_user_func($dmap[$methName]['function'], $this, $m);
@@ -460,7 +460,8 @@ class XML_RPC_Server
      *
      * Useful for debugging.
      */
-    function echoInput() {
+    function echoInput()
+    {
         global $HTTP_RAW_POST_DATA;
 
         $r = new XML_RPC_Response(0);

@@ -1197,7 +1197,7 @@ class XML_RPC_Message extends XML_RPC_Base
         // gotta get rid of headers here
 
 
-        if ((!$hdrfnd) && ($brpos = strpos($data,"\r\n\r\n"))) {
+        if (!$hdrfnd && ($brpos = strpos($data,"\r\n\r\n"))) {
             $XML_RPC_xh[$parser]['ha'] = substr($data, 0, $brpos);
             $data = substr($data, $brpos + 4);
             $hdrfnd = 1;
@@ -1212,7 +1212,7 @@ class XML_RPC_Message extends XML_RPC_Base
 
         if (!xml_parse($parser_resource, $data, sizeof($data))) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
-            if ((xml_get_current_line_number($parser_resource)) == 1) {
+            if (xml_get_current_line_number($parser_resource) == 1) {
                 $errstr = 'XML error at line 1, check URL';
             } else {
                 $errstr = sprintf('XML error: %s at line %d',
@@ -1510,7 +1510,8 @@ class XML_RPC_Value extends XML_RPC_Base
     /**
      * @return mixed  the current value
      */
-    function getval() {
+    function getval()
+    {
         // UNSTABLE
         global $XML_RPC_BOOLEAN, $XML_RPC_Base64;
 
@@ -1600,7 +1601,8 @@ class XML_RPC_Value extends XML_RPC_Base
  *
  * @return string  the formatted date
  */
-function XML_RPC_iso8601_encode($timet, $utc = 0) {
+function XML_RPC_iso8601_encode($timet, $utc = 0)
+{
     if (!$utc) {
         $t = strftime('%Y%m%dT%H:%M:%S', $timet);
     } else {
@@ -1628,7 +1630,8 @@ function XML_RPC_iso8601_encode($timet, $utc = 0) {
  *
  * @return int  the unix timestamp of the date submitted
  */
-function XML_RPC_iso8601_decode($idate, $utc = 0) {
+function XML_RPC_iso8601_decode($idate, $utc = 0)
+{
     $t = 0;
     if (ereg('([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})', $idate, $regs)) {
         if ($utc) {
@@ -1682,9 +1685,10 @@ function XML_RPC_decode($XML_RPC_val)
  *
  * @author Dan Libby <dan@libby.com>
  */
-function XML_RPC_encode($php_val) {
+function XML_RPC_encode($php_val)
+{
     global $XML_RPC_Boolean, $XML_RPC_Int, $XML_RPC_Double, $XML_RPC_String,
-            $XML_RPC_Array, $XML_RPC_Struct;
+           $XML_RPC_Array, $XML_RPC_Struct;
 
     $type = gettype($php_val);
     $XML_RPC_val = new XML_RPC_Value;
