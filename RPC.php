@@ -68,15 +68,20 @@ $GLOBALS['XML_RPC_Array']    = 'array';
 $GLOBALS['XML_RPC_Struct']   = 'struct';
 /**#@-*/
 
-$GLOBALS['XML_RPC_Types'] = array($GLOBALS['XML_RPC_I4']       => 1,
-                                  $GLOBALS['XML_RPC_Int']      => 1,
-                                  $GLOBALS['XML_RPC_Boolean']  => 1,
-                                  $GLOBALS['XML_RPC_String']   => 1,
-                                  $GLOBALS['XML_RPC_Double']   => 1,
-                                  $GLOBALS['XML_RPC_DateTime'] => 1,
-                                  $GLOBALS['XML_RPC_Base64']   => 1,
-                                  $GLOBALS['XML_RPC_Array']    => 2,
-                                  $GLOBALS['XML_RPC_Struct']   => 3);
+/**
+ * Data type meta-types
+ */
+$GLOBALS['XML_RPC_Types'] = array(
+    $GLOBALS['XML_RPC_I4']       => 1,
+    $GLOBALS['XML_RPC_Int']      => 1,
+    $GLOBALS['XML_RPC_Boolean']  => 1,
+    $GLOBALS['XML_RPC_String']   => 1,
+    $GLOBALS['XML_RPC_Double']   => 1,
+    $GLOBALS['XML_RPC_DateTime'] => 1,
+    $GLOBALS['XML_RPC_Base64']   => 1,
+    $GLOBALS['XML_RPC_Array']    => 2,
+    $GLOBALS['XML_RPC_Struct']   => 3,
+);
 
 /**#@+
  * Error messages
@@ -93,29 +98,32 @@ $GLOBALS['XML_RPC_err']['http_error']         = 5;
 $GLOBALS['XML_RPC_str']['http_error']         = 'Didn\'t receive 200 OK from remote server.';
 /**#@-*/
 
+/**
+ * Default XML encoding
+ */
 $GLOBALS['XML_RPC_defencoding'] = 'UTF-8';
 
 /**
- * let user errors start at 800
+ * User error codes start at 800
  */
 $GLOBALS['XML_RPC_erruser'] = 800;
 
 /**
- * let XML parse errors start at 100
+ * XML parse error codes start at 100
  */
 $GLOBALS['XML_RPC_errxml'] = 100;
 
-/**
- * formulate backslashes for escaping regexp
+/**#@+
+ * Compose backslashes for escaping regexp
  */
 $GLOBALS['XML_RPC_backslash'] = chr(92) . chr(92);
-
 $GLOBALS['XML_RPC_twoslash'] = $GLOBALS['XML_RPC_backslash']
                              . $GLOBALS['XML_RPC_backslash'];
 $GLOBALS['XML_RPC_twoslash'] = '2SLS';
+/**#@-*/
 
 /**
- * stores state during parsing
+ * Stores state during parsing
  *
  * quick explanation of components:
  *   + st     = builds up a string for evaluation
@@ -131,7 +139,7 @@ $GLOBALS['XML_RPC_twoslash'] = '2SLS';
 $GLOBALS['XML_RPC_xh'] = array();
 
 /**
- *
+ * Start element handler for the XML parser
  */
 function XML_RPC_se($parser, $name, $attrs)
 {
@@ -212,7 +220,7 @@ function XML_RPC_se($parser, $name, $attrs)
 }
 
 /**
- *
+ * End element handler for the XML parser
  */
 function XML_RPC_ee($parser, $name)
 {
@@ -341,7 +349,7 @@ function XML_RPC_ee($parser, $name)
 }
 
 /**
- *
+ * Character data handler for the XML parser
  */
 function XML_RPC_cd($parser, $data)
 {
@@ -383,6 +391,10 @@ function XML_RPC_cd($parser, $data)
  * @link       http://pear.php.net/package/XML_RPC
  */
 class XML_RPC_Base {
+
+    /**
+     * PEAR Error handling
+     */
     function raiseError($msg, $code)
     {
         include_once 'PEAR.php';
@@ -1122,10 +1134,9 @@ function XML_RPC_iso8601_encode($timet, $utc = 0) {
 }
 
 /**
- *
+ * Convert a datetime string into a Unix timestamp
  */
 function XML_RPC_iso8601_decode($idate, $utc = 0) {
-    // return a timet in the localtime, or UTC
     $t = 0;
     if (ereg('([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})', $idate, $regs)) {
         if ($utc) {
@@ -1138,7 +1149,8 @@ function XML_RPC_iso8601_decode($idate, $utc = 0) {
 }
 
 /**
- * Takes a message in PHP XML_RPC object format and translates it into native PHP types.
+ * Takes a message in PHP XML_RPC object format and translates it into
+ * native PHP types
  *
  * @author Dan Libby <dan@libby.com>
  */
@@ -1224,12 +1236,12 @@ function XML_RPC_encode($php_val) {
        $XML_RPC_val->addScalar($php_val, $XML_RPC_String);
        break;
 
-   // <G_Giunta_2001-02-29>
-   // Add support for encoding/decoding of booleans, since they are supported in PHP
+   // Add support for encoding/decoding of booleans, since they
+   // are supported in PHP
+   // by <G_Giunta_2001-02-29>
    case 'boolean':
        $XML_RPC_val->addScalar($php_val, $XML_RPC_Boolean);
        break;
-   // </G_Giunta_2001-02-29>
 
    case 'unknown type':
    default:
