@@ -15,11 +15,11 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.3</version>
-    <date>2002-05-19</date>
+    <version>1.0.4</version>
+    <date>2002-10-02</date>
     <state>stable</state>
     <notes>
-* fix bug when parsing responses with boolean types
+* added HTTP proxy authorization support (thanks to Arnaud Limbourg)
 </notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML"/>
@@ -28,13 +28,12 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
   </release>
   <changelog>
     <release>
-      <version>1.0.1</version>
-      <date>2001-09-25</date>
+      <version>1.0.3</version>
+      <date>2002-05-19</date>
       <state>stable</state>
       <notes>
-        This is a PEAR-ified version of Useful Inc's 1.0.1 release.
-        Includes an urgent security fix identified by Dan Libby &lt;dan@libby.com>.
-      </notes>
+  * fix bug when parsing responses with boolean types
+  </notes>
     </release>
     <release>
       <version>1.0.2</version>
@@ -44,6 +43,15 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
 * E_ALL fixes
 * fix HTTP response header parsing
 </notes>
+    </release>
+    <release>
+      <version>1.0.1</version>
+      <date>2001-09-25</date>
+      <state>stable</state>
+      <notes>
+        This is a PEAR-ified version of Useful Inc's 1.0.1 release.
+        Includes an urgent security fix identified by Dan Libby &lt;dan@libby.com>.
+      </notes>
     </release>
   </changelog>
 </package>

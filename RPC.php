@@ -372,13 +372,17 @@ class XML_RPC_Client
     var $username="";
     var $password="";
 
-    function XML_RPC_Client($path, $server, $port=80, $proxy="", $proxy_port=8080)
+    function XML_RPC_Client($path, $server, $port = 80,
+                            $proxy = '', $proxy_port = 8080,
+                            $proxy_user = '', $proxy_pass = '')
     {
         $this->port=$port;
         $this->server=$server;
         $this->path=$path;
         $this->proxy = $proxy;
-        $this->proxy_port = $proxy_port ;
+        $this->proxy_port = $proxy_port;
+        $this->proxy_user = $proxy_user;
+        $this->proxy_pass = $proxy_pass;
     }
 
     function setDebug($in)
@@ -457,8 +461,13 @@ class XML_RPC_Client
         }
 
         $op .= $this->path. " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n" .
-            "Host: ". $this->server  . "\r\n" .
-            $credentials .
+            "Host: ". $this->server  . "\r\n";
+        if ($this->proxy && $this->proxy_user != '') {
+            $op .= 'Proxy-Authorization: Basic ' .
+                base64_encode($this->proxy_user . ':' . $this->proxy_pass) .
+                "\r\n";
+        }
+        $op .= $credentials .
             "Content-Type: text/xml\r\nContent-Length: " .
             strlen($msg->payload) . "\r\n\r\n" .
             $msg->payload;
