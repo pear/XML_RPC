@@ -585,6 +585,12 @@ class XML_RPC_Client extends XML_RPC_Base {
      */
     var $debug = 0;
 
+    /**
+     * The HTTP headers for the current request.
+     * @var string
+     */
+    var $headers = '';
+
 
     /**
      * Sets the object's properties
@@ -744,6 +750,7 @@ class XML_RPC_Client extends XML_RPC_Base {
      * @return object  an XML_RPC_Response object.  0 is returned if any
      *                  problems happen.
      *
+     * @access protected
      * @see XML_RPC_Client::send()
      */
     function sendPayloadHTTP10($msg, $server, $port, $timeout = 0,
@@ -803,39 +810,19 @@ class XML_RPC_Client extends XML_RPC_Base {
             stream_set_timeout($fp, $timeout);
         }
 
+        // Pre-emptive BC hacks for fools calling sendPayloadHTTP10() directly
+        if ($username != $this->username) {
+            $this->setCredentials($username, $password);
+        }
+
         // Only create the payload if it was not created previously
         if (empty($msg->payload)) {
             $msg->createPayload();
         }
+        $this->createHeaders($msg);
 
-        // thanks to Grant Rauscher <grant7@firstworld.net> for this
-        $credentials = '';
-        if ($username != '') {
-            $credentials = 'Authorization: Basic ' .
-                base64_encode($username . ':' . $password) . "\r\n";
-        }
-
-        if ($this->proxy) {
-            $op = 'POST ' . $this->protocol . $server;
-            if ($this->proxy_port) {
-                $op .= ':' . $this->port;
-            }
-        } else {
-           $op = 'POST ';
-        }
-
-        $op .= $this->path. " HTTP/1.0\r\n" .
-               "User-Agent: PEAR XML_RPC\r\n" .
-               'Host: ' . $server . "\r\n";
-        if ($this->proxy && $this->proxy_user != '') {
-            $op .= 'Proxy-Authorization: Basic ' .
-                base64_encode($this->proxy_user . ':' . $this->proxy_pass) .
-                "\r\n";
-        }
-        $op .= $credentials .
-               "Content-Type: text/xml\r\n" .
-               'Content-Length: ' . strlen($msg->payload) . "\r\n\r\n" .
-               $msg->payload;
+        $op  = $this->headers . "\r\n\r\n";
+        $op .= $msg->payload;
 
         if (!fputs($fp, $op, strlen($op))) {
             $this->errstr = 'Write error';
@@ -853,6 +840,51 @@ class XML_RPC_Client extends XML_RPC_Base {
 
         fclose($fp);
         return $resp;
+    }
+
+    /**
+     * Determines the HTTP headers and puts it in the $headers property
+     *
+     * @param object $msg       the XML_RPC_Message object
+     *
+     * @return boolean  TRUE if okay, FALSE if the message payload isn't set.
+     *
+     * @access protected
+     */
+    function createHeaders($msg)
+    {
+        if (empty($msg->payload)) {
+            return false;
+        }
+        if ($this->proxy) {
+            $this->headers = 'POST ' . $this->protocol . $this->server;
+            if ($this->proxy_port) {
+                $this->headers .= ':' . $this->port;
+            }
+        } else {
+           $this->headers = 'POST ';
+        }
+        $this->headers .= $this->path. " HTTP/1.0\r\n";
+        
+        $this->headers .= "User-Agent: PEAR XML_RPC\r\n";
+        $this->headers .= 'Host: ' . $this->server . "\r\n";
+
+        if ($this->proxy && $this->proxy_user) {
+            $this->headers .= 'Proxy-Authorization: Basic '
+                     . base64_encode("$this->proxy_user:$this->proxy_pass")
+                     . "\r\n";
+        }
+
+        // thanks to Grant Rauscher <grant7@firstworld.net> for this
+        if ($this->username) {
+            $this->headers .= 'Authorization: Basic '
+                     . base64_encode("$this->username:$this->password")
+                     . "\r\n";
+        }
+
+        $this->headers .= "Content-Type: text/xml\r\n";
+        $this->headers .= 'Content-Length: ' . strlen($msg->payload);
+        return true;
     }
 }
 
