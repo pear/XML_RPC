@@ -468,35 +468,35 @@ class XML_RPC_Client extends XML_RPC_Base {
         if ($this->proxy){
             $proxy_server = $this->proxy;
             $proxy_proto = '';
-            if (strstr($proxy_server, 'https://'))
-            {
-                $proxy_server = substr($proxy_server,8);
+            if (strstr($proxy_server, 'https://')) {
+                $proxy_server = substr($proxy_server, 8);
                 $proxy_proto = 'ssl://';
             }
             // Backward compatibility
-            if (!strstr($proxy_server, 'http://'))
-            {
+            if (!strstr($proxy_server, 'http://')) {
                 $server = 'http://' . $server;
             }
             if ($timeout > 0) {
-                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port, $this->errno, $this->errstr, $timeout);
+                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
+                                $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port, $this->errno, $this->errstr);             }
+                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port,
+                                $this->errno, $this->errstr);
             }
         } else {
             $server_proto = '';
-            if (strstr($server, 'https://'))
-            {
-                $server = substr($server,8);
+            if (strstr($server, 'https://')) {
+                $server = substr($server, 8);
                 $server_proto = 'ssl://';
-            } elseif (strstr($server, 'http://'))
-            {
-                $server = substr($server,7);
+            } elseif (strstr($server, 'http://')) {
+                $server = substr($server, 7);
             }
             if ($timeout > 0) {
-                $fp = fsockopen($server_proto . $server, $port, $this->errno, $this->errstr, $timeout);
+                $fp = fsockopen($server_proto . $server, $port, $this->errno,
+                                $this->errstr, $timeout);
             } else {
-                $fp = fsockopen($server_proto . $server, $port, $this->errno, $this->errstr);
+                $fp = fsockopen($server_proto . $server, $port, $this->errno,
+                                $this->errstr);
             }
         }
 
