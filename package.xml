@@ -2,9 +2,11 @@
 <!DOCTYPE package SYSTEM "../package.dtd">
 <package version="1.0">
   <name>XML_RPC</name>
-  <summary>
-    A PEAR-ified version of Useful inc's xmlrpc implementation for PHP.
-  </summary>
+  <summary>PHP implementation of the XML-RPC protocol</summary>
+  <description>This is a PEAR-ified version of Useful inc's XML-RPC
+for PHP.  It has support for HTTP transport, proxies and authentication.
+</description>
+  <license>PHP License</license>
   <maintainers>
     <maintainer>
       <user>ssb</user>
@@ -14,19 +16,15 @@
   </maintainers>
   <release>
     <version>1.0.2</version>
-    <date>2002-02-28</date>
+    <date>2002-04-16</date>
     <state>stable</state>
     <notes>
 * E_ALL fixes
 * fix HTTP response header parsing
 </notes>
     <filelist>
-      <dir name="/" baseinstalldir="XML">
-	<file role="php">RPC.php</file>
-      </dir>
-      <dir name="." baseinstalldir="XML/RPC">
-        <file role="php">Server.php</file>
-      </dir>
+      <file role="php" name="RPC.php" baseinstalldir="XML"/>
+      <file role="php" name="Server.php" baseinstalldir="XML/RPC"/>
     </filelist>
   </release>
   <changelog>
