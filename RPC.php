@@ -818,7 +818,7 @@ class XML_RPC_Client extends XML_RPC_Base {
         }
 
         if ($this->proxy) {
-            $op = 'POST ' . $server;
+            $op = 'POST ' . $this->protocol . $server;
             if ($this->proxy_port) {
                 $op .= ':' . $this->port;
             }

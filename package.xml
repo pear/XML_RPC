@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.41 2005-03-01 17:09:49 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.42 2005-03-07 17:45:08 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,11 +30,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.2.1</version>
-    <date>2005-03-01</date>
+    <version>1.2.2</version>
+    <date>2005-03-07</date>
     <state>stable</state>
     <notes><![CDATA[
-* Add isset() check before examining the dispatch map.  Bug 3658.
+* When using a proxy, add the protocol to the Request-URI, making it an "absoluteURI" as per the HTTP 1.0 spec.  Bug 3679.
     ]]></notes>
 
     <filelist>
@@ -59,6 +59,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.1</version>
+      <date>2005-03-01</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Add isset() check before examining the dispatch map.  Bug 3658.
+      ]]></notes>
+    </release>
+
     <release>
       <version>1.2.0</version>
       <date>2005-02-27</date>

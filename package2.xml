@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.2 2005-03-01 17:09:49 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.3 2005-03-07 17:45:09 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -83,7 +83,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <name>PEAR</name>
    <channel>pear.php.net</channel>
    <min>1.4.0a1</min>
-   <max>1.4.0a2</max>
+   <max>1.4.0a4</max>
   </compatible>
 
   <dependencies>
@@ -101,6 +101,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.2.2</release>
+     <api>1.2.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-03-07</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* When using a proxy, add the protocol to the Request-URI, making it an "absoluteURI" as per the HTTP 1.0 spec.  Bug 3679.
+    ]]></notes>
+   </release>
+
    <release>
     <version>
      <release>1.2.0</release>
