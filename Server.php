@@ -366,7 +366,8 @@ class XML_RPC_Server
         }
 
         $this->encoding = XML_RPC_Message::getEncoding($data);
-        $parser = xml_parser_create($this->encoding);
+        $parser_resource = xml_parser_create($this->encoding);
+        $parser = (int) $parser_resource;
 
         $XML_RPC_xh[$parser] = array();
         $XML_RPC_xh[$parser]['st']     = '';
@@ -379,19 +380,19 @@ class XML_RPC_Server
 
         // decompose incoming XML into request structure
 
-        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
-        xml_set_element_handler($parser, 'XML_RPC_se', 'XML_RPC_ee');
-        xml_set_character_data_handler($parser, 'XML_RPC_cd');
-        if (!xml_parse($parser, $data, 1)) {
+        xml_parser_set_option($parser_resource, XML_OPTION_CASE_FOLDING, true);
+        xml_set_element_handler($parser_resource, 'XML_RPC_se', 'XML_RPC_ee');
+        xml_set_character_data_handler($parser_resource, 'XML_RPC_cd');
+        if (!xml_parse($parser_resource, $data, 1)) {
             // return XML error as a faultCode
             $r = new XML_RPC_Response(0,
-                                      $XML_RPC_errxml+xml_get_error_code($parser),
+                                      $XML_RPC_errxml+xml_get_error_code($parser_resource),
                                       sprintf('XML error: %s at line %d',
-                                              xml_error_string(xml_get_error_code($parser)),
-                                              xml_get_current_line_number($parser)));
-            xml_parser_free($parser);
+                                              xml_error_string(xml_get_error_code($parser_resource)),
+                                              xml_get_current_line_number($parser_resource)));
+            xml_parser_free($parser_resource);
         } else {
-            xml_parser_free($parser);
+            xml_parser_free($parser_resource);
             $m = new XML_RPC_Message($XML_RPC_xh[$parser]['method']);
             // now add parameters in
             for ($i = 0; $i < sizeof($XML_RPC_xh[$parser]['params']); $i++) {

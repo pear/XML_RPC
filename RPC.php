@@ -203,9 +203,10 @@ $GLOBALS['XML_RPC_xh'] = array();
  *
  * @return void
  */
-function XML_RPC_se($parser, $name, $attrs)
+function XML_RPC_se($parser_resource, $name, $attrs)
 {
     global $XML_RPC_xh, $XML_RPC_DateTime, $XML_RPC_String;
+    $parser = (int) $parser_resource;
 
     switch ($name) {
     case 'STRUCT':
@@ -282,9 +283,10 @@ function XML_RPC_se($parser, $name, $attrs)
  *
  * @return void
  */
-function XML_RPC_ee($parser, $name)
+function XML_RPC_ee($parser_resource, $name)
 {
     global $XML_RPC_xh, $XML_RPC_Types, $XML_RPC_String;
+    $parser = (int) $parser_resource;
 
     switch ($name) {
     case 'STRUCT':
@@ -409,9 +411,10 @@ function XML_RPC_ee($parser, $name)
  *
  * @return void
  */
-function XML_RPC_cd($parser, $data)
+function XML_RPC_cd($parser_resource, $data)
 {
     global $XML_RPC_xh, $XML_RPC_backslash;
+    $parser = (int) $parser_resource;
 
     if ($XML_RPC_xh[$parser]['lv'] != 3) {
         // "lookforvalue==3" means that we've found an entire value
@@ -1166,7 +1169,8 @@ class XML_RPC_Message extends XML_RPC_Base
         global $XML_RPC_xh, $XML_RPC_err, $XML_RPC_str, $XML_RPC_defencoding;
 
         $encoding = $this->getEncoding($data);
-        $parser = xml_parser_create($encoding);
+        $parser_resource = xml_parser_create($encoding);
+        $parser = (int) $parser_resource;
 
         $XML_RPC_xh[$parser] = array();
 
@@ -1176,9 +1180,9 @@ class XML_RPC_Message extends XML_RPC_Base
         $XML_RPC_xh[$parser]['ac'] = '';
         $XML_RPC_xh[$parser]['qt'] = '';
 
-        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
-        xml_set_element_handler($parser, 'XML_RPC_se', 'XML_RPC_ee');
-        xml_set_character_data_handler($parser, 'XML_RPC_cd');
+        xml_parser_set_option($parser_resource, XML_OPTION_CASE_FOLDING, true);
+        xml_set_element_handler($parser_resource, 'XML_RPC_se', 'XML_RPC_ee');
+        xml_set_character_data_handler($parser_resource, 'XML_RPC_cd');
 
         $hdrfnd = 0;
         if ($this->debug) {
@@ -1196,7 +1200,7 @@ class XML_RPC_Message extends XML_RPC_Base
                 $r = new XML_RPC_Response(0, $XML_RPC_err['http_error'],
                                           $XML_RPC_str['http_error'] . ' (' .
                                           $errstr . ')');
-                xml_parser_free($parser);
+                xml_parser_free($parser_resource);
                 return $r;
         }
         // gotta get rid of headers here
@@ -1215,22 +1219,22 @@ class XML_RPC_Message extends XML_RPC_Base
          */
         $data = substr($data, 0, strpos($data, "</methodResponse>") + 17);
 
-        if (!xml_parse($parser, $data, sizeof($data))) {
+        if (!xml_parse($parser_resource, $data, sizeof($data))) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
-            if ((xml_get_current_line_number($parser)) == 1) {
+            if ((xml_get_current_line_number($parser_resource)) == 1) {
                 $errstr = 'XML error at line 1, check URL';
             } else {
                 $errstr = sprintf('XML error: %s at line %d',
-                                  xml_error_string(xml_get_error_code($parser)),
-                                  xml_get_current_line_number($parser));
+                                  xml_error_string(xml_get_error_code($parser_resource)),
+                                  xml_get_current_line_number($parser_resource));
             }
             error_log($errstr);
             $r = new XML_RPC_Response(0, $XML_RPC_err['invalid_return'],
                                       $XML_RPC_str['invalid_return']);
-            xml_parser_free($parser);
+            xml_parser_free($parser_resource);
             return $r;
         }
-        xml_parser_free($parser);
+        xml_parser_free($parser_resource);
         if ($this->debug) {
             print '<PRE>---EVALING---[' .
             strlen($XML_RPC_xh[$parser]['st']) . " chars]---\n" .
