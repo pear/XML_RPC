@@ -561,16 +561,22 @@ class XML_RPC_Client extends XML_RPC_Base {
             }
         }
 
+        /*
+         * Just raising the error without returning it is strange,
+         * but keep it here for backwards compatibility.
+         */
         if (!$fp && $this->proxy) {
-            return $this->raiseError('Connection to proxy server '
-                                     . $this->proxy . ':' . $this->proxy_port
-                                     . ' failed. ' . $this->errstr,
-                                     XML_RPC_ERROR_CONNECTION_FAILED);
+            $this->raiseError('Connection to proxy server '
+                              . $this->proxy . ':' . $this->proxy_port
+                              . ' failed. ' . $this->errstr,
+                              XML_RPC_ERROR_CONNECTION_FAILED);
+            return 0;
         } elseif (!$fp) {
-            return $this->raiseError('Connection to RPC server '
-                                     . $server . ':' . $port
-                                     . ' failed. ' . $this->errstr,
-                                     XML_RPC_ERROR_CONNECTION_FAILED);
+            $this->raiseError('Connection to RPC server '
+                              . $server . ':' . $port
+                              . ' failed. ' . $this->errstr,
+                              XML_RPC_ERROR_CONNECTION_FAILED);
+            return 0;
         }
 
         // Only create the payload if it was not created previously
