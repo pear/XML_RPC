@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.21 2004-12-29 19:00:52 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.22 2004-12-29 19:09:10 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -27,7 +27,7 @@
 
   <release>
     <version>1.2.0dev</version>
-    <date>2004-12-08</date>
+    <date>2004-12-29</date>
     <state>devel</state>
     <notes><![CDATA[
 - Make things work with SSL.  Bug 2489.  (nkukard lbsd net)

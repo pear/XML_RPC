@@ -7,7 +7,7 @@
  * Should be helpful as a normal var_dump(..) displays all internals which
  * doesn't really give you an overview due to too much information.
  *
- * @category   XML
+ * @category   Web Services
  * @package    XML_RPC
  * @author     Christian Weiske <cweiske@php.net>
  * @version    CVS: $Id$
