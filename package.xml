@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.35 2005-01-24 17:48:43 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.36 2005-02-08 16:20:01 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -45,10 +45,10 @@
       </file>
       <dir name="tests" role="test">
         <file name="protoport.php">
-          <replace from="@package_version@" to="version" type="pear-config"/>
+          <replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="test_Dump.php">
-          <replace from="@package_version@" to="version" type="pear-config"/>
+          <replace from="@package_version@" to="version" type="package-info"/>
         </file>
       </dir>
     </filelist>
