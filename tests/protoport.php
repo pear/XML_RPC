@@ -27,17 +27,36 @@
  * @since      File available since Release 1.2
  */
 
-/**
- * Get the needed class
+/*
+ * If the package version number is found in the left hand
+ * portion of the if() expression below, that means this file has
+ * come from the PEAR installer.  Therefore, let's test the
+ * installed version of XML_RPC which should be in the include path.
+ * 
+ * If the version has not been substituted in the if() expression,
+ * this file has likely come from a CVS checkout or a .tar file.
+ * Therefore, we'll assume the tests should use the version of
+ * XML_RPC that has come from there as well.
  */
-require_once '../RPC.php';
+if ('@package_version@' != '@'.'package_version'.'@') {
+    /**
+     * Get the needed class from the PEAR installation
+     */
+    require_once 'XML/RPC.php';
+} else {
+    /**
+     * Get the needed class from the parent directory
+     */
+    require_once '../RPC.php';
+}
 
 /**
  * Compare the test result to the expected result
  *
  * If the test fails, echo out the results.
  *
- * @param array  $expect     the array of object properties you expect from the test
+ * @param array  $expect     the array of object properties you expect
+ *                            from the test
  * @param object $actual     the object results from the test
  * @param string $test_name  the name of the test
  *
@@ -211,7 +230,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'theserver', 0, 'theproxy');
+$c = new XML_RPC_Client('thepath', 'theserver', 0,
+                        'theproxy');
 compare($x, $c, 'defaults proxy');
 
 $x = array(
@@ -228,7 +248,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'http://theserver', 0, 'http://theproxy');
+$c = new XML_RPC_Client('thepath', 'http://theserver', 0,
+                        'http://theproxy');
 compare($x, $c, 'defaults with http proxy');
 
 $x = array(
@@ -245,7 +266,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'https://theserver', 0, 'https://theproxy');
+$c = new XML_RPC_Client('thepath', 'https://theserver',
+            0, 'https://theproxy');
 compare($x, $c, 'defaults with https proxy');
 
 $x = array(
@@ -262,7 +284,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'ssl://theserver', 0, 'ssl://theproxy');
+$c = new XML_RPC_Client('thepath', 'ssl://theserver', 0,
+                        'ssl://theproxy');
 compare($x, $c, 'defaults with ssl proxy');
 
 
@@ -280,7 +303,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'theserver', 65, 'theproxy', 6565);
+$c = new XML_RPC_Client('thepath', 'theserver', 65,
+                        'theproxy', 6565);
 compare($x, $c, 'port 65 proxy 6565');
 
 $x = array(
@@ -297,7 +321,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'http://theserver', 65, 'http://theproxy', 6565);
+$c = new XML_RPC_Client('thepath', 'http://theserver', 65,
+                        'http://theproxy', 6565);
 compare($x, $c, 'port 65 with http proxy 6565');
 
 $x = array(
@@ -314,7 +339,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'https://theserver', 65, 'https://theproxy', 6565);
+$c = new XML_RPC_Client('thepath', 'https://theserver', 65,
+                        'https://theproxy', 6565);
 compare($x, $c, 'port 65 with https proxy 6565');
 
 $x = array(
@@ -331,5 +357,6 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'ssl://theserver', 65, 'ssl://theproxy', 6565);
+$c = new XML_RPC_Client('thepath', 'ssl://theserver', 65,
+                        'ssl://theproxy', 6565);
 compare($x, $c, 'port 65 with ssl proxy 6565');

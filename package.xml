@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.32 2005-01-24 06:41:09 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.33 2005-01-24 07:01:50 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -27,13 +27,14 @@
 
   <release>
     <version>1.2.0RC4</version>
-    <date>2005-01-22</date>
+    <date>2005-01-24</date>
     <state>beta</state>
     <notes><![CDATA[
 - When a connection attempt fails, have the method return 0.  (danielc)
 - Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
 - Add tests for setting the client properties.  (danielc)
 - Remove $GLOBALS['XML_RPC_twoslash'] since it's not used.  (danielc)
+- Bundle the tests with the package.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
@@ -46,8 +47,12 @@
         <replace from="@package_version@" to="version" type="package-info" />
       </file>
       <dir name="tests" role="test">
-        <file name="protoport.php" />
-        <file name="test_Dump.php" />
+        <file name="protoport.php">
+          <replace from="@package_version@" to="version" type="pear-config"/>
+        </file>
+        <file name="test_Dump.php">
+          <replace from="@package_version@" to="version" type="pear-config"/>
+        </file>
       </dir>
     </filelist>
   </release>
