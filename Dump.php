@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -20,16 +21,20 @@
  */
 require_once 'XML/RPC.php';
 
+
 /**
  * Generates the dump of the XML_RPC_Value and echoes it
  *
- * @param  XML_RPC_Value   The object to dump
+ * @param object $value  the XML_RPC_Value object to dump
+ *
+ * @return void
  */
 function XML_RPC_Dump($value)
 {
     $dumper = new XML_RPC_Dump();
     echo $dumper->generateDump($value);
 }
+
 
 /**
  * Class which generates a dump of a XML_RPC_Value object
@@ -47,13 +52,20 @@ class XML_RPC_Dump
      * @var array
      */
     var $arIndent      = array();
+
+    /**
+     * The spaces used for indenting the XML
+     * @var string
+     */
     var $strBaseIndent = '    ';
 
     /**
-     * Returns the dump.  Does not print it out.
+     * Returns the dump in XML format without printing it out
      *
-     * @param  XML_RPC_Value   The object which dump shall be generated
-     * @return string          The dump
+     * @param object $value   the XML_RPC_Value object to dump
+     * @param int    $nLevel  the level of indentation
+     *
+     * @return string  the dump
      */
     function generateDump($value, $nLevel = 0)
     {
@@ -85,17 +97,17 @@ class XML_RPC_Dump
             PEAR::raiseError('Illegal type "' . $value->kindOf()
                              . '" in XML_RPC_Value' . "\r\n", 0,
                              PEAR_ERROR_PRINT);
-            break;
         }
 
         return $ret;
     }
 
     /**
-     * returns the scalar value dump
+     * Returns the scalar value dump
      *
-     * @param  XML_RPC_Value   Scalar value
-     * @param  int             Level of indentation
+     * @param object $value   the scalar XML_RPC_Value object to dump
+     * @param int    $nLevel  the level of indentation
+     *
      * @return string  Dumped version of the scalar value
      */
     function genScalar($value, $nLevel)
@@ -110,10 +122,11 @@ class XML_RPC_Dump
     }
 
     /**
-     * returns the dump of a struct
+     * Returns the dump of a struct
      *
-     * @param  XML_RPC_Value   Struct value
-     * @param  int             Level of indentation
+     * @param object $value   the struct XML_RPC_Value object to dump
+     * @param int    $nLevel  the level of indentation
+     *
      * @return string  Dumped version of the scalar value
      */
     function genStruct($value, $nLevel)
@@ -128,10 +141,11 @@ class XML_RPC_Dump
     }
 
     /**
-     * returns the dump of an array
+     * Returns the dump of an array
      *
-     * @param  XML_RPC_Value   Array value
-     * @param  int             Level of indentation
+     * @param object $value   the array XML_RPC_Value object to dump
+     * @param int    $nLevel  the level of indentation
+     *
      * @return string  Dumped version of the scalar value
      */
     function genArray($value, $nLevel)
@@ -147,10 +161,11 @@ class XML_RPC_Dump
     }
 
     /**
-     * returns the indent for a specific level and caches it for faster use
+     * Returns the indent for a specific level and caches it for faster use
      *
-     * @param  int     Level
-     * @return string  Indented string
+     * @param int $nLevel  the level
+     *
+     * @return string  the indented string
      */
     function getIndent($nLevel)
     {

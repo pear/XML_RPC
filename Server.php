@@ -44,6 +44,7 @@ require_once 'XML/RPC.php';
 
 /**
  * listMethods: either a string, or nothing
+ * @global array $GLOBALS['XML_RPC_Server_listMethods_sig']
  */
 $GLOBALS['XML_RPC_Server_listMethods_sig'] = array(
     array($GLOBALS['XML_RPC_Array'],
@@ -52,11 +53,75 @@ $GLOBALS['XML_RPC_Server_listMethods_sig'] = array(
     array($GLOBALS['XML_RPC_Array'])
 );
 
+/**
+ * @global string $GLOBALS['XML_RPC_Server_listMethods_doc']
+ */
 $GLOBALS['XML_RPC_Server_listMethods_doc'] = 'This method lists all the'
         . ' methods that the XML-RPC server knows how to dispatch';
 
 /**
+ * @global array $GLOBALS['XML_RPC_Server_methodSignature_sig']
+ */
+$GLOBALS['XML_RPC_Server_methodSignature_sig'] = array(
+    array($GLOBALS['XML_RPC_Array'],
+          $GLOBALS['XML_RPC_String']
+    )
+);
+
+/**
+ * @global string $GLOBALS['XML_RPC_Server_methodSignature_doc']
+ */
+$GLOBALS['XML_RPC_Server_methodSignature_doc'] = 'Returns an array of known'
+        . ' signatures (an array of arrays) for the method name passed. If'
+        . ' no signatures are known, returns a none-array (test for type !='
+        . ' array to detect missing signature)';
+
+/**
+ * @global array $GLOBALS['XML_RPC_Server_methodHelp_sig']
+ */
+$GLOBALS['XML_RPC_Server_methodHelp_sig'] = array(
+    array($GLOBALS['XML_RPC_String'],
+          $GLOBALS['XML_RPC_String']
+    )
+);
+
+/**
+ * @global string $GLOBALS['XML_RPC_Server_methodHelp_doc']
+ */
+$GLOBALS['XML_RPC_Server_methodHelp_doc'] = 'Returns help text if defined'
+        . ' for the method passed, otherwise returns an empty string';
+
+/**
+ * @global array $GLOBALS['XML_RPC_Server_dmap']
+ */
+$GLOBALS['XML_RPC_Server_dmap'] = array(
+    'system.listMethods' => array(
+        'function'  => 'XML_RPC_Server_listMethods',
+        'signature' => $GLOBALS['XML_RPC_Server_listMethods_sig'],
+        'docstring' => $GLOBALS['XML_RPC_Server_listMethods_doc']
+    ),
+    'system.methodHelp' => array(
+        'function'  => 'XML_RPC_Server_methodHelp',
+        'signature' => $GLOBALS['XML_RPC_Server_methodHelp_sig'],
+        'docstring' => $GLOBALS['XML_RPC_Server_methodHelp_doc']
+    ),
+    'system.methodSignature' => array(
+        'function'  => 'XML_RPC_Server_methodSignature',
+        'signature' => $GLOBALS['XML_RPC_Server_methodSignature_sig'],
+        'docstring' => $GLOBALS['XML_RPC_Server_methodSignature_doc']
+    )
+);
+
+/**
+ * @global string $GLOBALS['XML_RPC_Server_debuginfo']
+ */
+$GLOBALS['XML_RPC_Server_debuginfo'] = '';
+
+
+/**
+ * Lists all the methods that the XML-RPC server knows how to dispatch
  *
+ * @return object  a new XML_RPC_Response object
  */
 function XML_RPC_Server_listMethods($server, $m)
 {
@@ -76,19 +141,14 @@ function XML_RPC_Server_listMethods($server, $m)
     return new XML_RPC_Response($v);
 }
 
-$GLOBALS['XML_RPC_Server_methodSignature_sig'] = array(
-    array($GLOBALS['XML_RPC_Array'],
-          $GLOBALS['XML_RPC_String']
-    )
-);
-
-$GLOBALS['XML_RPC_Server_methodSignature_doc'] = 'Returns an array of known'
-        . ' signatures (an array of arrays) for the method name passed. If'
-        . ' no signatures are known, returns a none-array (test for type !='
-        . ' array to detect missing signature)';
-
 /**
+ * Returns an array of known signatures (an array of arrays)
+ * for the given method
  *
+ * If no signatures are known, returns a none-array
+ * (test for type != array to detect missing signature)
+ *
+ * @return object  a new XML_RPC_Response object
  */
 function XML_RPC_Server_methodSignature($server, $m)
 {
@@ -127,17 +187,11 @@ function XML_RPC_Server_methodSignature($server, $m)
     return $r;
 }
 
-$GLOBALS['XML_RPC_Server_methodHelp_sig'] = array(
-    array($GLOBALS['XML_RPC_String'],
-          $GLOBALS['XML_RPC_String']
-    )
-);
-
-$GLOBALS['XML_RPC_Server_methodHelp_doc'] = 'Returns help text if defined'
-        . ' for the method passed, otherwise returns an empty string';
-
 /**
+ * Returns help text if defined for the method passed, otherwise returns
+ * an empty string
  *
+ * @return object  a new XML_RPC_Response object
  */
 function XML_RPC_Server_methodHelp($server, $m)
 {
@@ -167,36 +221,15 @@ function XML_RPC_Server_methodHelp($server, $m)
     return $r;
 }
 
-$GLOBALS['XML_RPC_Server_dmap'] = array(
-    'system.listMethods' => array(
-        'function'  => 'XML_RPC_Server_listMethods',
-        'signature' => $GLOBALS['XML_RPC_Server_listMethods_sig'],
-        'docstring' => $GLOBALS['XML_RPC_Server_listMethods_doc']
-    ),
-
-    'system.methodHelp' => array(
-        'function'  => 'XML_RPC_Server_methodHelp',
-        'signature' => $GLOBALS['XML_RPC_Server_methodHelp_sig'],
-        'docstring' => $GLOBALS['XML_RPC_Server_methodHelp_doc']
-    ),
-
-    'system.methodSignature' => array(
-        'function'  => 'XML_RPC_Server_methodSignature',
-        'signature' => $GLOBALS['XML_RPC_Server_methodSignature_sig'],
-        'docstring' => $GLOBALS['XML_RPC_Server_methodSignature_doc']
-    )
-);
-
-$GLOBALS['XML_RPC_Server_debuginfo'] = '';
-
 /**
- *
+ * @return void
  */
 function XML_RPC_Server_debugmsg($m)
 {
     global $XML_RPC_Server_debuginfo;
     $XML_RPC_Server_debuginfo = $XML_RPC_Server_debuginfo . $m . "\n";
 }
+
 
 /**
  *
@@ -216,6 +249,9 @@ class XML_RPC_Server
     var $encoding = '';
     var $debug = 0;
 
+    /**
+     * @return void
+     */
     function XML_RPC_Server($dispMap, $serviceNow = 1, $debug = 0)
     {
         global $HTTP_RAW_POST_DATA;
@@ -237,6 +273,9 @@ class XML_RPC_Server
         }
     }
 
+    /**
+     * @return string  the debug information if debug debug mode is on
+     */
     function serializeDebug()
     {
         global $XML_RPC_Server_debuginfo, $HTTP_RAW_POST_DATA;
@@ -262,6 +301,8 @@ class XML_RPC_Server
      * The encoding and content-type are determined by
      * XML_RPC_Message::getEncoding()
      *
+     * @return void
+     *
      * @see XML_RPC_Message::getEncoding()
      */
     function service()
@@ -276,6 +317,9 @@ class XML_RPC_Server
         print $payload;
     }
 
+    /**
+     * @return array
+     */
     function verifySignature($in, $sig)
     {
         for ($i = 0; $i < sizeof($sig); $i++) {
@@ -308,6 +352,9 @@ class XML_RPC_Server
         return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
     }
 
+    /**
+     * @return object  a new XML_RPC_Response object
+     */
     function parseRequest($data = '')
     {
         global $XML_RPC_xh, $HTTP_RAW_POST_DATA,
@@ -392,7 +439,9 @@ class XML_RPC_Server
     }
 
     /**
-     * echos back the input packet as a string value
+     * Echos back the input packet as a string value
+     *
+     * @return void
      *
      * Useful for debugging.
      */
