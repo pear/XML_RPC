@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.34 2005-01-24 07:34:28 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.35 2005-01-24 17:48:43 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -27,11 +27,11 @@
 
 
   <release>
-    <version>1.2.0RC5</version>
-    <date>2005-01-24</date>
+    <version>1.2.0RC6</version>
+    <date>2005-01-25</date>
     <state>beta</state>
     <notes><![CDATA[
-- If $port is 443 but a protocol isn't specified in $server, assume ssl:// is the protocol.
+- Don't put the protocol in the Host field of the POST data.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
@@ -55,6 +55,15 @@
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.0RC5</version>
+      <date>2005-01-24</date>
+      <state>beta</state>
+      <notes><![CDATA[
+- If $port is 443 but a protocol isn't specified in $server, assume ssl:// is the protocol.
+      ]]></notes>
+    </release>
+
     <release>
       <version>1.2.0RC4</version>
       <date>2005-01-24</date>

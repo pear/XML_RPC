@@ -510,6 +510,12 @@ class XML_RPC_Client extends XML_RPC_Base {
     var $server = '';
 
     /**
+     * The protocol to use in contacting the remote server
+     * @var string
+     */
+    var $protocol = 'http://';
+
+    /**
      * The port for connecting to the remote server
      *
      * The default is 80 for http:// connections
@@ -534,10 +540,16 @@ class XML_RPC_Client extends XML_RPC_Base {
     var $password = '';
 
     /**
-     * The URL of the proxy server to use, if any
+     * The name of the proxy server to use, if any
      * @var string
      */
     var $proxy = '';
+
+    /**
+     * The protocol to use in contacting the proxy server, if any
+     * @var string
+     */
+    var $proxy_protocol = 'http://';
 
     /**
      * The port for connecting to the proxy server
@@ -615,8 +627,9 @@ class XML_RPC_Client extends XML_RPC_Base {
         preg_match('@^(http://|https://|ssl://)?(.*)$@', $server, $match);
         if ($match[1] == '') {
             if ($port == 443) {
-                $this->server = 'ssl://' . $match[2];
-                $this->port   = 443;
+                $this->server   = $match[2];
+                $this->protocol = 'ssl://';
+                $this->port     = 443;
             } else {
                 $this->server = $match[2];
                 if ($port) {
@@ -629,7 +642,8 @@ class XML_RPC_Client extends XML_RPC_Base {
                 $this->port = $port;
             }
         } else {
-            $this->server = 'ssl://' . $match[2];
+            $this->server   = $match[2];
+            $this->protocol = 'ssl://';
             if ($port) {
                 $this->port = $port;
             } else {
@@ -641,8 +655,9 @@ class XML_RPC_Client extends XML_RPC_Base {
             preg_match('@^(http://|https://|ssl://)?(.*)$@', $proxy, $match);
             if ($match[1] == '') {
                 if ($proxy_port == 443) {
-                    $this->proxy      = 'ssl://' . $match[2];
-                    $this->proxy_port = 443;
+                    $this->proxy          = $match[2];
+                    $this->proxy_protocol = 'ssl://';
+                    $this->proxy_port     = 443;
                 } else {
                     $this->proxy = $match[2];
                     if ($proxy_port) {
@@ -655,7 +670,8 @@ class XML_RPC_Client extends XML_RPC_Base {
                     $this->proxy_port = $proxy_port;
                 }
             } else {
-                $this->proxy = 'ssl://' . $match[2];
+                $this->proxy          = $match[2];
+                $this->proxy_protocol = 'ssl://';
                 if ($proxy_port) {
                     $this->proxy_port = $proxy_port;
                 } else {
@@ -744,19 +760,26 @@ class XML_RPC_Client extends XML_RPC_Base {
          * instead to the xml-rpc server
          */
         if ($this->proxy) {
+            if ($this->proxy_protocol == 'http://') {
+                $protocol = '';
+            }
             if ($timeout > 0) {
-                $fp = @fsockopen($this->proxy, $this->proxy_port,
+                $fp = @fsockopen($protocol . $this->proxy, $this->proxy_port,
                                  $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = @fsockopen($this->proxy, $this->proxy_port,
+                $fp = @fsockopen($protocol . $this->proxy, $this->proxy_port,
                                  $this->errno, $this->errstr);
             }
         } else {
+            if ($this->protocol == 'http://') {
+                $protocol = '';
+            }
             if ($timeout > 0) {
-                $fp = @fsockopen($server, $port, $this->errno, $this->errstr,
-                                 $timeout);
+                $fp = @fsockopen($protocol . $server, $port,
+                                 $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = @fsockopen($server, $port, $this->errno, $this->errstr);
+                $fp = @fsockopen($protocol . $server, $port,
+                                 $this->errno, $this->errstr);
             }
         }
 

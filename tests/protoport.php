@@ -81,8 +81,10 @@ if (php_sapi_name() != 'cli') {
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 80,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -98,8 +100,10 @@ compare($x, $c, 'defaults');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 80,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -114,9 +118,11 @@ compare($x, $c, 'defaults with http');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 443,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -131,9 +137,11 @@ compare($x, $c, 'defaults with https');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 443,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -150,8 +158,10 @@ compare($x, $c, 'defaults with ssl');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 65,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -167,8 +177,10 @@ compare($x, $c, 'port 65');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 65,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -183,9 +195,11 @@ compare($x, $c, 'port 65 with http');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 65,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -200,9 +214,11 @@ compare($x, $c, 'port 65 with https');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 65,
     'proxy' => '',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -219,8 +235,10 @@ compare($x, $c, 'port 65 with ssl');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 80,
     'proxy' => 'theproxy',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -237,8 +255,10 @@ compare($x, $c, 'defaults proxy');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 80,
     'proxy' => 'theproxy',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 8080,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -254,9 +274,11 @@ compare($x, $c, 'defaults with http proxy');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 443,
-    'proxy' => 'ssl://theproxy',
+    'proxy' => 'theproxy',
+    'proxy_protocol' => 'ssl://',
     'proxy_port' => 443,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -272,9 +294,11 @@ compare($x, $c, 'defaults with https proxy');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 443,
-    'proxy' => 'ssl://theproxy',
+    'proxy' => 'theproxy',
+    'proxy_protocol' => 'ssl://',
     'proxy_port' => 443,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -292,8 +316,10 @@ compare($x, $c, 'defaults with ssl proxy');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 65,
     'proxy' => 'theproxy',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 6565,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -310,8 +336,10 @@ compare($x, $c, 'port 65 proxy 6565');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 65,
     'proxy' => 'theproxy',
+    'proxy_protocol' => 'http://',
     'proxy_port' => 6565,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -327,9 +355,11 @@ compare($x, $c, 'port 65 with http proxy 6565');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 65,
-    'proxy' => 'ssl://theproxy',
+    'proxy' => 'theproxy',
+    'proxy_protocol' => 'ssl://',
     'proxy_port' => 6565,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -345,9 +375,11 @@ compare($x, $c, 'port 65 with https proxy 6565');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 65,
-    'proxy' => 'ssl://theproxy',
+    'proxy' => 'theproxy',
+    'proxy_protocol' => 'ssl://',
     'proxy_port' => 6565,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -364,9 +396,11 @@ compare($x, $c, 'port 65 with ssl proxy 6565');
 
 $x = array(
     'path' => 'thepath',
-    'server' => 'ssl://theserver',
+    'server' => 'theserver',
+    'protocol' => 'ssl://',
     'port' => 443,
-    'proxy' => 'ssl://theproxy',
+    'proxy' => 'theproxy',
+    'proxy_protocol' => 'ssl://',
     'proxy_port' => 443,
     'proxy_user' => '',
     'proxy_pass' => '',
@@ -383,8 +417,10 @@ compare($x, $c, 'port 443 no protocol and proxy port 443 no protocol');
 $x = array(
     'path' => 'thepath',
     'server' => 'theserver',
+    'protocol' => 'http://',
     'port' => 80,
-    'proxy' => 'ssl://theproxy',
+    'proxy' => 'theproxy',
+    'proxy_protocol' => 'ssl://',
     'proxy_port' => 6565,
     'proxy_user' => '',
     'proxy_pass' => '',
