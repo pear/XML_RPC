@@ -898,10 +898,7 @@ class XML_RPC_Value extends XML_RPC_Base
             if ($type == '') {
                 $type = 'string';
             }
-            if (!array_key_exists($type, $XML_RPC_Types)) {
-//                $this->raiseError('Invalid $type submitted to XML_RPC_Value()',
-//                                  XML_RPC_ERROR_INVALID_TYPE);
-            } elseif ($XML_RPC_Types[$type] == 1) {
+            if ($XML_RPC_Types[$type] == 1) {
                 $this->addScalar($val,$type);
             } elseif ($XML_RPC_Types[$type] == 2) {
                 $this->addArray($val);
@@ -1013,11 +1010,6 @@ class XML_RPC_Value extends XML_RPC_Base
     {
         $rs = '';
         global $XML_RPC_Types, $XML_RPC_Base64, $XML_RPC_String, $XML_RPC_Boolean;
-        if (!array_key_exists($typ, $XML_RPC_Types)) {
-//            $this->raiseError('Invalid $typ submitted to serializedata()',
-//                              XML_RPC_ERROR_INVALID_TYPE);
-            return;
-        }
         switch ($XML_RPC_Types[$typ]) {
         case 3:
             // struct
