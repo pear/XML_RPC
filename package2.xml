@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.1 2005-02-27 00:25:59 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.2 2005-03-01 17:09:49 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-02-27</date>
+  <date>2005-03-01</date>
 
   <version>
-   <release>1.2.0</release>
+   <release>1.2.1</release>
    <api>1.2.0</api>
   </version>
   <stability>
@@ -45,10 +45,8 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
 
-     <notes><![CDATA[
-* Provide the "stable" release.
-* Add package2.xml for compatibility with PEAR 1.4.0.
-* For changes since 1.1.0, see the changelogs for the various RC releases.
+    <notes><![CDATA[
+* Add isset() check before examining the dispatch map.  Bug 3658.
     ]]></notes>
 
   <contents>
@@ -85,7 +83,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <name>PEAR</name>
    <channel>pear.php.net</channel>
    <min>1.4.0a1</min>
-   <max>1.4.0a1</max>
+   <max>1.4.0a2</max>
   </compatible>
 
   <dependencies>
@@ -103,6 +101,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+   <release>
+    <version>
+     <release>1.2.0</release>
+     <api>1.2.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-02-27</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+      <notes><![CDATA[
+* Provide the "stable" release.
+* Add package2.xml for compatibility with PEAR 1.4.0.
+* For changes since 1.1.0, see the changelogs for the various RC releases.
+      ]]></notes>
+   </release>
 
    <release>
     <version>

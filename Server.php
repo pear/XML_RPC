@@ -411,7 +411,8 @@ class XML_RPC_Server
                 $sysCall = 0;
             }
 
-            if (is_string($dmap[$methName]['function'])
+            if (isset($dmap[$methName]['function'])
+                && is_string($dmap[$methName]['function'])
                 && strpos($dmap[$methName]['function'], '::') !== false)
             {
                 $dmap[$methName]['function'] =

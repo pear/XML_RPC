@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.40 2005-02-27 00:25:59 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.41 2005-03-01 17:09:49 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,13 +30,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.2.0</version>
-    <date>2005-02-27</date>
+    <version>1.2.1</version>
+    <date>2005-03-01</date>
     <state>stable</state>
     <notes><![CDATA[
-* Provide the "stable" release.
-* Add package2.xml for compatibility with PEAR 1.4.0.
-* For changes since 1.1.0, see the changelogs for the various RC releases.
+* Add isset() check before examining the dispatch map.  Bug 3658.
     ]]></notes>
 
     <filelist>
@@ -61,6 +59,17 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.0</version>
+      <date>2005-02-27</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Provide the "stable" release.
+* Add package2.xml for compatibility with PEAR 1.4.0.
+* For changes since 1.1.0, see the changelogs for the various RC releases.
+      ]]></notes>
+    </release>
+
     <release>
       <version>1.2.0RC7</version>
       <date>2005-02-22</date>
