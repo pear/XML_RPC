@@ -269,7 +269,7 @@ function XML_RPC_ee($parser, $name)
         } else {
             // we have an I4, INT or a DOUBLE
             // we must check that only 0123456789-.<space> are characters here
-            if (!ereg("^\-?[0123456789 \t\.]+$", $XML_RPC_xh[$parser]['ac'])) {
+            if (!ereg("^[+-]?[0123456789 \t\.]+$", $XML_RPC_xh[$parser]['ac'])) {
                 PEAR::raiseError("Non-numeric value received in INT or DOUBLE", XML_RPC_ERROR_NON_NUMERIC_FOUND);
                 $XML_RPC_xh[$parser]['st'] .= "ERROR_NON_NUMERIC_FOUND";
             } else {
