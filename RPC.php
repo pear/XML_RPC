@@ -585,11 +585,17 @@ class XML_RPC_Client extends XML_RPC_Base {
      *
      * @param string  $path        the path and name of the RPC server script
      *                              you want the request to go to
-     * @param string  $server      the URL of the remote server to connect to
+     * @param string  $server      the URL of the remote server to connect to.
+     *                              If this parameter doesn't specify a
+     *                              protocol and $port is 443, ssl:// is
+     *                              assumed.
      * @param integer $port        a port for connecting to the remote server.
      *                              Defaults to 80 for http:// connections and
      *                              443 for https:// and ssl:// connections.
-     * @param string  $proxy       the URL of the proxy server to use, if any
+     * @param string  $proxy       the URL of the proxy server to use, if any.
+     *                              If this parameter doesn't specify a
+     *                              protocol and $port is 443, ssl:// is
+     *                              assumed.
      * @param integer $proxy_port  a port for connecting to the remote server.
      *                              Defaults to 8080 for http:// connections and
      *                              443 for https:// and ssl:// connections.
@@ -607,7 +613,17 @@ class XML_RPC_Client extends XML_RPC_Base {
         $this->proxy_pass = $proxy_pass;
 
         preg_match('@^(http://|https://|ssl://)?(.*)$@', $server, $match);
-        if ($match[1] == '' || $match[1] == 'http://') {
+        if ($match[1] == '') {
+            if ($port == 443) {
+                $this->server = 'ssl://' . $match[2];
+                $this->port   = 443;
+            } else {
+                $this->server = $match[2];
+                if ($port) {
+                    $this->port = $port;
+                }
+            }
+        } elseif ($match[1] == 'http://') {
             $this->server = $match[2];
             if ($port) {
                 $this->port = $port;
@@ -623,14 +639,24 @@ class XML_RPC_Client extends XML_RPC_Base {
 
         if ($proxy) {
             preg_match('@^(http://|https://|ssl://)?(.*)$@', $proxy, $match);
-            if ($match[1] == '' || $match[1] == 'http://') {
+            if ($match[1] == '') {
+                if ($proxy_port == 443) {
+                    $this->proxy      = 'ssl://' . $match[2];
+                    $this->proxy_port = 443;
+                } else {
+                    $this->proxy = $match[2];
+                    if ($proxy_port) {
+                        $this->proxy_port = $proxy_port;
+                    }
+                }
+            } elseif ($match[1] == 'http://') {
                 $this->proxy = $match[2];
                 if ($proxy_port) {
                     $this->proxy_port = $proxy_port;
                 }
             } else {
                 $this->proxy = 'ssl://' . $match[2];
-                if ($port) {
+                if ($proxy_port) {
                     $this->proxy_port = $proxy_port;
                 } else {
                     $this->proxy_port = 443;

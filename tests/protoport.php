@@ -266,8 +266,8 @@ $x = array(
     'username' => '',
     'password' => '',
 );
-$c = new XML_RPC_Client('thepath', 'https://theserver',
-            0, 'https://theproxy');
+$c = new XML_RPC_Client('thepath', 'https://theserver', 0,
+                        'https://theproxy');
 compare($x, $c, 'defaults with https proxy');
 
 $x = array(
@@ -360,3 +360,40 @@ $x = array(
 $c = new XML_RPC_Client('thepath', 'ssl://theserver', 65,
                         'ssl://theproxy', 6565);
 compare($x, $c, 'port 65 with ssl proxy 6565');
+
+
+$x = array(
+    'path' => 'thepath',
+    'server' => 'ssl://theserver',
+    'port' => 443,
+    'proxy' => 'ssl://theproxy',
+    'proxy_port' => 443,
+    'proxy_user' => '',
+    'proxy_pass' => '',
+    'errno' => 0,
+    'errstring' => '',
+    'debug' => 0,
+    'username' => '',
+    'password' => '',
+);
+$c = new XML_RPC_Client('thepath', 'theserver', 443,
+                        'theproxy', 443);
+compare($x, $c, 'port 443 no protocol and proxy port 443 no protocol');
+
+$x = array(
+    'path' => 'thepath',
+    'server' => 'theserver',
+    'port' => 80,
+    'proxy' => 'ssl://theproxy',
+    'proxy_port' => 6565,
+    'proxy_user' => '',
+    'proxy_pass' => '',
+    'errno' => 0,
+    'errstring' => '',
+    'debug' => 0,
+    'username' => '',
+    'password' => '',
+);
+$c = new XML_RPC_Client('thepath', 'theserver', 0,
+                        'ssl://theproxy', 6565);
+compare($x, $c, 'port 443 no protocol and proxy port 443 no protocol');

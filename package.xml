@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.33 2005-01-24 07:01:50 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.34 2005-01-24 07:34:28 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -25,16 +25,13 @@
     </maintainer>
   </maintainers>
 
+
   <release>
-    <version>1.2.0RC4</version>
+    <version>1.2.0RC5</version>
     <date>2005-01-24</date>
     <state>beta</state>
     <notes><![CDATA[
-- When a connection attempt fails, have the method return 0.  (danielc)
-- Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
-- Add tests for setting the client properties.  (danielc)
-- Remove $GLOBALS['XML_RPC_twoslash'] since it's not used.  (danielc)
-- Bundle the tests with the package.  (danielc)
+- If $port is 443 but a protocol isn't specified in $server, assume ssl:// is the protocol.
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
@@ -58,6 +55,19 @@
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.0RC4</version>
+      <date>2005-01-24</date>
+      <state>beta</state>
+      <notes><![CDATA[
+- When a connection attempt fails, have the method return 0.  (danielc)
+- Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
+- Add tests for setting the client properties.  (danielc)
+- Remove $GLOBALS['XML_RPC_twoslash'] since it's not used.  (danielc)
+- Bundle the tests with the package.  (danielc)
+      ]]></notes>
+    </release>
+
     <release>
       <version>1.2.0RC3</version>
       <date>2005-01-19</date>
