@@ -400,6 +400,7 @@ class XML_RPC_Server
                 eval('$m->addParam(' . $XML_RPC_xh[$parser]['params'][$i] . ');');
             }
             XML_RPC_Server_debugmsg($plist);
+
             // now to deal with the method
             $methName = $XML_RPC_xh[$parser]['method'];
             if (strpos($methName, 'system.') === 0) {
@@ -409,6 +410,14 @@ class XML_RPC_Server
                 $dmap = $this->dmap;
                 $sysCall = 0;
             }
+
+            if (is_string($dmap[$methName]['function'])
+                && strpos($dmap[$methName]['function'], '::') !== false)
+            {
+                $dmap[$methName]['function'] =
+                        explode('::', $dmap[$methName]['function']);
+            }
+
             if (isset($dmap[$methName]['function'])
                 && is_callable($dmap[$methName]['function']))
             {
