@@ -312,7 +312,7 @@ function XML_RPC_ee($parser, $name)
         break;
     }
     // if it's a valid type name, set the type
-    if ($XML_RPC_Types[strtolower($name)]) {
+    if (isset($XML_RPC_Types[strtolower($name)])) {
         $XML_RPC_xh[$parser]['vt']=strtolower($name);
     }
 }
