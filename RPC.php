@@ -642,8 +642,11 @@ class XML_RPC_Message
                 return $r;
         }
         // gotta get rid of headers here
-        if ((!$hdrfnd) && ereg("^(.*)\r\n\r\n",$data,$XML_RPC_xh[$parser]['ha'])) {
-            $data=ereg_replace("^.*\r\n\r\n", "", $data);
+          
+        
+        if ((!$hdrfnd) && ($brpos = strpos($data,"\r\n\r\n"))) {
+            $XML_RPC_xh[$parser]['ha'] = substr($data,0,$brpos);
+            $data= substr($data,$brpos+4);
             $hdrfnd=1;
         }
 
