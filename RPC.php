@@ -1241,31 +1241,21 @@ function XML_RPC_encode($php_val) {
 
    switch ($type) {
    case 'array':
-       $keys = array_keys($php_val);
-       $count = count($php_val);
-       $firstkey = $keys[0];
-       $lastkey = $keys[$count - 1];
-       if ($firstkey === 0 && is_int($lastkey) && ($lastkey + 1) == $count) {
-           $is_continuous = true;
-           $expected = 0;
-           foreach ($keys as $actual) {
-               if ($actual != $expected) {
-                   $is_continuous = false;
-                   break;
-               }
-               $expected++;
+        if (empty($php_val)) {
+            $XML_RPC_val->addArray($php_val);
+            break;
+        }
+        $tmp = array_diff(array_keys($php_val), range(0, count($php_val)-1));
+        if (empty($tmp)) {
+           $arr = array();
+           foreach ($php_val as $k => $v) {
+               $arr[$k] = XML_RPC_encode($v);
            }
+           $XML_RPC_val->addArray($arr);
+           break;
+        }
+        // fall though if it's not an enumerated array
 
-           if ($is_continuous) {
-               $arr = array();
-               foreach ($php_val as $k => $v) {
-                   $arr[$k] = XML_RPC_encode($v);
-               }
-               $XML_RPC_val->addArray($arr);
-               break;
-           }
-       }
-       // fall though if not numerical and continuous
    case 'object':
        $arr = array();
        foreach ($php_val as $k => $v) {
