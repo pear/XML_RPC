@@ -245,7 +245,7 @@ function XML_RPC_ee($parser, $name)
         } else if ($XML_RPC_xh[$parser]['qt']==2) {
             $XML_RPC_xh[$parser]['st'].="base64_decode('". $XML_RPC_xh[$parser]['ac'] . "')"; 
         } else if ($name=="BOOLEAN") {
-            $XML_RPC_xh[$parser]['st'].=$_xh[$parser]['ac'];
+            $XML_RPC_xh[$parser]['st'].=$XML_RPC_xh[$parser]['ac'];
         } else {
             // we have an I4, INT or a DOUBLE
             // we must check that only 0123456789-.<space> are characters here
@@ -261,7 +261,7 @@ function XML_RPC_ee($parser, $name)
         }
          
         $XML_RPC_xh[$parser]['ac']=""; $XML_RPC_xh[$parser]['qt']=0;
-        $_xh[$parser]['lv']=3; // indicate we've found a value
+        $XML_RPC_xh[$parser]['lv']=3; // indicate we've found a value
         break;
     
     case "VALUE":
