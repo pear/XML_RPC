@@ -799,6 +799,10 @@ class XML_RPC_Client extends XML_RPC_Base {
             return 0;
         }
 
+        if ($timeout) {
+            stream_set_timeout($fp, $timeout);
+        }
+
         // Only create the payload if it was not created previously
         if (empty($msg->payload)) {
             $msg->createPayload();
@@ -838,6 +842,15 @@ class XML_RPC_Client extends XML_RPC_Base {
             return 0;
         }
         $resp = $msg->parseResponseFile($fp);
+
+        $meta = stream_get_meta_data($fp);
+        if ($meta['timed_out']) {
+            fclose($fp);
+            $this->errstr = 'RPC server did not send response before timeout.';
+            $this->raiseError($this->errstr, XML_RPC_ERROR_CONNECTION_FAILED);
+            return 0;
+        }
+
         fclose($fp);
         return $resp;
     }
