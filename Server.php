@@ -370,7 +370,8 @@ class XML_RPC_Server
     }
 
     /**
-     * Determines the headers and puts it in the $server_payload property
+     * Determines the HTTP headers and puts them in the $server_headers
+     * property
      *
      * @return boolean  TRUE if okay, FALSE if $server_payload isn't set.
      *
