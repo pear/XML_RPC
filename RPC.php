@@ -19,7 +19,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Adapted to PEAR standards by Stig S�her Bakken <stig@php.net> and
+// Adapted to PEAR standards by Stig Bakken <stig@php.net> and
 // Martin Jansen <mj@php.net>
 // /* $id$ */
 
@@ -451,16 +451,37 @@ class XML_RPC_Client extends XML_RPC_Base {
     {
         // If we're using a proxy open a socket to the proxy server instead to the xml-rpc server
         if ($this->proxy){
+            $proxy_server = $this->proxy;
+            $proxy_proto = '';
+            if (strstr($proxy_server, 'https://'))
+            {
+                $proxy_server = substr($proxy_server,8);
+                $proxy_proto = 'ssl://';
+            }
+            // Backward compatibility
+            if (!strstr($proxy_server, 'http://'))
+            {
+                $server = 'http://' . $server;
+            }
             if ($timeout > 0) {
-                $fp = fsockopen($this->proxy, $this->proxy_port, $this->errno, $this->errstr, $timeout);
+                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port, $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = fsockopen($this->proxy, $this->proxy_port, $this->errno, $this->errstr);
+                $fp = fsockopen($proxy_proto . $this->proxy, $this->proxy_port, $this->errno, $this->errstr);             }
             }
         } else {
+            $server_proto = '';
+            if (strstr($server, 'https://'))
+            {
+                $server = substr($server,8);
+                $server_proto = 'ssl://';
+            } elseif (strstr($server, 'http://'))
+            {
+                $server = substr($server,7);
+            }
             if ($timeout > 0) {
-                $fp = fsockopen($server, $port, $this->errno, $this->errstr, $timeout);
+                $fp = fsockopen($server_proto . $server, $port, $this->errno, $this->errstr, $timeout);
             } else {
-                $fp = fsockopen($server, $port, $this->errno, $this->errstr);
+                $fp = fsockopen($server_proto . $server, $port, $this->errno, $this->errstr);
             }
         }
 
@@ -488,7 +509,7 @@ class XML_RPC_Client extends XML_RPC_Base {
 
 
         if ($this->proxy) {
-            $op = "POST http://" . $this->server;
+            $op = 'POST ' . $server;
 
             if ($this->proxy_port) {
                 $op .= ":" . $this->port;
@@ -499,7 +520,7 @@ class XML_RPC_Client extends XML_RPC_Base {
 
         $op .= $this->path. " HTTP/1.0\r\n" .
                "User-Agent: PEAR XML_RPC\r\n" .
-               "Host: " . $this->server . "\r\n";
+               'Host: ' . $server . "\r\n";
         if ($this->proxy && $this->proxy_user != '') {
             $op .= 'Proxy-Authorization: Basic ' .
                 base64_encode($this->proxy_user . ':' . $this->proxy_pass) .
@@ -659,7 +680,7 @@ class XML_RPC_Message extends XML_RPC_Base
     {
         $ipd = "";
 
-        while($data = fread($fp, 32768)) {
+        while($data = @fread($fp, 32768)) {
             $ipd .= $data;
         }
         return $this->parseResponse($ipd);
