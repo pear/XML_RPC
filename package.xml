@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.29 2005-01-19 23:05:31 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.30 2005-01-22 07:38:32 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -26,11 +26,13 @@
   </maintainers>
 
   <release>
-    <version>1.2.0RC3</version>
-    <date>2005-01-19</date>
+    <version>1.2.0RC4</version>
+    <date>2005-01-22</date>
     <state>beta</state>
     <notes><![CDATA[
-- ssl uses port 443, not 445.
+- When a connection attempt fails, have the method return 0.  (danielc)
+- Move the protocol/port checking/switching and the property settings from sendPayloadHTTP10() to the XML_RPC_Client constructor.  (danielc)
+- Add tests for setting the client properties.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
@@ -46,6 +48,15 @@
   </release>
 
   <changelog>
+    <release>
+      <version>1.2.0RC3</version>
+      <date>2005-01-19</date>
+      <state>beta</state>
+      <notes><![CDATA[
+- ssl uses port 443, not 445.
+      ]]></notes>
+    </release>
+
     <release>
       <version>1.2.0RC2</version>
       <date>2005-01-11</date>
