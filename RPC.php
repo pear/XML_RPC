@@ -387,17 +387,6 @@ function XML_RPC_ee($parser_resource, $name)
         $XML_RPC_xh[$parser]['method'] = ereg_replace("^[\n\r\t ]+", '',
                                                       $XML_RPC_xh[$parser]['ac']);
         break;
-
-    case 'BOOLEAN':
-        // special case here: we translate boolean 1 or 0 into PHP
-        // constants true or false
-        if ($XML_RPC_xh[$parser]['ac'] == '1') {
-            $XML_RPC_xh[$parser]['ac'] = 'true';
-        } else {
-            $XML_RPC_xh[$parser]['ac'] = 'false';
-        }
-
-        $XML_RPC_xh[$parser]['vt'] = strtolower($name);
     }
 
     // if it's a valid type name, set the type
