@@ -337,15 +337,11 @@ function XML_RPC_cd($parser, $data)
             $XML_RPC_xh[$parser]['lv']=2; 
         }
     
-        if (isset($XML_RPC_xh[$parser]['qt']) && $XML_RPC_xh[$parser]['qt']) { 
-            // quoted string: replace characters that eval would
-            // do special things with
-            $XML_RPC_xh[$parser]['ac'].=str_replace('\$', '\\$',
-                                         str_replace('"', '\"', 
-                                                     str_replace(chr(92),$XML_RPC_backslash, $data)));
-        }
-        else 
-            $XML_RPC_xh[$parser]['ac'].=$data;
+        // replace characters that eval would
+        // do special things with
+        $XML_RPC_xh[$parser]['ac'].=str_replace('$', '\$',
+            str_replace('"', '\"', str_replace(chr(92),
+                $XML_RPC_backslash, $data)));
     }
 }
 
@@ -358,7 +354,9 @@ function XML_RPC_dh($parser, $data)
             $XML_RPC_xh[$parser]['qt']=1; 
             $XML_RPC_xh[$parser]['lv']=2; 
         }
-        $XML_RPC_xh[$parser]['ac'].=$data;
+        $XML_RPC_xh[$parser]['ac'].=str_replace('$', '\$',
+            str_replace('"', '\"', str_replace(chr(92),
+                $XML_RPC_backslash, $data)));
     }
 }
 
