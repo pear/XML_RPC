@@ -399,10 +399,24 @@ class XML_RPC_Base {
     {
         include_once 'PEAR.php';
         if (is_object(@$this)) {
-            PEAR::raiseError(get_class($this) . ': ' . $msg, $code);
+            return PEAR::raiseError(get_class($this) . ': ' . $msg, $code);
         } else {
-            PEAR::raiseError('XML_RPC: ' . $msg, $code);
+            return PEAR::raiseError('XML_RPC: ' . $msg, $code);
         }
+    }
+
+    /**
+     * Tell whether something is a PEAR_Error object
+     *
+     * @param mixed $value  the item to check
+     *
+     * @return bool  whether $value is a PEAR_Error object or not
+     *
+     * @access public
+     */
+    function isError($value)
+    {
+        return is_a($value, 'PEAR_Error');
     }
 }
 
@@ -548,12 +562,15 @@ class XML_RPC_Client extends XML_RPC_Base {
         }
 
         if (!$fp && $this->proxy) {
-            $this->raiseError('Connection to proxy server ' . $this->proxy
-                              . ':' . $this->proxy_port . ' failed',
-                              XML_RPC_ERROR_CONNECTION_FAILED);
+            return $this->raiseError('Connection to proxy server '
+                                     . $this->proxy . ':' . $this->proxy_port
+                                     . ' failed. ' . $this->errstr,
+                                     XML_RPC_ERROR_CONNECTION_FAILED);
         } elseif (!$fp) {
-            $this->raiseError('Connection to RPC server ' . $this->server . ' failed',
-                              XML_RPC_ERROR_CONNECTION_FAILED);
+            return $this->raiseError('Connection to RPC server '
+                                     . $server . ':' . $port
+                                     . ' failed. ' . $this->errstr,
+                                     XML_RPC_ERROR_CONNECTION_FAILED);
         }
 
         // Only create the payload if it was not created previously
