@@ -55,22 +55,65 @@ define('XML_RPC_ERROR_CONNECTION_FAILED',   103);
 define('XML_RPC_ERROR_ALREADY_INITIALIZED', 104);
 /**#@-*/
 
-/**#@+
+
+/**
  * Data types
+ * @global string $GLOBALS['XML_RPC_I4']
  */
 $GLOBALS['XML_RPC_I4']       = 'i4';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_Int']
+ */
 $GLOBALS['XML_RPC_Int']      = 'int';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_Boolean']
+ */
 $GLOBALS['XML_RPC_Boolean']  = 'boolean';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_Double']
+ */
 $GLOBALS['XML_RPC_Double']   = 'double';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_String']
+ */
 $GLOBALS['XML_RPC_String']   = 'string';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_DateTime']
+ */
 $GLOBALS['XML_RPC_DateTime'] = 'dateTime.iso8601';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_Base64']
+ */
 $GLOBALS['XML_RPC_Base64']   = 'base64';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_Array']
+ */
 $GLOBALS['XML_RPC_Array']    = 'array';
+
+/**
+ * Data types
+ * @global string $GLOBALS['XML_RPC_Struct']
+ */
 $GLOBALS['XML_RPC_Struct']   = 'struct';
-/**#@-*/
+
 
 /**
  * Data type meta-types
+ * @global array $GLOBALS['XML_RPC_Types']
  */
 $GLOBALS['XML_RPC_Types'] = array(
     $GLOBALS['XML_RPC_I4']       => 1,
@@ -84,44 +127,57 @@ $GLOBALS['XML_RPC_Types'] = array(
     $GLOBALS['XML_RPC_Struct']   => 3,
 );
 
-/**#@+
- * Error messages
+
+/**
+ * Error message numbers
+ * @global array $GLOBALS['XML_RPC_err']
  */
-$GLOBALS['XML_RPC_err']['unknown_method']     = 1;
-$GLOBALS['XML_RPC_str']['unknown_method']     = 'Unknown method';
-$GLOBALS['XML_RPC_err']['invalid_return']     = 2;
-$GLOBALS['XML_RPC_str']['invalid_return']     = 'Invalid return payload: enable debugging to examine incoming payload';
-$GLOBALS['XML_RPC_err']['incorrect_params']   = 3;
-$GLOBALS['XML_RPC_str']['incorrect_params']   = 'Incorrect parameters passed to method';
-$GLOBALS['XML_RPC_err']['introspect_unknown'] = 4;
-$GLOBALS['XML_RPC_str']['introspect_unknown'] = 'Can\'t introspect: method unknown';
-$GLOBALS['XML_RPC_err']['http_error']         = 5;
-$GLOBALS['XML_RPC_str']['http_error']         = 'Didn\'t receive 200 OK from remote server.';
-/**#@-*/
+$GLOBALS['XML_RPC_err'] = array(
+    'unknown_method'      => 1,
+    'invalid_return'      => 2,
+    'incorrect_params'    => 3,
+    'introspect_unknown'  => 4,
+    'http_error'          => 5,
+);
+
+/**
+ * Error message strings
+ * @global array $GLOBALS['XML_RPC_str']
+ */
+$GLOBALS['XML_RPC_str'] = array(
+    'unknown_method'      => 'Unknown method',
+    'invalid_return'      => 'Invalid return payload: enable debugging to examine incoming payload',
+    'incorrect_params'    => 'Incorrect parameters passed to method',
+    'introspect_unknown'  => 'Can\'t introspect: method unknown',
+    'http_error'          => 'Didn\'t receive 200 OK from remote server.',
+);
+
 
 /**
  * Default XML encoding
+ * @global string $GLOBALS['XML_RPC_defencoding']
  */
 $GLOBALS['XML_RPC_defencoding'] = 'UTF-8';
 
 /**
  * User error codes start at 800
+ * @global int $GLOBALS['XML_RPC_erruser']
  */
 $GLOBALS['XML_RPC_erruser'] = 800;
 
 /**
  * XML parse error codes start at 100
+ * @global int $GLOBALS['XML_RPC_errxml']
  */
 $GLOBALS['XML_RPC_errxml'] = 100;
 
-/**#@+
+
+/**
  * Compose backslashes for escaping regexp
+ * @global string $GLOBALS['XML_RPC_backslash']
  */
 $GLOBALS['XML_RPC_backslash'] = chr(92) . chr(92);
-$GLOBALS['XML_RPC_twoslash'] = $GLOBALS['XML_RPC_backslash']
-                             . $GLOBALS['XML_RPC_backslash'];
-$GLOBALS['XML_RPC_twoslash'] = '2SLS';
-/**#@-*/
+
 
 /**
  * Stores state during parsing
@@ -136,8 +192,11 @@ $GLOBALS['XML_RPC_twoslash'] = '2SLS';
  *               to allow values with no types to be strings
  *   + params = stores parameters in method calls
  *   + method = stores method name
+ *
+ * @global array $GLOBALS['XML_RPC_xh']
  */
 $GLOBALS['XML_RPC_xh'] = array();
+
 
 /**
  * Start element handler for the XML parser
@@ -427,6 +486,7 @@ class XML_RPC_Base {
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
+ * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1999-2001 Edd Dumbill
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
@@ -578,7 +638,7 @@ class XML_RPC_Client extends XML_RPC_Base {
     /**
      * Change the current debug mode
      *
-     * @param int $in  1 = on, 0 = off
+     * @param int $in  where 1 = on, 0 = off
      *
      * @return void
      */
