@@ -167,10 +167,12 @@ class XML_RPC_Server
     function serializeDebug()
     {
         global $XML_RPC_Server_debuginfo;
-        if ($XML_RPC_Server_debuginfo != "")
-            return "<!-- DEBUG INFO:\n\n" . $XML_RPC_Server_debuginfo . "\n-->\n";
-        else
+        if ($XML_RPC_Server_debuginfo != "") {
+            return "<!-- DEBUG INFO:\n\n" . preg_replace('/-(?=-)/', '- ',
+                    $XML_RPC_Server_debuginfo) . "\n-->\n";
+        } else {
             return "";
+        }
     }
 
     function service()
