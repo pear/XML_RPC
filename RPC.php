@@ -21,8 +21,6 @@
 // Adapted to PEAR standards by Stig S�her Bakken <stig@php.net> and 
 // Martin Jansen <mj@php.net>
 
-require_once "PEAR.php";
-
 if (!function_exists('xml_parser_create')) {
 // Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
     if ($WINDIR) {
@@ -31,6 +29,11 @@ if (!function_exists('xml_parser_create')) {
         dl("xml.so");
     }
 }
+
+define('XML_RPC_ERROR_INVALID_TYPE',        101);
+define('XML_RPC_ERROR_NON_NUMERIC_FOUND',   102);
+define('XML_RPC_ERROR_CONNECTION_FAILED',   103);
+define('XML_RPC_ERROR_ALREADY_INITIALIZED', 104);
 
 $GLOBALS['XML_RPC_I4'] = "i4";
 $GLOBALS['XML_RPC_Int'] = "int";
@@ -253,9 +256,7 @@ function XML_RPC_ee($parser, $name)
             // we have an I4, INT or a DOUBLE
             // we must check that only 0123456789-.<space> are characters here
             if (!ereg("^\-?[0123456789 \t\.]+$", $XML_RPC_xh[$parser]['ac'])) {
-                // TODO: find a better way of throwing an error
-                // than this!
-                error_log("XML-RPC: non numeric value received in INT or DOUBLE");
+                $this->raiseError("Non-numeric value recieved in INT or DOUBLE", XML_RPC_ERROR_NON_NUMERIC_FOUND);
                 $XML_RPC_xh[$parser]['st'] .= "ERROR_NON_NUMERIC_FOUND";
             } else {
                 // it's ok, add it on
@@ -368,8 +369,21 @@ function XML_RPC_dh($parser, $data)
     }
 }
 
+/**
+ * Base class
+ *
+ * This class provides common functions for all of the XML_RPC classes.
+ */
+class XML_RPC_Base
+{
+    function raiseError($msg, $code)
+    {
+        include_once 'PEAR.php';
+        PEAR::raiseError(get_class($this) . ": " . $msg, $code);
+    }
+}
 
-class XML_RPC_Client
+class XML_RPC_Client extends XML_RPC_Base
 {
     var $path;
     var $server;
@@ -439,10 +453,14 @@ class XML_RPC_Client
         }
 
         if (!$fp && $this->proxy) {
-            PEAR::raiseError("Connection to proxy server " . $this->proxy . ":" . $this->proxy_port . " failed");
+            $this->raiseError(
+                "Connection to proxy server " . $this->proxy . ":" . $this->proxy_port . " failed",
+                XML_RPC_ERROR_CONNECTION_FAILED);
         }
         elseif (!$fp) {
-            PEAR::raiseError("Connection to RPC server " . $this->server . " failed");
+            $this->raiseError(
+                "Connection to RPC server " . $this->server . " failed",
+                XML_RPC_ERROR_CONNECTION_FAILED);
         }
 
         // Only create the payload if it was not created previously
@@ -493,7 +511,7 @@ class XML_RPC_Client
 }
 
 
-class XML_RPC_Response
+class XML_RPC_Response extends XML_RPC_Base
 {
     var $xv;
     var $fn;
@@ -548,7 +566,7 @@ class XML_RPC_Response
 }
 
 
-class XML_RPC_Message
+class XML_RPC_Message extends XML_RPC_Base
 {
     var $payload;
     var $methodname;
@@ -659,7 +677,7 @@ class XML_RPC_Message
         }
         // gotta get rid of headers here
           
-        
+
         if ((!$hdrfnd) && ($brpos = strpos($data,"\r\n\r\n"))) {
             $XML_RPC_xh[$parser]['ha'] = substr($data, 0, $brpos);
             $data = substr($data, $brpos + 4);
@@ -710,7 +728,7 @@ class XML_RPC_Message
 }
 
 
-class XML_RPC_Value
+class XML_RPC_Value extends XML_RPC_Base
 {
     var $me = array();
     var $mytype = 0;
@@ -739,12 +757,12 @@ class XML_RPC_Value
         global $XML_RPC_Types, $XML_RPC_Boolean;
 
         if ($this->mytype == 1) {
-            echo "<B>XML_RPC_Value</B>: scalar can have only one value<BR>";
+            $this->raiseError("Scalar can have only one value", XML_RPC_ERROR_INVALID_TYPE);
             return 0;
         }
         $typeof = $XML_RPC_Types[$type];
         if ($typeof != 1) {
-            echo "<B>XML_RPC_Value</B>: not a scalar type (${typeof})<BR>";
+            $this->raiseError("Not a scalar type (${typeof})", XML_RPC_ERROR_INVALID_TYPE);
             return 0;
         }
 
@@ -777,8 +795,9 @@ class XML_RPC_Value
     {
         global $XML_RPC_Types;
         if ($this->mytype != 0) {
-            echo "<B>XML_RPC_Value</B>: already initialized as a [" .
-                $this->kindOf() . "]<BR>";
+            $this->raiseError(
+                "Already initialized as a [" . $this->kindOf() . "]",
+                XML_RPC_ERROR_ALREADY_INITIALIZED);
             return 0;
         }
         $this->mytype = $XML_RPC_Types["array"];
@@ -790,8 +809,9 @@ class XML_RPC_Value
     {
         global $XML_RPC_Types;
         if ($this->mytype != 0) {
-            echo "<B>XML_RPC_Value</B>: already initialized as a [" .
-            $this->kindOf() . "]<BR>";
+            $this->raiseError(
+                "Already initialized as a [" . $this->kindOf() . "]",
+                XML_RPC_ERROR_ALREADY_INITIALIZED);
             return 0;
         }
         $this->mytype = $XML_RPC_Types["struct"];
@@ -1016,12 +1036,11 @@ function XML_RPC_iso8601_decode($idate, $utc = 0) {
     return $t;
 }
 
-/******************************************************************
-* XML_RPC_decode takes a message in PHP XML_RPC object format and *
-* translates it into native PHP types.                            *
-*                                                                 *
-* author: Dan Libby (dan@libby.com)                               *
-******************************************************************/
+/**
+ * Takes a message in PHP XML_RPC object format and translates it into native PHP types.
+ *
+ * @author Dan Libby <dan@libby.com>
+ **/
 function XML_RPC_decode($XML_RPC_val) {
     $kind = $XML_RPC_val->kindOf();
 
@@ -1048,15 +1067,13 @@ function XML_RPC_decode($XML_RPC_val) {
    }
 }
 
-/*****************************************************************
-* XML_RPC_encode takes native php types and encodes them into    *
-* XML_RPC PHP object format.                                     *
-*                                                                *
-* feature creep -- could support more types via optional type    *
-* argument.                                                      *
-*                                                                *
-* author: Dan Libby (dan@libby.com)                              *
-*****************************************************************/
+/**
+ * Takes native php types and encodes them into XML_RPC PHP object format.
+ *
+ * Feature creep -- could support more types via optional type argument.
+ *
+ * @author Dan Libby <dan@libby.com>
+ **/
 function XML_RPC_encode($php_val) {
    global $XML_RPC_Boolean;
    global $XML_RPC_Int;
