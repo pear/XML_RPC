@@ -1061,7 +1061,7 @@ function XML_RPC_encode($php_val) {
    global $XML_RPC_Struct;
 
    $type = gettype($php_val);
-   $XML_RPC_val = new XML_RPC_value;
+   $XML_RPC_val = new XML_RPC_Value;
 
    switch($type) {
       case "array":
