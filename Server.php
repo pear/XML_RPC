@@ -65,7 +65,7 @@ function XML_RPC_Server_methodSignature($server, $m)
     } else {
         $dmap=$server->dmap; $sysCall=0;
     }
-    //	print "<!-- ${methName} -->\n";
+    //  print "<!-- ${methName} -->\n";
     if (isset($dmap[$methName])) {
         if ($dmap[$methName]["signature"]) {
             $sigs=array();
@@ -106,7 +106,7 @@ function XML_RPC_Server_methodHelp($server, $m)
     } else {
         $dmap=$server->dmap; $sysCall=0;
     }
-    //	print "<!-- ${methName} -->\n";
+    //  print "<!-- ${methName} -->\n";
     if (isset($dmap[$methName])) {
         if ($dmap[$methName]["docstring"]) {
             $r=new XML_RPC_Response(new XML_RPC_Value($dmap[$methName]["docstring"]),
@@ -217,29 +217,31 @@ class XML_RPC_Server
 
     function parseRequest($data="")
     {
-	global $XML_RPC_xh,$HTTP_RAW_POST_DATA;
-	global $XML_RPC_err, $XML_RPC_str, $XML_RPC_errxml,
+        global $XML_RPC_xh,$HTTP_RAW_POST_DATA;
+        global $XML_RPC_err, $XML_RPC_str, $XML_RPC_errxml,
             $XML_RPC_defencoding, $XML_RPC_Server_dmap;
         
-	if ($data=="") {
+        if ($data=="") {
             $data=$HTTP_RAW_POST_DATA;
-	}
-	$parser = xml_parser_create($XML_RPC_defencoding);
+        }
+        $parser = xml_parser_create($XML_RPC_defencoding);
         
-	$XML_RPC_xh[$parser]=array();
-	$XML_RPC_xh[$parser]['st']="";
-	$XML_RPC_xh[$parser]['cm']=0; 
-	$XML_RPC_xh[$parser]['isf']=0; 
-	$XML_RPC_xh[$parser]['params']=array();
-	$XML_RPC_xh[$parser]['method']="";
+        $XML_RPC_xh[$parser]=array();
+        $XML_RPC_xh[$parser]['st']="";
+        $XML_RPC_xh[$parser]['cm']=0; 
+        $XML_RPC_xh[$parser]['isf']=0; 
+        $XML_RPC_xh[$parser]['params']=array();
+        $XML_RPC_xh[$parser]['method']="";
         
-	// decompose incoming XML into request structure
+        $plist = '';
+
+        // decompose incoming XML into request structure
         
-	xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
-	xml_set_element_handler($parser, "XML_RPC_se", "XML_RPC_ee");
-	xml_set_character_data_handler($parser, "XML_RPC_cd");
-	xml_set_default_handler($parser, "XML_RPC_dh");
-	if (!xml_parse($parser, $data, 1)) {
+        xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, true);
+        xml_set_element_handler($parser, "XML_RPC_se", "XML_RPC_ee");
+        xml_set_character_data_handler($parser, "XML_RPC_cd");
+        xml_set_default_handler($parser, "XML_RPC_dh");
+        if (!xml_parse($parser, $data, 1)) {
             // return XML error as a faultCode
             $r=new XML_RPC_Response(0,
                                     $XML_RPC_errxml+xml_get_error_code($parser),
@@ -247,7 +249,7 @@ class XML_RPC_Server
                                             xml_error_string(xml_get_error_code($parser)),
                                             xml_get_current_line_number($parser)));
             xml_parser_free($parser);
-	} else {
+        } else {
             xml_parser_free($parser);
             $m=new XML_RPC_Message($XML_RPC_xh[$parser]['method']);
             // now add parameters in
@@ -285,24 +287,24 @@ class XML_RPC_Server
                                             $XML_RPC_str["incorrect_params"].": ". $sr[1]);
                 }
             } else {
-		// else prepare error response
-		$r=new XML_RPC_Response(0,
+                // else prepare error response
+                $r=new XML_RPC_Response(0,
                                         $XML_RPC_err["unknown_method"],
                                         $XML_RPC_str["unknown_method"]);
             }
-	}
-	return $r;
+        }
+        return $r;
     }
 
   function echoInput() {
-	global $HTTP_RAW_POST_DATA;
+        global $HTTP_RAW_POST_DATA;
 
-	// a debugging routine: just echos back the input
-	// packet as a string value
+        // a debugging routine: just echos back the input
+        // packet as a string value
 
-	$r=new XML_RPC_Response;
-	$r->xv=new XML_RPC_Value( "'Aha said I: '" . $HTTP_RAW_POST_DATA, "string");
-	print $r->serialize();
+        $r=new XML_RPC_Response;
+        $r->xv=new XML_RPC_Value( "'Aha said I: '" . $HTTP_RAW_POST_DATA, "string");
+        print $r->serialize();
   }
 }
 

@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "../package.dtd">
-<!-- do not use the "Type" attribute here, that one is only for
-     generated package.xml files -->
 <package version="1.0">
   <name>XML_RPC</name>
-  <summary>A PEAR-ified version of Useful inc's xmlrpc implementation for PHP.</summary>
+  <summary>
+    A PEAR-ified version of Useful inc's xmlrpc implementation for PHP.
+  </summary>
   <maintainers>
     <maintainer>
-      <user>SSB</user>
+      <user>ssb</user>
       <name>Stig Sæther Bakken</name>
       <email>stig@php.net</email>
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.1</version>
-    <date>2001-09-25</date>
-    <notes><![CDATA[This is a PEAR-ified version of Useful Inc's 1.0.1 release.
-   Includes an urgent security fix identified by Dan Libby <dan@libby.com>.]]>
-  </notes>
+    <version>1.0.2</version>
+    <date>2002-02-28</date>
+    <state>stable</state>
+    <notes>
+      E_ALL fixes.
+    </notes>
     <filelist>
       <dir name="/" baseinstalldir="XML">
 	<file role="php">RPC.php</file>
-	<dir name="RPC">
-	  <file role="php">Server.php</file>
-	</dir>
+      </dir>
+      <dir name="." baseinstalldir="XML/RPC">
+        <file role="php">Server.php</file>
       </dir>
     </filelist>
   </release>
+  <changelog>
+    <release>
+      <version>1.0.1</version>
+      <date>2001-09-25</date>
+      <state>stable</state>
+      <notes>
+        This is a PEAR-ified version of Useful Inc's 1.0.1 release.
+        Includes an urgent security fix identified by Dan Libby &lt;dan@libby.com>.
+      </notes>
+    </release>
+  </changelog>
 </package>

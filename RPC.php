@@ -339,7 +339,7 @@ function XML_RPC_cd($parser, $data)
     
         // replace characters that eval would
         // do special things with
-        $XML_RPC_xh[$parser]['ac'].=str_replace('$', '\$',
+        @$XML_RPC_xh[$parser]['ac'].=str_replace('$', '\$',
             str_replace('"', '\"', str_replace(chr(92),
                 $XML_RPC_backslash, $data)));
     }
