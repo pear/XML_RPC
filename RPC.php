@@ -1070,25 +1070,24 @@ function XML_RPC_encode($php_val) {
 
    switch ($type) {
       case "array":
-        reset($php_val);
-        $firstkey = key($php_val);
-        end($php_val);
-        $lastkey = key($php_val);
-        if ($firstkey === 0 && is_int($lastkey) &&
-            ($lastkey + 1) == count($php_val)) {
+        $keys = array_keys($php_val);
+        $count = count($php_val);
+        $firstkey = $keys[0];
+        $lastkey = $keys[$count - 1];
+        if ($firstkey === 0 && is_int($lastkey) && ($lastkey + 1) == $count) {
             $is_continuous = true;
-            reset($php_val);
-            $size = count($php_val);
-            for ($expect = 0; $expect < $size; $expect++, next($php_val)) {
-                if (key($php_val) !== $expect) {
+            $expected = 0;
+            foreach ($keys as $actual) {
+                if ($actual != $expected) {
                     $is_continuous = false;
                     break;
                 }
+                $expected++;
             }
+
             if ($is_continuous) {
-                reset($php_val);
                 $arr = array();
-                while (list($k, $v) = each($php_val)) {
+                foreach ($php_val as $k => $v) {
                     $arr[$k] = XML_RPC_encode($v);
                 }
                 $XML_RPC_val->addArray($arr);
@@ -1098,7 +1097,7 @@ function XML_RPC_encode($php_val) {
         // fall though if not numerical and continuous
       case "object":
          $arr = array();
-         while (list($k,$v) = each($php_val)) {
+         foreach ($php_val as $k => $v) {
             $arr[$k] = XML_RPC_encode($v);
          }
          $XML_RPC_val->addStruct($arr);
