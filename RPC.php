@@ -36,7 +36,7 @@
 
 
 if (!function_exists('xml_parser_create')) {
-// Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
+    // Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
     if ($WINDIR) {
         dl('php_xml.dll');
     } else {
@@ -44,14 +44,18 @@ if (!function_exists('xml_parser_create')) {
     }
 }
 
-/**
- *
+/**#@+
+ * Error constants
  */
 define('XML_RPC_ERROR_INVALID_TYPE',        101);
 define('XML_RPC_ERROR_NON_NUMERIC_FOUND',   102);
 define('XML_RPC_ERROR_CONNECTION_FAILED',   103);
 define('XML_RPC_ERROR_ALREADY_INITIALIZED', 104);
+/**#@-*/
 
+/**#@+
+ * Data types
+ */
 $GLOBALS['XML_RPC_I4']       = 'i4';
 $GLOBALS['XML_RPC_Int']      = 'int';
 $GLOBALS['XML_RPC_Boolean']  = 'boolean';
@@ -61,23 +65,27 @@ $GLOBALS['XML_RPC_DateTime'] = 'dateTime.iso8601';
 $GLOBALS['XML_RPC_Base64']   = 'base64';
 $GLOBALS['XML_RPC_Array']    = 'array';
 $GLOBALS['XML_RPC_Struct']   = 'struct';
+/**#@-*/
 
-$GLOBALS['XML_RPC_Types'] = array($GLOBALS['XML_RPC_I4'] => 1,
-                                  $GLOBALS['XML_RPC_Int'] => 1,
-                                  $GLOBALS['XML_RPC_Boolean'] => 1,
-                                  $GLOBALS['XML_RPC_String'] => 1,
-                                  $GLOBALS['XML_RPC_Double'] => 1,
+$GLOBALS['XML_RPC_Types'] = array($GLOBALS['XML_RPC_I4']       => 1,
+                                  $GLOBALS['XML_RPC_Int']      => 1,
+                                  $GLOBALS['XML_RPC_Boolean']  => 1,
+                                  $GLOBALS['XML_RPC_String']   => 1,
+                                  $GLOBALS['XML_RPC_Double']   => 1,
                                   $GLOBALS['XML_RPC_DateTime'] => 1,
-                                  $GLOBALS['XML_RPC_Base64'] => 1,
-                                  $GLOBALS['XML_RPC_Array'] => 2,
-                                  $GLOBALS['XML_RPC_Struct'] => 3);
+                                  $GLOBALS['XML_RPC_Base64']   => 1,
+                                  $GLOBALS['XML_RPC_Array']    => 2,
+                                  $GLOBALS['XML_RPC_Struct']   => 3);
 
 $GLOBALS['XML_RPC_entities'] = array('quot' => '"',
-                                     'amp' => '&',
-                                     'lt' => '<',
-                                     'gt' => '>',
+                                     'amp'  => '&',
+                                     'lt'   => '<',
+                                     'gt'   => '>',
                                      'apos' => '\'');
 
+/**#@+
+ * Error messages
+ */
 $GLOBALS['XML_RPC_err']['unknown_method']     = 1;
 $GLOBALS['XML_RPC_str']['unknown_method']     = 'Unknown method';
 $GLOBALS['XML_RPC_err']['invalid_return']     = 2;
@@ -88,33 +96,43 @@ $GLOBALS['XML_RPC_err']['introspect_unknown'] = 4;
 $GLOBALS['XML_RPC_str']['introspect_unknown'] = 'Can\'t introspect: method unknown';
 $GLOBALS['XML_RPC_err']['http_error']         = 5;
 $GLOBALS['XML_RPC_str']['http_error']         = 'Didn\'t receive 200 OK from remote server.';
+/**#@-*/
 
 $GLOBALS['XML_RPC_defencoding'] = 'UTF-8';
 
-// let user errors start at 800
+/**
+ * let user errors start at 800
+ */
 $GLOBALS['XML_RPC_erruser'] = 800;
 
-// let XML parse errors start at 100
+/**
+ * let XML parse errors start at 100
+ */
 $GLOBALS['XML_RPC_errxml'] = 100;
 
-// formulate backslashes for escaping regexp
+/**
+ * formulate backslashes for escaping regexp
+ */
 $GLOBALS['XML_RPC_backslash'] = chr(92) . chr(92);
 
-$GLOBALS['XML_RPC_twoslash'] = $GLOBALS['XML_RPC_backslash'] . $GLOBALS['XML_RPC_backslash'];
+$GLOBALS['XML_RPC_twoslash'] = $GLOBALS['XML_RPC_backslash']
+                             . $GLOBALS['XML_RPC_backslash'];
 $GLOBALS['XML_RPC_twoslash'] = '2SLS';
 
-// used to store state during parsing
-// quick explanation of components:
-//   st - used to build up a string for evaluation
-//   ac - used to accumulate values
-//   qt - used to decide if quotes are needed for evaluation
-//   cm - used to denote struct or array (comma needed)
-//   isf - used to indicate a fault
-//   lv - used to indicate "looking for a value": implements
-//        the logic to allow values with no types to be strings
-//   params - used to store parameters in method calls
-//   method - used to store method name
-
+/**
+ * stores state during parsing
+ *
+ * quick explanation of components:
+ *   + st     = builds up a string for evaluation
+ *   + ac     = accumulates values
+ *   + qt     = decides if quotes are needed for evaluation
+ *   + cm     = denotes struct or array (comma needed)
+ *   + isf    = indicates a fault
+ *   + lv     = indicates "looking for a value": implements the logic
+ *               to allow values with no types to be strings
+ *   + params = stores parameters in method calls
+ *   + method = stores method name
+ */
 $GLOBALS['XML_RPC_xh'] = array();
 
 function XML_RPC_entity_decode($string)
@@ -140,7 +158,9 @@ function XML_RPC_entity_decode($string)
     return $op;
 }
 
-
+/**
+ *
+ */
 function XML_RPC_lookup_entity($ent)
 {
     global $XML_RPC_entities;
@@ -156,7 +176,9 @@ function XML_RPC_lookup_entity($ent)
     return '?';
 }
 
-
+/**
+ *
+ */
 function XML_RPC_se($parser, $name, $attrs)
 {
     global $XML_RPC_xh, $XML_RPC_DateTime, $XML_RPC_String;
@@ -235,10 +257,12 @@ function XML_RPC_se($parser, $name, $attrs)
     }
 }
 
-
+/**
+ *
+ */
 function XML_RPC_ee($parser, $name)
 {
-    global $XML_RPC_xh,$XML_RPC_Types,$XML_RPC_String;
+    global $XML_RPC_xh, $XML_RPC_Types, $XML_RPC_String;
 
     switch ($name) {
     case 'STRUCT':
@@ -362,7 +386,9 @@ function XML_RPC_ee($parser, $name)
     }
 }
 
-
+/**
+ *
+ */
 function XML_RPC_cd($parser, $data)
 {
     global $XML_RPC_xh, $XML_RPC_backslash;
@@ -390,7 +416,9 @@ function XML_RPC_cd($parser, $data)
     }
 }
 
-
+/**
+ *
+ */
 function XML_RPC_dh($parser, $data)
 {
     global $XML_RPC_xh, $XML_RPC_backslash;
@@ -410,6 +438,13 @@ function XML_RPC_dh($parser, $data)
  * Base class
  *
  * This class provides common functions for all of the XML_RPC classes.
+ *
+ * @author     Edd Dumbill <edd@usefulinc.com>
+ * @author     Stig Bakken <stig@php.net>
+ * @author     Martin Jansen <mj@php.net>
+ * @copyright  1999-2001 Edd Dumbill
+ * @version    Release: @package_version@
+ * @link       http://pear.php.net/package/XML_RPC
  */
 class XML_RPC_Base {
     function raiseError($msg, $code)
@@ -419,6 +454,16 @@ class XML_RPC_Base {
     }
 }
 
+/**
+ *
+ *
+ * @author     Edd Dumbill <edd@usefulinc.com>
+ * @author     Stig Bakken <stig@php.net>
+ * @author     Martin Jansen <mj@php.net>
+ * @copyright  1999-2001 Edd Dumbill
+ * @version    Release: @package_version@
+ * @link       http://pear.php.net/package/XML_RPC
+ */
 class XML_RPC_Client extends XML_RPC_Base {
     var $path;
     var $server;
@@ -561,7 +606,16 @@ class XML_RPC_Client extends XML_RPC_Base {
     }
 }
 
-
+/**
+ *
+ *
+ * @author     Edd Dumbill <edd@usefulinc.com>
+ * @author     Stig Bakken <stig@php.net>
+ * @author     Martin Jansen <mj@php.net>
+ * @copyright  1999-2001 Edd Dumbill
+ * @version    Release: @package_version@
+ * @link       http://pear.php.net/package/XML_RPC
+ */
 class XML_RPC_Response extends XML_RPC_Base
 {
     var $xv;
@@ -625,7 +679,16 @@ class XML_RPC_Response extends XML_RPC_Base
     }
 }
 
-
+/**
+ *
+ *
+ * @author     Edd Dumbill <edd@usefulinc.com>
+ * @author     Stig Bakken <stig@php.net>
+ * @author     Martin Jansen <mj@php.net>
+ * @copyright  1999-2001 Edd Dumbill
+ * @version    Release: @package_version@
+ * @link       http://pear.php.net/package/XML_RPC
+ */
 class XML_RPC_Message extends XML_RPC_Base
 {
     var $payload;
@@ -806,7 +869,16 @@ class XML_RPC_Message extends XML_RPC_Base
 
 }
 
-
+/**
+ *
+ *
+ * @author     Edd Dumbill <edd@usefulinc.com>
+ * @author     Stig Bakken <stig@php.net>
+ * @author     Martin Jansen <mj@php.net>
+ * @copyright  1999-2001 Edd Dumbill
+ * @version    Release: @package_version@
+ * @link       http://pear.php.net/package/XML_RPC
+ */
 class XML_RPC_Value extends XML_RPC_Base
 {
     var $me = array();
@@ -1073,7 +1145,6 @@ class XML_RPC_Value extends XML_RPC_Base
     }
 }
 
-
 /**
  * date helpers
  */
@@ -1103,6 +1174,9 @@ function XML_RPC_iso8601_encode($timet, $utc = 0) {
     return $t;
 }
 
+/**
+ *
+ */
 function XML_RPC_iso8601_decode($idate, $utc = 0) {
     // return a timet in the localtime, or UTC
     $t = 0;

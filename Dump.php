@@ -67,23 +67,25 @@ class XML_RPC_Dump
             return $this->getIndent($nLevel) . 'NOT A XML_RPC_Value: '
                    . $strType . "\r\n";
         }
+
         switch ($value->kindOf()) {
-            case 'struct':
-                $ret = $this->genStruct($value, $nLevel);
-                break;
-            case 'array':
-                $ret = $this->genArray($value, $nLevel);
-                break;
-            case 'scalar':
-                $ret = $this->genScalar($value->scalarval(), $nLevel);
-                break;
-            default:
-                require_once 'PEAR.php';
-                PEAR::raiseError('Illegal type "' . $value->kindOf()
-                                 . '" in XML_RPC_Value' . "\r\n", 0,
-                                 PEAR_ERROR_PRINT);
-                break;
+        case 'struct':
+            $ret = $this->genStruct($value, $nLevel);
+            break;
+        case 'array':
+            $ret = $this->genArray($value, $nLevel);
+            break;
+        case 'scalar':
+            $ret = $this->genScalar($value->scalarval(), $nLevel);
+            break;
+        default:
+            require_once 'PEAR.php';
+            PEAR::raiseError('Illegal type "' . $value->kindOf()
+                             . '" in XML_RPC_Value' . "\r\n", 0,
+                             PEAR_ERROR_PRINT);
+            break;
         }
+
         return $ret;
     }
 
