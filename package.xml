@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.22 2004-12-29 19:09:10 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.23 2004-12-30 00:00:28 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -19,7 +19,7 @@
     </maintainer>
     <maintainer>
       <user>danielc</user>
-      <role>helper</role>
+      <role>lead</role>
       <name>Daniel Convissor</name>
       <email>danielc@analysisandsolutions.com</email>
     </maintainer>
@@ -39,6 +39,9 @@
 - Encode empty arrays as an array. Bug 1493.  (danielc)
 - Eliminate undefined index notice when submitting empty arrays to XML_RPC_Encode().  Bug 1819.  (danielc)
 - Speed up check for enumerated arrays in XML_RPC_Encode().  (danielc)
+- Prepend "XML_RPC_" to ERROR_NON_NUMERIC_FOUND, eliminating problem when eval()'ing error messages.  (danielc)
+- Use XML_RPC_Base::raiseError() instead of PEAR::raiseError() in XML_RPC_ee() because PEAR.php is lazy loaded.  (danielc)
+- Allow raiseError() to be called statically.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
