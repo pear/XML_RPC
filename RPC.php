@@ -711,6 +711,42 @@ class XML_RPC_Message extends XML_RPC_Base
         return sizeof($this->params);
     }
 
+    /**
+     * Determine the XML's encoding via the encoding attribute
+     * in the XML declaration
+     *
+     * If the encoding parameter is not set or is not ISO-8859-1, UTF-8
+     * or US-ASCII, $XML_RPC_defencoding will be returned.
+     *
+     * @param string $data  the XML that will be parsed
+     *
+     * @return string  the encoding to be used
+     *
+     * @link   http://php.net/xml_parser_create
+     * @since  Method available since Release 1.2.0
+     */
+    function getEncoding($data)
+    {
+        global $XML_RPC_defencoding;
+
+        if (preg_match('/<\?xml[^>]*\s*encoding\s*=\s*[\'"]([^"\']*)[\'"]/i',
+                       $data, $match))
+        {
+            $match[1] = trim(strtoupper($match[1]));
+            switch ($match[1]) {
+                case 'ISO-8859-1':
+                case 'UTF-8':
+                case 'US-ASCII':
+                    return $match[1];
+                    break;
+                default:
+                    return $XML_RPC_defencoding;
+            }
+        } else {
+            return $XML_RPC_defencoding;
+        }
+    }
+
     function parseResponseFile($fp)
     {
         $ipd = '';
@@ -726,7 +762,8 @@ class XML_RPC_Message extends XML_RPC_Base
         global $XML_RPC_xh,$XML_RPC_err,$XML_RPC_str;
         global $XML_RPC_defencoding;
 
-        $parser = xml_parser_create($XML_RPC_defencoding);
+        $encoding = $this->getEncoding($data);
+        $parser = xml_parser_create($encoding);
 
         $XML_RPC_xh[$parser] = array();
 

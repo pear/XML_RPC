@@ -211,6 +211,7 @@ function XML_RPC_Server_debugmsg($m)
 class XML_RPC_Server
 {
     var $dmap = array();
+    var $encoding = '';
 
     function XML_RPC_Server($dispMap, $serviceNow = 1)
     {
@@ -240,13 +241,23 @@ class XML_RPC_Server
         }
     }
 
+    /**
+     * Print out the result
+     *
+     * The encoding and content-type are determined by
+     * XML_RPC_Message::getEncoding()
+     *
+     * @see XML_RPC_Message::getEncoding()
+     */
     function service()
     {
         $r = $this->parseRequest();
-        $payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug()
+        $payload = '<?xml version="1.0" encoding="'
+                 . $this->encoding . '"?>' . "\n"
+                 . $this->serializeDebug()
                  . $r->serialize();
         header('Content-Length: ' . strlen($payload));
-        header('Content-Type: text/xml');
+        header('Content-Type: text/xml; charset=' . $this->encoding);
         print $payload;
     }
 
@@ -291,7 +302,9 @@ class XML_RPC_Server
         if ($data == '') {
             $data = $HTTP_RAW_POST_DATA;
         }
-        $parser = xml_parser_create($XML_RPC_defencoding);
+
+        $this->encoding = XML_RPC_Message::getEncoding($data);
+        $parser = xml_parser_create($this->encoding);
 
         $XML_RPC_xh[$parser] = array();
         $XML_RPC_xh[$parser]['st']     = '';

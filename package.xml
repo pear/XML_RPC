@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.24 2004-12-30 19:32:10 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.25 2004-12-30 21:35:47 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -48,6 +48,7 @@
     * $GLOBALS['XML_RPC_entities']
     * XML_RPC_entity_decode()
     * XML_RPC_lookup_entity()
+- Determine the XML's encoding via the encoding attribute in the XML declaration.  Bug 52.  (danielc)
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
