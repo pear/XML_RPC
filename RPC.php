@@ -1,27 +1,39 @@
 <?php
-// /* vim: set expandtab tabstop=4 shiftwidth=4: */
-// by Edd Dumbill (C) 1999-2001
-// <edd@usefulinc.com>
-// $Id$
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-// License is granted to use or modify this software ("XML-RPC for PHP")
-// for commercial or non-commercial use provided the copyright of the author
-// is preserved in any distributed or derivative work.
+/**
+ * PHP implementation of the XML-RPC protocol
+ *
+ * This is a PEAR-ified version of Useful inc's XML-RPC for PHP.
+ * It has support for HTTP transport, proxies and authentication.
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: License is granted to use or modify this software
+ * ("XML-RPC for PHP") for commercial or non-commercial use provided the
+ * copyright of the author is preserved in any distributed or derivative work.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESSED OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * @category   XML
+ * @package    XML_RPC
+ * @author     Edd Dumbill <edd@usefulinc.com>
+ * @author     Stig Bakken <stig@php.net>
+ * @author     Martin Jansen <mj@php.net>
+ * @copyright  1999-2001 Edd Dumbill
+ * @version    CVS: $Id$
+ * @link       http://pear.php.net/package/XML_RPC
+ */
 
-// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESSED OR
-// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-// IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
-// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-// NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-// THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-// Adapted to PEAR standards by Stig Bakken <stig@php.net> and
-// Martin Jansen <mj@php.net>
-// /* $id$ */
 
 if (!function_exists('xml_parser_create')) {
 // Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
@@ -32,6 +44,9 @@ if (!function_exists('xml_parser_create')) {
     }
 }
 
+/**
+ *
+ */
 define('XML_RPC_ERROR_INVALID_TYPE',        101);
 define('XML_RPC_ERROR_NON_NUMERIC_FOUND',   102);
 define('XML_RPC_ERROR_CONNECTION_FAILED',   103);
@@ -1205,5 +1220,13 @@ function XML_RPC_encode($php_val) {
    }
    return $XML_RPC_val;
 }
+
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * c-hanging-comment-ender-p: nil
+ * End:
+ */
 
 ?>
