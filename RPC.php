@@ -1152,7 +1152,7 @@ class XML_RPC_Message extends XML_RPC_Base
     function parseResponseFile($fp)
     {
         $ipd = '';
-        while ($data = @fread($fp, 32768)) {
+        while ($data = @fread($fp, 8192)) {
             $ipd .= $data;
         }
         return $this->parseResponse($ipd);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <!-- $Id: package.xml,v 1.38 2005-02-22 01:16:44 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.39 2005-02-22 06:16:44 danielc Exp $ -->
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
   <description>
@@ -27,7 +27,7 @@
 
   <release>
     <version>1.2.0RC7</version>
-    <date>2005-02-21</date>
+    <date>2005-02-22</date>
     <state>beta</state>
     <notes><![CDATA[
 - Add the setSendEncoding() method and $send_encoding
@@ -37,6 +37,8 @@
      or
      'function' => array('hello', 'sayhello'),
   Bug 3363.
+- Use 8192 instead of 32768 for bytes in fread()
+  in parseResponseFile().  Bug 3340.
     ]]></notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML">
