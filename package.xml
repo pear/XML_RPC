@@ -15,6 +15,20 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
     </maintainer>
   </maintainers>
   <release>
+    <version>1.2.0-dev</version>
+    <date>2004-04-11</date>
+    <state>devel</state>
+    <notes>
+- Allow array function callbacks (thanks to Matt Kane)
+- Some minor speed-ups (thanks to Matt Kane)
+</notes>
+    <filelist>
+      <file role="php" name="RPC.php" baseinstalldir="XML"/>
+      <file role="php" name="Server.php" baseinstalldir="XML/RPC"/>
+    </filelist>
+  </release>
+  <changelog>
+  <release>
     <version>1.1.0</version>
     <date>2003-03-15</date>
     <state>stable</state>
@@ -33,7 +47,6 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
       <file role="php" name="Server.php" baseinstalldir="XML/RPC"/>
     </filelist>
   </release>
-  <changelog>
   <release>
     <version>1.0.4</version>
     <date>2002-10-02</date>
