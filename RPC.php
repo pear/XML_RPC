@@ -1,4 +1,5 @@
 <?php
+// /* vim: set expandtab tabstop=4 shiftwidth=4: */
 // by Edd Dumbill (C) 1999-2001
 // <edd@usefulinc.com>
 // $Id$
@@ -18,13 +19,14 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Adapted to PEAR standards by Stig S�her Bakken <stig@php.net> and 
+// Adapted to PEAR standards by Stig S�her Bakken <stig@php.net> and
 // Martin Jansen <mj@php.net>
+// /* $id$ */
 
 if (!function_exists('xml_parser_create')) {
 // Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
     if ($WINDIR) {
-        dl("php3_xml.dll");
+        dl("php_xml.dll");
     } else {
         dl("xml.so");
     }
@@ -301,7 +303,7 @@ function XML_RPC_ee($parser, $name)
         break;
 
     case "MEMBER":
-        $XML_RPC_xh[$parser]['ac'] = ""; 
+        $XML_RPC_xh[$parser]['ac'] = "";
         $XML_RPC_xh[$parser]['qt'] = 0;
         break;
 
@@ -546,14 +548,14 @@ class XML_RPC_Response extends XML_RPC_Base
         }
     }
 
-    function faultString() 
-    { 
+    function faultString()
+    {
         return $this->fs;
     }
 
-    function value() 
-    { 
-        return $this->xv; 
+    function value()
+    {
+        return $this->xv;
     }
 
     function serialize()
@@ -644,7 +646,7 @@ class XML_RPC_Message extends XML_RPC_Base
         $this->params[] = $par;
     }
 
-    function getParam($i) 
+    function getParam($i)
     {
         return $this->params[$i];
     }
@@ -705,7 +707,7 @@ class XML_RPC_Message extends XML_RPC_Base
                 return $r;
         }
         // gotta get rid of headers here
-          
+
 
         if ((!$hdrfnd) && ($brpos = strpos($data,"\r\n\r\n"))) {
             $XML_RPC_xh[$parser]['ha'] = substr($data, 0, $brpos);
