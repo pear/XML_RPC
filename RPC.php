@@ -60,31 +60,31 @@ define('XML_RPC_ERROR_ALREADY_INITIALIZED', 104);
  * Data types
  * @global string $GLOBALS['XML_RPC_I4']
  */
-$GLOBALS['XML_RPC_I4']       = 'i4';
+$GLOBALS['XML_RPC_I4'] = 'i4';
 
 /**
  * Data types
  * @global string $GLOBALS['XML_RPC_Int']
  */
-$GLOBALS['XML_RPC_Int']      = 'int';
+$GLOBALS['XML_RPC_Int'] = 'int';
 
 /**
  * Data types
  * @global string $GLOBALS['XML_RPC_Boolean']
  */
-$GLOBALS['XML_RPC_Boolean']  = 'boolean';
+$GLOBALS['XML_RPC_Boolean'] = 'boolean';
 
 /**
  * Data types
  * @global string $GLOBALS['XML_RPC_Double']
  */
-$GLOBALS['XML_RPC_Double']   = 'double';
+$GLOBALS['XML_RPC_Double'] = 'double';
 
 /**
  * Data types
  * @global string $GLOBALS['XML_RPC_String']
  */
-$GLOBALS['XML_RPC_String']   = 'string';
+$GLOBALS['XML_RPC_String'] = 'string';
 
 /**
  * Data types
@@ -96,19 +96,19 @@ $GLOBALS['XML_RPC_DateTime'] = 'dateTime.iso8601';
  * Data types
  * @global string $GLOBALS['XML_RPC_Base64']
  */
-$GLOBALS['XML_RPC_Base64']   = 'base64';
+$GLOBALS['XML_RPC_Base64'] = 'base64';
 
 /**
  * Data types
  * @global string $GLOBALS['XML_RPC_Array']
  */
-$GLOBALS['XML_RPC_Array']    = 'array';
+$GLOBALS['XML_RPC_Array'] = 'array';
 
 /**
  * Data types
  * @global string $GLOBALS['XML_RPC_Struct']
  */
-$GLOBALS['XML_RPC_Struct']   = 'struct';
+$GLOBALS['XML_RPC_Struct'] = 'struct';
 
 
 /**
@@ -200,6 +200,8 @@ $GLOBALS['XML_RPC_xh'] = array();
 
 /**
  * Start element handler for the XML parser
+ *
+ * @return void
  */
 function XML_RPC_se($parser, $name, $attrs)
 {
@@ -268,10 +270,6 @@ function XML_RPC_se($parser, $name, $attrs)
 
     case 'MEMBER':
         $XML_RPC_xh[$parser]['ac'] = '';
-        break;
-
-    default:
-        break;
     }
 
     if ($name != 'VALUE') {
@@ -281,6 +279,8 @@ function XML_RPC_se($parser, $name, $attrs)
 
 /**
  * End element handler for the XML parser
+ *
+ * @return void
  */
 function XML_RPC_ee($parser, $name)
 {
@@ -396,10 +396,6 @@ function XML_RPC_ee($parser, $name)
         }
 
         $XML_RPC_xh[$parser]['vt'] = strtolower($name);
-        break;
-
-    default:
-        break;
     }
 
     // if it's a valid type name, set the type
@@ -410,6 +406,8 @@ function XML_RPC_ee($parser, $name)
 
 /**
  * Character data handler for the XML parser
+ *
+ * @return void
  */
 function XML_RPC_cd($parser, $data)
 {
@@ -456,6 +454,8 @@ class XML_RPC_Base {
 
     /**
      * PEAR Error handling
+     *
+     * @return object  PEAR_Error object
      */
     function raiseError($msg, $code)
     {
@@ -815,6 +815,9 @@ class XML_RPC_Response extends XML_RPC_Base
     var $fs;
     var $hdrs;
 
+    /**
+     * @return void
+     */
     function XML_RPC_Response($val, $fcode = 0, $fstr = '')
     {
         if ($fcode != 0) {
@@ -825,6 +828,9 @@ class XML_RPC_Response extends XML_RPC_Base
         }
     }
 
+    /**
+     * @return int  the error code
+     */
     function faultCode()
     {
         if (isset($this->fn)) {
@@ -834,16 +840,25 @@ class XML_RPC_Response extends XML_RPC_Base
         }
     }
 
+    /**
+     * @return string  the error string
+     */
     function faultString()
     {
         return $this->fs;
     }
 
+    /**
+     * @return mixed  the value
+     */
     function value()
     {
         return $this->xv;
     }
 
+    /**
+     * @return string  the error message in XML format
+     */
     function serialize()
     {
         $rs = "<methodResponse>\n";
@@ -885,11 +900,32 @@ class XML_RPC_Response extends XML_RPC_Base
  */
 class XML_RPC_Message extends XML_RPC_Base
 {
-    var $payload;
-    var $methodname;
+    /**
+     * The XML message being generated
+     * @var string
+     */
+    var $payload = '';
+
+    /**
+     * The method presently being evaluated
+     * @var string
+     */
+    var $methodname = '';
+
+    /**
+     * @var array
+     */
     var $params = array();
+
+    /**
+     * The current debug mode (1 = on, 0 = off)
+     * @var integer
+     */
     var $debug = 0;
 
+    /**
+     * @return void
+     */
     function XML_RPC_Message($meth, $pars = 0)
     {
         $this->methodname = $meth;
@@ -900,16 +936,25 @@ class XML_RPC_Message extends XML_RPC_Base
         }
     }
 
+    /**
+     * @return string  the XML declaration and <methodCall> element
+     */
     function xml_header()
     {
         return "<?xml version=\"1.0\"?>\n<methodCall>\n";
     }
 
+    /**
+     * @return string  the closing </methodCall> tag
+     */
     function xml_footer()
     {
         return "</methodCall>\n";
     }
 
+    /**
+     * @return void
+     */
     function createPayload()
     {
         $this->payload = $this->xml_header();
@@ -924,6 +969,9 @@ class XML_RPC_Message extends XML_RPC_Base
         $this->payload = ereg_replace("[\r\n]+", "\r\n", $this->payload);
     }
 
+    /**
+     * @return string  the name of the method
+     */
     function method($meth = '')
     {
         if ($meth != '') {
@@ -932,22 +980,34 @@ class XML_RPC_Message extends XML_RPC_Base
         return $this->methodname;
     }
 
+    /**
+     * @return string  the payload
+     */
     function serialize()
     {
         $this->createPayload();
         return $this->payload;
     }
 
+    /**
+     * @return void
+     */
     function addParam($par)
     {
         $this->params[] = $par;
     }
 
+    /**
+     * @return void
+     */
     function getParam($i)
     {
         return $this->params[$i];
     }
 
+    /**
+     * @return int  the number of parameters
+     */
     function getNumParams()
     {
         return sizeof($this->params);
@@ -981,6 +1041,7 @@ class XML_RPC_Message extends XML_RPC_Base
                 case 'US-ASCII':
                     return $match[1];
                     break;
+
                 default:
                     return $XML_RPC_defencoding;
             }
@@ -989,6 +1050,9 @@ class XML_RPC_Message extends XML_RPC_Base
         }
     }
 
+    /**
+     * @return object  a new XML_RPC_Response object
+     */
     function parseResponseFile($fp)
     {
         $ipd = '';
@@ -998,6 +1062,9 @@ class XML_RPC_Message extends XML_RPC_Base
         return $this->parseResponse($ipd);
     }
 
+    /**
+     * @return object  a new XML_RPC_Response object
+     */
     function parseResponse($data = '')
     {
         global $XML_RPC_xh, $XML_RPC_err, $XML_RPC_str, $XML_RPC_defencoding;
@@ -1093,7 +1160,6 @@ class XML_RPC_Message extends XML_RPC_Base
         $r->hdrs = split("\r?\n", $XML_RPC_xh[$parser]['ha'][1]);
         return $r;
     }
-
 }
 
 /**
@@ -1113,6 +1179,9 @@ class XML_RPC_Value extends XML_RPC_Base
     var $me = array();
     var $mytype = 0;
 
+    /**
+     * @return void
+     */
     function XML_RPC_Value($val = -1, $type = '')
     {
         global $XML_RPC_Types;
@@ -1135,6 +1204,9 @@ class XML_RPC_Value extends XML_RPC_Base
         }
     }
 
+    /**
+     * @return int  returns 1 if successful or 0 if there are problems
+     */
     function addScalar($val, $type = 'string')
     {
         global $XML_RPC_Types, $XML_RPC_Boolean;
@@ -1175,6 +1247,9 @@ class XML_RPC_Value extends XML_RPC_Base
         return 1;
     }
 
+    /**
+     * @return int  returns 1 if successful or 0 if there are problems
+     */
     function addArray($vals)
     {
         global $XML_RPC_Types;
@@ -1189,6 +1264,9 @@ class XML_RPC_Value extends XML_RPC_Base
         return 1;
     }
 
+    /**
+     * @return int  returns 1 if successful or 0 if there are problems
+     */
     function addStruct($vals)
     {
         global $XML_RPC_Types;
@@ -1203,6 +1281,9 @@ class XML_RPC_Value extends XML_RPC_Base
         return 1;
     }
 
+    /**
+     * @return void
+     */
     function dump($ar)
     {
         reset($ar);
@@ -1216,23 +1297,29 @@ class XML_RPC_Value extends XML_RPC_Base
         }
     }
 
+    /**
+     * @return string  the data type of the current value
+     */
     function kindOf()
     {
         switch ($this->mytype) {
         case 3:
             return 'struct';
-            break;
+
         case 2:
             return 'array';
-            break;
+
         case 1:
             return 'scalar';
-            break;
+
         default:
             return 'undef';
         }
     }
 
+    /**
+     * @return string  the data in XML format
+     */
     function serializedata($typ, $val)
     {
         $rs = '';
@@ -1254,6 +1341,7 @@ class XML_RPC_Value extends XML_RPC_Base
             }
             $rs .= '</struct>';
             break;
+
         case 2:
             // array
             $rs .= "<array>\n<data>\n";
@@ -1262,6 +1350,7 @@ class XML_RPC_Value extends XML_RPC_Base
             }
             $rs .= "</data>\n</array>";
             break;
+
         case 1:
             switch ($typ) {
             case $XML_RPC_Base64:
@@ -1276,18 +1365,21 @@ class XML_RPC_Value extends XML_RPC_Base
             default:
                 $rs .= "<${typ}>${val}</${typ}>";
             }
-            break;
-        default:
-            break;
         }
         return $rs;
     }
 
+    /**
+     * @return string  the data in XML format
+     */
     function serialize()
     {
         return $this->serializeval($this);
     }
 
+    /**
+     * @return string  the data in XML format
+     */
     function serializeval($o)
     {
         $rs = '';
@@ -1300,22 +1392,33 @@ class XML_RPC_Value extends XML_RPC_Base
         return $rs;
     }
 
+    /**
+     * @return mixed  the contents of the element requested
+     */
     function structmem($m)
     {
-        $nv = $this->me['struct'][$m];
-        return $nv;
+        return $this->me['struct'][$m];
     }
 
+    /**
+     * @return void
+     */
     function structreset()
     {
         reset($this->me['struct']);
     }
 
+    /**
+     * @return  the key/value pair of the struct's current element
+     */
     function structeach()
     {
         return each($this->me['struct']);
     }
 
+    /**
+     * @return mixed  the current value
+     */
     function getval() {
         // UNSTABLE
         global $XML_RPC_BOOLEAN, $XML_RPC_Base64;
@@ -1349,6 +1452,9 @@ class XML_RPC_Value extends XML_RPC_Base
         return $b;
     }
 
+    /**
+     * @return mixed
+     */
     function scalarval()
     {
         global $XML_RPC_Boolean, $XML_RPC_Base64;
@@ -1357,6 +1463,9 @@ class XML_RPC_Value extends XML_RPC_Base
         return $b;
     }
 
+    /**
+     * @return string
+     */
     function scalartyp()
     {
         global $XML_RPC_I4, $XML_RPC_Int;
@@ -1368,12 +1477,17 @@ class XML_RPC_Value extends XML_RPC_Base
         return $a;
     }
 
+    /**
+     * @return mixed  the struct's current element
+     */
     function arraymem($m)
     {
-        $nv = $this->me['array'][$m];
-        return $nv;
+        return $this->me['array'][$m];
     }
 
+    /**
+     * @return int  the number of elements in the array
+     */
     function arraysize()
     {
         reset($this->me);
@@ -1392,6 +1506,8 @@ class XML_RPC_Value extends XML_RPC_Base
  *
  * This routine always assumes localtime unless $utc is set to 1, in which
  * case UTC is assumed and an adjustment for locale is made when encoding.
+ *
+ * @return string  the formatted date
  */
 function XML_RPC_iso8601_encode($timet, $utc = 0) {
     if (!$utc) {
@@ -1405,7 +1521,6 @@ function XML_RPC_iso8601_encode($timet, $utc = 0) {
             $t = strftime('%Y%m%dT%H:%M:%S', $timet - date('Z'));
         }
     }
-
     return $t;
 }
 
@@ -1419,6 +1534,8 @@ function XML_RPC_iso8601_encode($timet, $utc = 0) {
  *
  * This routine always assumes localtime unless $utc is set to 1, in which
  * case UTC is assumed and an adjustment for locale is made when encoding.
+ *
+ * @return int  the unix timestamp of the date submitted
  */
 function XML_RPC_iso8601_decode($idate, $utc = 0) {
     $t = 0;
@@ -1435,6 +1552,8 @@ function XML_RPC_iso8601_decode($idate, $utc = 0) {
 /**
  * Takes a message in PHP XML_RPC object format and translates it into
  * native PHP types
+ *
+ * @return
  *
  * @author Dan Libby <dan@libby.com>
  */
@@ -1467,6 +1586,8 @@ function XML_RPC_decode($XML_RPC_val)
  * Takes native php types and encodes them into XML_RPC PHP object format.
  *
  * Feature creep -- could support more types via optional type argument.
+ *
+ * @return
  *
  * @author Dan Libby <dan@libby.com>
  */
