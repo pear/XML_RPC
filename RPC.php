@@ -424,7 +424,7 @@ class XML_RPC_Client extends XML_RPC_Base {
      * The port for connecting to the remote server
      *
      * The default is 80 for http:// connections
-     * and 445 for https:// and ssl:// connections.
+     * and 443 for https:// and ssl:// connections.
      *
      * @var integer
      */
@@ -449,7 +449,7 @@ class XML_RPC_Client extends XML_RPC_Base {
      * @param string  $server      the name of the remote server to connect to
      * @param integer $port        a port for connecting to the remote server.
      *                              Defaults to 80 for http:// connections and
-     *                              445 for https:// and ssl:// connections.
+     *                              443 for https:// and ssl:// connections.
      * @param string  $proxy        a name of the proxy server to use, if any
      * @param integer $proxy_port  a port number for accessing the proxy server
      * @param string  $proxy_user  a user name for accessing the proxy server
@@ -511,8 +511,8 @@ class XML_RPC_Client extends XML_RPC_Base {
                 $proxy_server = $match[2];
                 $proxy_proto = 'ssl://';
                 if (!$this->_port_manual) {
-                    $port = 445;
-                    $this->port = 445;
+                    $port = 443;
+                    $this->port = 443;
                 }
             }
             // Backward compatibility
@@ -532,8 +532,8 @@ class XML_RPC_Client extends XML_RPC_Base {
                 $server = $match[2];
                 $server_proto = 'ssl://';
                 if (!$this->_port_manual) {
-                    $port = 445;
-                    $this->port = 445;
+                    $port = 443;
+                    $this->port = 443;
                 }
             } elseif (strstr($server, 'http://')) {
                 $server = substr($server, 7);
