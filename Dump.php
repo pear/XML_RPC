@@ -61,8 +61,7 @@ class XML_RPC_Dump
             }
             return $this->getIndent($nLevel) . 'NOT A XML_RPC_Value: ' . $strType . "\r\n";
         }
-        switch ($value->kindOf())
-        {
+        switch ($value->kindOf()) {
             case 'struct':
                 $ret = $this->genStruct($value, $nLevel);
                 break;
@@ -110,8 +109,7 @@ class XML_RPC_Dump
     {
         $value->structreset();
         $strOutput = $this->getIndent($nLevel) . 'struct' . "\r\n";
-        while (list($key, $keyval) = $value->structeach())
-        {
+        while (list($key, $keyval) = $value->structeach()) {
             $strOutput .= $this->getIndent($nLevel + 1) . $key . "\r\n";
             $strOutput .= $this->generateDump($keyval, $nLevel + 2);
         }
