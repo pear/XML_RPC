@@ -15,11 +15,18 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.4</version>
-    <date>2002-10-02</date>
+    <version>1.1.0</version>
+    <date>2003-03-15</date>
     <state>stable</state>
     <notes>
-* added HTTP proxy authorization support (thanks to Arnaud Limbourg)
+- Added support for sequential arrays to XML_RPC_encode() (mroch)
+- Cleaned up new XML_RPC_encode() changes a bit (mroch, pierre)
+- Remove "require_once 'PEAR.php'", include only when needed to raise an error
+- Replace echo and error_log() with raiseError() (mroch)
+- Make all classes extend XML_RPC_Base, which will handle common functions  (mroch)
+- be tolerant of junk after methodResponse (Luca Mariano, mroch)
+- Silent notice even in the error log (pierre)
+- fix include of shared xml extension on win32 (pierre)
 </notes>
     <filelist>
       <file role="php" name="RPC.php" baseinstalldir="XML"/>
@@ -27,6 +34,13 @@ for PHP.  It has support for HTTP transport, proxies and authentication.
     </filelist>
   </release>
   <changelog>
+  <release>
+    <version>1.0.4</version>
+    <date>2002-10-02</date>
+    <state>stable</state>
+    <notes>
+* added HTTP proxy authorization support (thanks to Arnaud Limbourg)
+</notes>
     <release>
       <version>1.0.3</version>
       <date>2002-05-19</date>
