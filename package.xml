@@ -5,7 +5,7 @@
  <name>XML_RPC</name>
  <summary>A PEAR-ified version of Useful inc's xmlrpc implementation for PHP.</summary>
  <maintainer>
-  <initials>SSB</initials>
+  <user>SSB</user>
   <name>Stig Sæther Bakken</name>
   <email>stig@php.net</email>
  </maintainer>
