@@ -17,8 +17,9 @@
     <date>2002-02-28</date>
     <state>stable</state>
     <notes>
-      E_ALL fixes.
-    </notes>
+* E_ALL fixes
+* fix HTTP response header parsing
+</notes>
     <filelist>
       <dir name="/" baseinstalldir="XML">
 	<file role="php">RPC.php</file>
