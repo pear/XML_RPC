@@ -373,7 +373,7 @@ function XML_RPC_cd($parser, $data)
 
 function XML_RPC_dh($parser, $data)
 {
-    global $XML_RPC_xh;
+    global $XML_RPC_xh, $XML_RPC_backslash;
 
     if (substr($data, 0, 1) == "&" && substr($data, -1, 1) == ";") {
         if ($XML_RPC_xh[$parser]['lv'] == 1) {
