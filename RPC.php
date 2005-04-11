@@ -1227,10 +1227,12 @@ class XML_RPC_Message extends XML_RPC_Base
             print "\n---END---\n</PRE>";
         }
 
-        // see if we got an HTTP 200 OK, else bomb
-        // but only do this if we're using the HTTP protocol.
+        // See if response is a 200 or a 100 then a 200, else raise error.
+        // But only do this if we're using the HTTP protocol.
         if (ereg('^HTTP', $data) &&
-            !ereg('^HTTP/[0-9\.]+ 200 ', $data)) {
+            !ereg('^HTTP/[0-9\.]+ 200 ', $data) &&
+            !preg_match('@^HTTP/[0-9\.]+ 10[0-9]([A-Za-z ]+)?[\r\n]+HTTP/[0-9\.]+ 200@', $data))
+        {
                 $errstr = substr($data, 0, strpos($data, "\n") - 1);
                 error_log('HTTP error, got response: ' . $errstr);
                 $r = new XML_RPC_Response(0, $XML_RPC_err['http_error'],
