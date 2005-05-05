@@ -387,6 +387,7 @@ function XML_RPC_ee($parser_resource, $name)
         break;
 
     case 'METHODNAME':
+    case 'RPCMETHODNAME':
         $XML_RPC_xh[$parser]['method'] = ereg_replace("^[\n\r\t ]+", '',
                                                       $XML_RPC_xh[$parser]['ac']);
         break;
