@@ -420,6 +420,8 @@ class XML_RPC_Server
                 if ($itsOK) {
                     return array(1);
                 }
+            } else {
+                return array(0, 'Improper call to verifySignature()');
             }
         }
         return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
