@@ -53,6 +53,7 @@ define('XML_RPC_ERROR_INVALID_TYPE',        101);
 define('XML_RPC_ERROR_NON_NUMERIC_FOUND',   102);
 define('XML_RPC_ERROR_CONNECTION_FAILED',   103);
 define('XML_RPC_ERROR_ALREADY_INITIALIZED', 104);
+define('XML_RPC_ERROR_INCORRECT_PARAMS',    105);
 /**#@-*/
 
 
@@ -1122,7 +1123,13 @@ class XML_RPC_Message extends XML_RPC_Base
      */
     function getParam($i)
     {
-        return $this->params[$i];
+        if (isset($this->params[$i])) {
+            return $this->params[$i];
+        } else {
+            $this->raiseError('Parameters submitted do not match signature',
+                              XML_RPC_ERROR_INCORRECT_PARAMS);
+            return false;
+        }
     }
 
     /**
