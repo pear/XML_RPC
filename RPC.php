@@ -49,11 +49,30 @@ if (!function_exists('xml_parser_create')) {
 /**#@+
  * Error constants
  */
-define('XML_RPC_ERROR_INVALID_TYPE',        101);
-define('XML_RPC_ERROR_NON_NUMERIC_FOUND',   102);
-define('XML_RPC_ERROR_CONNECTION_FAILED',   103);
+/**
+ * Parameter values don't match parameter types
+ */
+define('XML_RPC_ERROR_INVALID_TYPE', 101);
+/**
+ * Parameter declared to be numeric but the values are not
+ */
+define('XML_RPC_ERROR_NON_NUMERIC_FOUND', 102);
+/**
+ * Communication error
+ */
+define('XML_RPC_ERROR_CONNECTION_FAILED', 103);
+/**
+ * The array or struct has already been started
+ */
 define('XML_RPC_ERROR_ALREADY_INITIALIZED', 104);
-define('XML_RPC_ERROR_INCORRECT_PARAMS',    105);
+/**
+ * Incorrect parameters submitted
+ */
+define('XML_RPC_ERROR_INCORRECT_PARAMS', 105);
+/**
+ * Programming error by developer
+ */
+define('XML_RPC_ERROR_PROGRAMMING', 106);
 /**#@-*/
 
 
@@ -729,6 +748,12 @@ class XML_RPC_Client extends XML_RPC_Base {
      */
     function send($msg, $timeout = 0)
     {
+        if (strtolower(get_class($msg)) != 'xml_rpc_message') {
+            $this->errstr = 'send()\'s $msg parameter must be an'
+                          . ' XML_RPC_Message object.';
+            $this->raiseError($this->errstr, XML_RPC_ERROR_PROGRAMMING);
+            return 0;
+        }
         $msg->debug = $this->debug;
         return $this->sendPayloadHTTP10($msg, $this->server, $this->port,
                                         $timeout, $this->username,
