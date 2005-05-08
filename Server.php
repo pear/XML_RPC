@@ -420,11 +420,26 @@ class XML_RPC_Server
                 if ($itsOK) {
                     return array(1);
                 }
-            } else {
-                return array(0, 'Improper call to verifySignature()');
             }
         }
-        return array(0, "Wanted ${wanted}, got ${got} at param ${pno})");
+        if (isset($wanted)) {
+            return array(0, "Wanted ${wanted}, got ${got} at param ${pno}");
+        } else {
+            $allowed = array();
+            foreach ($sig as $val) {
+                end($val);
+                $allowed[] = key($val);
+            }
+            $allowed = array_unique($allowed);
+            $last = count($allowed) - 1;
+            if ($last > 0) {
+                $allowed[$last] = 'or ' . $allowed[$last];
+            }
+            return array(0,
+                         'Signature permits ' . implode(', ', $allowed)
+                                . ' parameters but the request had '
+                                . $in->getNumParams());
+        }
     }
 
     /**
