@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.10 2005-05-05 15:29:45 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.11 2005-05-08 00:36:24 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,23 +32,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-05-05</date>
+  <date>pending</date>
 
   <version>
-   <release>1.3.0RC2</release>
+   <release>1.3.0</release>
    <api>1.3.0</api>
   </version>
   <stability>
-   <release>beta</release>
-   <api>beta</api>
+   <release>stable</release>
+   <api>stable</api>
   </stability>
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* If XML_RPC_Message::getParam() is given an incorrect parameter, raise an error with the new XML_RPC_ERROR_INCORRECT_PARAMS code and return FALSE.
-* Handle improper requests to XML_RPC_Server::verifySignature().  Bug 4231.
-* Try to allow HTTP 100 responses if followed by a 200 response.  Bug 4116.
-* Help Delphi users by making RPCMETHODNAME an alias for METHODNAME.  Request 4205.
+* When verifying requests against function signatures, if the number of parameters don't match, provide an appropriate message.  NOTE: this resolves a path disclosure vulnerability.  (Refines the changes made in the last commit.)  Bug 4231.
+* XML_RPC_Message::getParam() now returns an XML_RPC_Response object upon error.  Changed from Release 1.3.0RC2.
+* Add the XML_RPC_Value::isValue() method. For testing if an item is an XML_RPC_Value object.
+* If XML_RPC_Client::send() is given an incorrect $msg parameter, raise an error with the new XML_RPC_ERROR_PROGRAMMING code and return 0.
   ]]></notes>
 
   <contents>
@@ -103,6 +103,25 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.3.0RC2</release>
+     <api>1.3.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2005-05-05</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* If XML_RPC_Message::getParam() is given an incorrect parameter, raise an error with the new XML_RPC_ERROR_INCORRECT_PARAMS code and return FALSE.
+* Handle improper requests to XML_RPC_Server::verifySignature().  Bug 4231.
+* Try to allow HTTP 100 responses if followed by a 200 response.  Bug 4116.
+* Help Delphi users by making RPCMETHODNAME an alias for METHODNAME.  Request 4205.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
