@@ -1145,16 +1145,26 @@ class XML_RPC_Message extends XML_RPC_Base
     }
 
     /**
-     * @return void
+     * Obtains an XML_RPC_Value object for the given parameter
+     *
+     * @param int $i  the index number of the parameter to obtain
+     *
+     * @return object  the XML_RPC_Value object.
+     *                  If the parameter doesn't exist, an XML_RPC_Response object.
+     *
+     * @since Returns XML_RPC_Response object on error since Release 1.3.0
      */
     function getParam($i)
     {
+        global $XML_RPC_err, $XML_RPC_str;
+
         if (isset($this->params[$i])) {
             return $this->params[$i];
         } else {
-            $this->raiseError('Parameters submitted do not match signature',
+            $this->raiseError('The submitted request did not contain this parameter',
                               XML_RPC_ERROR_INCORRECT_PARAMS);
-            return false;
+            return new XML_RPC_Response(0, $XML_RPC_err['incorrect_params'],
+                                        $XML_RPC_str['incorrect_params']);
         }
     }
 
@@ -1665,6 +1675,21 @@ class XML_RPC_Value extends XML_RPC_Base
         reset($this->me);
         list($a, $b) = each($this->me);
         return sizeof($b);
+    }
+
+    /**
+     * Determines if the item submitted is an XML_RPC_Value object
+     *
+     * @param mixed $val  the variable to be evaluated
+     *
+     * @return bool  TRUE if the item is an XML_RPC_Value object
+     *
+     * @static
+     * @since Method available since Release 1.3.0
+     */
+    function isValue($val)
+    {
+        return (strtolower(get_class($val)) == 'xml_rpc_value');
     }
 }
 
