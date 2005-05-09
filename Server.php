@@ -3,7 +3,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * PHP implementation of the XML-RPC protocol
+ * Server commands for our PHP implementation of the XML-RPC protocol
  *
  * This is a PEAR-ified version of Useful inc's XML-RPC for PHP.
  * It has support for HTTP transport, proxies and authentication.
@@ -30,7 +30,8 @@
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -43,7 +44,8 @@ require_once 'XML/RPC.php';
 
 
 /**
- * listMethods: either a string, or nothing
+ * signature for system.listMethods: return = array,
+ * parameters = a string or nothing
  * @global array $GLOBALS['XML_RPC_Server_listMethods_sig']
  */
 $GLOBALS['XML_RPC_Server_listMethods_sig'] = array(
@@ -54,12 +56,15 @@ $GLOBALS['XML_RPC_Server_listMethods_sig'] = array(
 );
 
 /**
+ * docstring for system.listMethods
  * @global string $GLOBALS['XML_RPC_Server_listMethods_doc']
  */
 $GLOBALS['XML_RPC_Server_listMethods_doc'] = 'This method lists all the'
         . ' methods that the XML-RPC server knows how to dispatch';
 
 /**
+ * signature for system.methodSignature: return = array,
+ * parameters = string
  * @global array $GLOBALS['XML_RPC_Server_methodSignature_sig']
  */
 $GLOBALS['XML_RPC_Server_methodSignature_sig'] = array(
@@ -69,6 +74,7 @@ $GLOBALS['XML_RPC_Server_methodSignature_sig'] = array(
 );
 
 /**
+ * docstring for system.methodSignature
  * @global string $GLOBALS['XML_RPC_Server_methodSignature_doc']
  */
 $GLOBALS['XML_RPC_Server_methodSignature_doc'] = 'Returns an array of known'
@@ -77,6 +83,8 @@ $GLOBALS['XML_RPC_Server_methodSignature_doc'] = 'Returns an array of known'
         . ' array to detect missing signature)';
 
 /**
+ * signature for system.methodHelp: return = string,
+ * parameters = string
  * @global array $GLOBALS['XML_RPC_Server_methodHelp_sig']
  */
 $GLOBALS['XML_RPC_Server_methodHelp_sig'] = array(
@@ -86,12 +94,14 @@ $GLOBALS['XML_RPC_Server_methodHelp_sig'] = array(
 );
 
 /**
+ * docstring for methodHelp
  * @global string $GLOBALS['XML_RPC_Server_methodHelp_doc']
  */
 $GLOBALS['XML_RPC_Server_methodHelp_doc'] = 'Returns help text if defined'
         . ' for the method passed, otherwise returns an empty string';
 
 /**
+ * dispatch map for the automatically declared XML-RPC methods.
  * @global array $GLOBALS['XML_RPC_Server_dmap']
  */
 $GLOBALS['XML_RPC_Server_dmap'] = array(
@@ -232,14 +242,36 @@ function XML_RPC_Server_debugmsg($m)
 
 
 /**
+ * A server for receiving and replying to XML RPC requests
  *
+ * <code>
+ * $server = new XML_RPC_Server(
+ *     array(
+ *         'isan8' =>
+ *             array(
+ *                 'function' => 'is_8',
+ *                 'signature' =>
+ *                      array(
+ *                          array('boolean', 'int'),
+ *                          array('boolean', 'int', 'boolean'),
+ *                          array('boolean', 'string'),
+ *                          array('boolean', 'string', 'boolean'),
+ *                      ),
+ *                 'docstring' => 'Is the value an 8?'
+ *             ),
+ *     ),
+ *     1,
+ *     0
+ * ); 
+ * </code>
  *
  * @category   Web Services
  * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -278,7 +310,21 @@ class XML_RPC_Server
 
 
     /**
-     * @param array $dispMap   the dispatch map
+     * Constructor for the XML_RPC_Server class
+     *
+     * @param array $dispMap   the dispatch map. An associative array
+     *                          explaining each function. The keys of the main
+     *                          array are the procedure names used by the
+     *                          clients. The value is another associative array
+     *                          that contains up to three elements:
+     *                            + The 'function' element's value is the name
+     *                              of the function or method that gets called.
+     *                              To define a class' method: 'class::method'.
+     *                            + The 'signature' element (optional) is an
+     *                              array describing the return values and
+     *                              parameters
+     *                            + The 'docstring' element (optional) is a
+     *                              string describing what the method does
      * @param int $serviceNow  should the HTTP response be sent now?
      *                          (1 = yes, 0 = no)
      * @param int $debug       should debug output be displayed?
@@ -296,11 +342,6 @@ class XML_RPC_Server
             $this->debug = 0;
         }
 
-        // dispMap is a despatch array of methods
-        // mapped to function names and signatures
-        // if a method
-        // doesn't appear in the map then an unknown
-        // method error is generated
         $this->dmap = $dispMap;
 
         if ($serviceNow) {
