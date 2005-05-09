@@ -31,19 +31,14 @@
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  */
 
 
 if (!function_exists('xml_parser_create')) {
-    // Win 32 fix. From: "Leo West" <lwest@imaginet.fr>
-    if ($WINDIR) {
-        dl('php_xml.dll');
-    } else {
-        dl('xml.so');
-    }
+    PEAR::loadExtension('xml');
 }
 
 /**#@+
@@ -452,16 +447,15 @@ function XML_RPC_cd($parser_resource, $data)
 }
 
 /**
- * Base class
- *
- * This class provides common functions for all of the XML_RPC classes.
+ * The common methods and properties for all of the XML_RPC classes
  *
  * @category   Web Services
  * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -498,7 +492,7 @@ class XML_RPC_Base {
 }
 
 /**
- *
+ * The methods and properties for submitting XML RPC requests
  *
  * @category   Web Services
  * @package    XML_RPC
@@ -506,7 +500,7 @@ class XML_RPC_Base {
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -916,14 +910,15 @@ class XML_RPC_Client extends XML_RPC_Base {
 }
 
 /**
- *
+ * The methods and properties for interpreting responses to XML RPC requests
  *
  * @category   Web Services
  * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -1006,7 +1001,7 @@ class XML_RPC_Response extends XML_RPC_Base
 }
 
 /**
- *
+ * The methods and properties for composing XML RPC messages
  *
  * @category   Web Services
  * @package    XML_RPC
@@ -1014,7 +1009,7 @@ class XML_RPC_Response extends XML_RPC_Base
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -1344,14 +1339,15 @@ class XML_RPC_Message extends XML_RPC_Base
 }
 
 /**
- *
+ * The methods and properties that represent data in XML RPC format
  *
  * @category   Web Services
  * @package    XML_RPC
  * @author     Edd Dumbill <edd@usefulinc.com>
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
- * @copyright  1999-2001 Edd Dumbill
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  1999-2001 Edd Dumbill, 2001-2005 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
