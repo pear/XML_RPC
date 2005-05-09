@@ -138,13 +138,11 @@ function XML_RPC_Server_listMethods($server, $m)
     global $XML_RPC_err, $XML_RPC_str, $XML_RPC_Server_dmap;
 
     $v = new XML_RPC_Value();
-    $dmap = $server->dmap;
     $outAr = array();
-    for (reset($dmap); list($key, $val) = each($dmap); ) {
+    foreach ($server->dmap as $key => $val) {
         $outAr[] = new XML_RPC_Value($key, 'string');
     }
-    $dmap = $XML_RPC_Server_dmap;
-    for (reset($dmap); list($key, $val) = each($dmap); ) {
+    foreach ($XML_RPC_Server_dmap as $key => $val) {
         $outAr[] = new XML_RPC_Value($key, 'string');
     }
     $v->addArray($outAr);
