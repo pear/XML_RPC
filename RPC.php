@@ -1464,11 +1464,11 @@ class XML_RPC_Value extends XML_RPC_Base
     function dump($ar)
     {
         reset($ar);
-        while (list($key, $val) = each($ar)) {
-            echo "$key => $val<br>";
+        foreach ($ar as $key => $val) {
+            echo "$key => $val<br />";
             if ($key == 'array') {
-                while (list($key2, $val2) = each($val)) {
-                    echo "-- $key2 => $val2<br>";
+                foreach ($val as $key2 => $val2) {
+                    echo "-- $key2 => $val2<br />";
                 }
             }
         }
@@ -1511,7 +1511,7 @@ class XML_RPC_Value extends XML_RPC_Base
             // struct
             $rs .= "<struct>\n";
             reset($val);
-            while (list($key2, $val2) = each($val)) {
+            foreach ($val as $key2 => $val2) {
                 $rs .= "<member><name>${key2}</name>\n";
                 $rs .= $this->serializeval($val2);
                 $rs .= "</member>\n";
@@ -1602,7 +1602,7 @@ class XML_RPC_Value extends XML_RPC_Base
         global $XML_RPC_BOOLEAN, $XML_RPC_Base64;
 
         reset($this->me);
-        list($a, $b) = each($this->me);
+        $b = current($this->me);
 
         // contributed by I Sofer, 2001-03-24
         // add support for nested arrays to scalarval
@@ -1637,8 +1637,7 @@ class XML_RPC_Value extends XML_RPC_Base
     {
         global $XML_RPC_Boolean, $XML_RPC_Base64;
         reset($this->me);
-        list($a, $b) = each($this->me);
-        return $b;
+        return current($this->me);
     }
 
     /**
@@ -1648,7 +1647,7 @@ class XML_RPC_Value extends XML_RPC_Base
     {
         global $XML_RPC_I4, $XML_RPC_Int;
         reset($this->me);
-        list($a, $b) = each($this->me);
+        $a = key($this->me);
         if ($a == $XML_RPC_I4) {
             $a = $XML_RPC_Int;
         }
