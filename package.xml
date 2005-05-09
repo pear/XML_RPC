@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.50 2005-05-09 21:53:22 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.51 2005-05-09 23:48:54 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,9 +30,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.3.0</version>
-    <date>pending</date>
-    <state>stable</state>
+    <version>1.3.0RC3</version>
+    <date>2005-05-10</date>
+    <state>beta</state>
     <notes><![CDATA[
 * When verifying requests against function signatures, if the number of parameters don't match, provide an appropriate message.  NOTE: this resolves a path disclosure vulnerability.  (Refines the changes made in the last commit.)  Bug 4231.
 * XML_RPC_Message::getParam() now returns an XML_RPC_Response object upon error.  Changed from Release 1.3.0RC2.
