@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.13 2005-05-09 23:48:54 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.14 2005-06-13 15:28:30 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,25 +32,20 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-05-10</date>
+  <date>2005-06-13</date>
 
   <version>
-   <release>1.3.0RC3</release>
+   <release>1.3.0</release>
    <api>1.3.0</api>
   </version>
   <stability>
-   <release>beta</release>
+   <release>stable</release>
    <api>stable</api>
   </stability>
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* When verifying requests against function signatures, if the number of parameters don't match, provide an appropriate message.  NOTE: this resolves a path disclosure vulnerability.  (Refines the changes made in the last commit.)  Bug 4231.
-* XML_RPC_Message::getParam() now returns an XML_RPC_Response object upon error.  Changed from Release 1.3.0RC2.
-* Add the XML_RPC_Value::isValue() method. For testing if an item is an XML_RPC_Value object.
-* If XML_RPC_Client::send() is given an incorrect $msg parameter, raise an error with the new XML_RPC_ERROR_PROGRAMMING code and return 0.
-* Improve cross-platform operation by using PEAR::loadExtension() instead of dl().
-* Use <br /> instead of <br> in XML_RPC_Value::dump().
+* Stable release.  See earlier releases for changes since 1.2.2.
   ]]></notes>
 
   <contents>
@@ -87,7 +82,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <name>PEAR</name>
    <channel>pear.php.net</channel>
    <min>1.4.0a1</min>
-   <max>1.4.0a10</max>
+   <max>1.4.0a12</max>
   </compatible>
 
   <dependencies>
@@ -105,6 +100,27 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.3.0RC3</release>
+     <api>1.3.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-05-10</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* When verifying requests against function signatures, if the number of parameters don't match, provide an appropriate message.  NOTE: this resolves a path disclosure vulnerability.  (Refines the changes made in the last commit.)  Bug 4231.
+* XML_RPC_Message::getParam() now returns an XML_RPC_Response object upon error.  Changed from Release 1.3.0RC2.
+* Add the XML_RPC_Value::isValue() method. For testing if an item is an XML_RPC_Value object.
+* If XML_RPC_Client::send() is given an incorrect $msg parameter, raise an error with the new XML_RPC_ERROR_PROGRAMMING code and return 0.
+* Improve cross-platform operation by using PEAR::loadExtension() instead of dl().
+* Use <br /> instead of <br> in XML_RPC_Value::dump().
+    ]]></notes>
+   </release>
 
    <release>
     <version>
