@@ -592,7 +592,7 @@ class XML_RPC_Client extends XML_RPC_Base {
      * The error message, if any
      * @var string
      */
-    var $errstring = '';
+    var $errstr = '';
 
     /**
      * The current debug mode (1 = on, 0 = off)
