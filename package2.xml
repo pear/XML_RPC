@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.15 2005-06-29 13:09:18 toby Exp $ -->
+  <!-- $Id: package2.xml,v 1.16 2005-07-02 16:27:18 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-06-29</date>
+  <date>2005-07-02</date>
 
   <version>
-   <release>1.3.1</release>
+   <release>1.3.2</release>
    <api>1.3.0</api>
   </version>
   <stability>
@@ -45,7 +45,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Security fix. Update highly recommended!
+* Change "var $errstring" to "var $errstr".  Bug 4582.
+  Was put into CVS version 1.75 of RPC.php but didn't make
+  it into RELEASE_1_3_1.
   ]]></notes>
 
   <contents>
@@ -100,6 +102,38 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.3.1</release>
+     <api>1.3.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-06-29</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Security fix. Update highly recommended!
+    ]]></notes>
+   </release>
+
+   <release>
+    <version>
+     <release>1.3.0</release>
+     <api>1.3.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-06-13</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Stable release.  See earlier releases for changes since 1.2.2.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
