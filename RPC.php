@@ -1559,6 +1559,9 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function serializeval($o)
     {
+        if (!is_object($o) || empty($o->me) || !is_array($o->me)) {
+            return '';
+        }
         $rs = '';
         $ar = $o->me;
         reset($ar);
