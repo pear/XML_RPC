@@ -1562,14 +1562,10 @@ class XML_RPC_Value extends XML_RPC_Base
         if (!is_object($o) || empty($o->me) || !is_array($o->me)) {
             return '';
         }
-        $rs = '';
         $ar = $o->me;
         reset($ar);
         list($typ, $val) = each($ar);
-        $rs .= '<value>';
-        $rs .= $this->serializedata($typ, $val);
-        $rs .= "</value>\n";
-        return $rs;
+        return '<value>' .  $this->serializedata($typ, $val) .  "</value>\n";
     }
 
     /**
