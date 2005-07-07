@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.16 2005-07-02 16:27:18 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.17 2005-07-07 00:48:13 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,7 +32,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-07-02</date>
+  <date>2005-07-07</date>
 
   <version>
    <release>1.3.2</release>
@@ -48,6 +48,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 * Change "var $errstring" to "var $errstr".  Bug 4582.
   Was put into CVS version 1.75 of RPC.php but didn't make
   it into RELEASE_1_3_1.
+* Suppress potential error messages when eval()'ing.
   ]]></notes>
 
   <contents>

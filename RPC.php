@@ -1323,7 +1323,7 @@ class XML_RPC_Message extends XML_RPC_Base
             $r = new XML_RPC_Response(0, $XML_RPC_err['invalid_return'],
                                       $XML_RPC_str['invalid_return']);
         } else {
-            eval('$v=' . $XML_RPC_xh[$parser]['st'] . '; $allOK=1;');
+            @eval('$v=' . $XML_RPC_xh[$parser]['st'] . '; $allOK=1;');
             if ($XML_RPC_xh[$parser]['isf']) {
                 $f = $v->structmem('faultCode');
                 $fs = $v->structmem('faultString');
@@ -1622,7 +1622,7 @@ class XML_RPC_Value extends XML_RPC_Base
                 $t[$id] = $cont->scalarval();
             }
             foreach ($t as $id => $cont) {
-                eval('$b->'.$id.' = $cont;');
+                @eval('$b->'.$id.' = $cont;');
             }
         }
 

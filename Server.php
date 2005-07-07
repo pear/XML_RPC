@@ -529,7 +529,7 @@ class XML_RPC_Server
             for ($i = 0; $i < sizeof($XML_RPC_xh[$parser]['params']); $i++) {
                 // print '<!-- ' . $XML_RPC_xh[$parser]['params'][$i]. "-->\n";
                 $plist .= "$i - " . $XML_RPC_xh[$parser]['params'][$i] . " \n";
-                eval('$m->addParam(' . $XML_RPC_xh[$parser]['params'][$i] . ');');
+                @eval('$m->addParam(' . $XML_RPC_xh[$parser]['params'][$i] . ');');
             }
             XML_RPC_Server_debugmsg($plist);
 

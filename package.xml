@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.54 2005-07-02 16:27:18 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.55 2005-07-07 00:48:13 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -31,12 +31,13 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <release>
 
     <version>1.3.2</version>
-    <date>2005-07-02</date>
+    <date>2005-07-07</date>
     <state>stable</state>
     <notes><![CDATA[
 * Change "var $errstring" to "var $errstr".  Bug 4582.
   Was put into CVS version 1.75 of RPC.php but didn't make
   it into RELEASE_1_3_1.
+* Suppress potential error messages when eval()'ing.
     ]]></notes>
 
     <filelist>
