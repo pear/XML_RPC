@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.17 2005-07-07 00:48:13 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.18 2005-07-07 00:59:04 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -45,10 +45,13 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
+* Eliminate path disclosure vulnerabilities by suppressing
+  error messages when eval()'ing.
+* Eliminate path disclosure vulnerability by catching
+  bogus parameters submitted to XML_RPC_Value::serializeval().
 * Change "var $errstring" to "var $errstr".  Bug 4582.
   Was put into CVS version 1.75 of RPC.php but didn't make
   it into RELEASE_1_3_1.
-* Suppress potential error messages when eval()'ing.
   ]]></notes>
 
   <contents>
