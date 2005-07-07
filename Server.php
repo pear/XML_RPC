@@ -385,8 +385,12 @@ class XML_RPC_Server
      */
     function service()
     {
-        $this->createServerPayload();
-        $this->createServerHeaders();
+        if (!$this->server_payload) {
+            $this->createServerPayload();
+        }
+        if (!$this->server_headers) {
+            $this->createServerHeaders();
+        }
         header($this->server_headers);
         print $this->server_payload;
     }
