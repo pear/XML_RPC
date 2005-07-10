@@ -1246,6 +1246,7 @@ class XML_RPC_Message extends XML_RPC_Base
         $parser_resource = xml_parser_create($encoding);
         $parser = (int) $parser_resource;
 
+        $XML_RPC_xh = array();
         $XML_RPC_xh[$parser] = array();
 
         $XML_RPC_xh[$parser]['st'] = '';

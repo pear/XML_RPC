@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.19 2005-07-07 01:21:29 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.20 2005-07-10 13:33:15 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-07-07</date>
+  <date>2005-07-??</date>
 
   <version>
-   <release>1.3.2</release>
+   <release>1.3.3</release>
    <api>1.3.0</api>
   </version>
   <stability>
@@ -45,10 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Eliminate path disclosure vulnerabilities by suppressing error messages when eval()'ing.
-* Eliminate path disclosure vulnerability by catching bogus parameters submitted to XML_RPC_Value::serializeval().
-* In XML_RPC_Server::service(), only call createServerPayload() and createServerHeaders() if necessary.  Fixes compatibility issue introduced in Release 1.3.0RC1 for users who set the $serviceNow parameter of XML_RPC_Server() to 0.  Bug 4757.
-* Change "var $errstring" to "var $errstr".  Bug 4582.  Was put into CVS version 1.75 of RPC.php but didn't make it into RELEASE_1_3_1.
+* Eliminate memory leak by resetting $XML_RPC_xh each time parseResponse() is called.  Bug 4780.
   ]]></notes>
 
   <contents>
@@ -103,6 +100,25 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.3.2</release>
+     <api>1.3.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-07-07</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Eliminate path disclosure vulnerabilities by suppressing error messages when eval()'ing.
+* Eliminate path disclosure vulnerability by catching bogus parameters submitted to XML_RPC_Value::serializeval().
+* In XML_RPC_Server::service(), only call createServerPayload() and createServerHeaders() if necessary.  Fixes compatibility issue introduced in Release 1.3.0RC1 for users who set the $serviceNow parameter of XML_RPC_Server() to 0.  Bug 4757.
+* Change "var $errstring" to "var $errstr".  Bug 4582.  Was put into CVS version 1.75 of RPC.php but didn't make it into RELEASE_1_3_1.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
