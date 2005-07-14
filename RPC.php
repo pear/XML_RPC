@@ -828,7 +828,11 @@ class XML_RPC_Client extends XML_RPC_Base {
         }
 
         if ($timeout) {
-            stream_set_timeout($fp, $timeout);
+            /*
+             * Using socket_set_timeout() because stream_set_timeout()
+             * was introduced in 4.3.0, but we need to support 4.2.0.
+             */
+            socket_set_timeout($fp, $timeout);
         }
 
         // Pre-emptive BC hacks for fools calling sendPayloadHTTP10() directly
