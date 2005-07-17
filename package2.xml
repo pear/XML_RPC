@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.22 2005-07-15 01:10:04 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.23 2005-07-17 14:38:59 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,11 +32,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-07-15</date>
+  <date>2005-07-18</date>
 
   <version>
-   <release>1.3.3</release>
-   <api>1.3.0</api>
+   <release>1.4.0</release>
+   <api>1.4.0</api>
   </version>
   <stability>
    <release>stable</release>
@@ -45,8 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Eliminate memory leak by resetting $XML_RPC_xh each time parseResponse() is called.  Bug 4780.
-* Using socket_set_timeout() because stream_set_timeout() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
+* Using socket_get_status() because stream_get_meta_data() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
   ]]></notes>
 
   <contents>
@@ -101,6 +100,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.3.3</release>
+     <api>1.3.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-07-15</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Eliminate memory leak by resetting $XML_RPC_xh each time parseResponse() is called.  Bug 4780.
+* Using socket_set_timeout() because stream_set_timeout() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
