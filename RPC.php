@@ -855,7 +855,7 @@ class XML_RPC_Client extends XML_RPC_Base {
         }
         $resp = $msg->parseResponseFile($fp);
 
-        $meta = stream_get_meta_data($fp);
+        $meta = socket_get_status($fp);
         if ($meta['timed_out']) {
             fclose($fp);
             $this->errstr = 'RPC server did not send response before timeout.';
