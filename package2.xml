@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.23 2005-07-17 14:38:59 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.24 2005-08-14 20:25:35 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -45,6 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
+* MAJOR SECURITY FIX: eliminate use of eval().
 * Using socket_get_status() because stream_get_meta_data() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
   ]]></notes>
 

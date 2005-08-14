@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.61 2005-07-17 14:38:59 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.62 2005-08-14 20:25:35 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -34,6 +34,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
     <date>2005-07-18</date>
     <state>stable</state>
     <notes><![CDATA[
+* MAJOR SECURITY FIX: eliminate use of eval().
 * Using socket_get_status() because stream_get_meta_data() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
     ]]></notes>
 
