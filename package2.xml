@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.26 2005-09-07 04:06:21 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.27 2005-09-07 04:52:14 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -46,6 +46,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
 * Don't add debug info unless debug is on.  Bug 5136.
+* Use is_a() instead of class_name() so people can use their own XML_RPC_Message objects.  Request 5002.
   ]]></notes>
 
   <contents>
