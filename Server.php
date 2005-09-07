@@ -543,7 +543,10 @@ class XML_RPC_Server
                 $plist .= "$i - " . var_export($XML_RPC_xh[$parser]['params'][$i], true) . " \n";
                 $m->addParam($XML_RPC_xh[$parser]['params'][$i]);
             }
-            XML_RPC_Server_debugmsg($plist);
+
+            if ($this->debug) {
+                XML_RPC_Server_debugmsg($plist);
+            }
 
             // now to deal with the method
             $methName = $XML_RPC_xh[$parser]['method'];

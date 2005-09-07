@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.25 2005-08-14 20:27:44 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.26 2005-09-07 04:06:21 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-08-14</date>
+  <date>2005-09-07</date>
 
   <version>
-   <release>1.4.0</release>
+   <release>1.4.1</release>
    <api>1.4.0</api>
   </version>
   <stability>
@@ -45,8 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* MAJOR SECURITY FIX: eliminate use of eval().
-* Using socket_get_status() because stream_get_meta_data() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
+* Don't add debug info unless debug is on.  Bug 5136.
   ]]></notes>
 
   <contents>
@@ -83,14 +82,13 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <name>PEAR</name>
    <channel>pear.php.net</channel>
    <min>1.4.0a1</min>
-   <max>1.4.0a12</max>
+   <max>1.4.0a14</max>
   </compatible>
 
   <dependencies>
    <required>
     <php>
      <min>4.2.0</min>
-     <max>6.0.0</max>
     </php>
     <pearinstaller>
      <min>1.4.0a1</min>
@@ -101,6 +99,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.0</release>
+     <api>1.4.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-08-14</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* MAJOR SECURITY FIX: eliminate use of eval().
+* Using socket_get_status() because stream_get_meta_data() was introduced in 4.3.0, but we need to support 4.2.0.  Bug 4805.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
