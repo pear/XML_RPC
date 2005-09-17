@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.27 2005-09-07 04:52:14 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.28 2005-09-17 16:01:46 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-09-07</date>
+  <date>2005-09-17</date>
 
   <version>
-   <release>1.4.1</release>
+   <release>1.4.2</release>
    <api>1.4.0</api>
   </version>
   <stability>
@@ -45,8 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Don't add debug info unless debug is on.  Bug 5136.
-* Use is_a() instead of class_name() so people can use their own XML_RPC_Message objects.  Request 5002.
+* Allow empty <value>'s without <types>'s.  Bug 5315.
   ]]></notes>
 
   <contents>
@@ -100,6 +99,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.1</release>
+     <api>1.4.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-09-07</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Don't add debug info unless debug is on.  Bug 5136.
+* Use is_a() instead of class_name() so people can use their own XML_RPC_Message objects.  Request 5002.
+    ]]></notes>
+   </release>
 
    <release>
     <version>

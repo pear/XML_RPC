@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.65 2005-09-07 04:52:14 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.66 2005-09-17 16:01:46 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,12 +30,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.4.1</version>
-    <date>2005-09-07</date>
+    <version>1.4.2</version>
+    <date>2005-09-17</date>
     <state>stable</state>
     <notes><![CDATA[
-* Don't add debug info unless debug is on.  Bug 5136.
-* Use is_a() instead of class_name() so people can use their own XML_RPC_Message objects.  Request 5002.
+* Allow empty <value>'s without <types>'s.  Bug 5315.
     ]]></notes>
 
     <filelist>
@@ -60,6 +59,16 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.4.1</version>
+      <date>2005-09-07</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Don't add debug info unless debug is on.  Bug 5136.
+* Use is_a() instead of class_name() so people can use their own XML_RPC_Message objects.  Request 5002.
+      ]]></notes>
+    <//release>
 
     <release>
       <version>1.4.0</version>

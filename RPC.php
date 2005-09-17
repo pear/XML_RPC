@@ -447,8 +447,7 @@ function XML_RPC_ee($parser_resource, $name)
 
     case 'VALUE':
         // deal with a string value
-        if (strlen($XML_RPC_xh[$parser]['ac']) > 0 &&
-            $XML_RPC_xh[$parser]['vt'] == $XML_RPC_String) {
+        if ($XML_RPC_xh[$parser]['vt'] == $XML_RPC_String) {
             $XML_RPC_xh[$parser]['value'] = $XML_RPC_xh[$parser]['ac'];
         }
 
