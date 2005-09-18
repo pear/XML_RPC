@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.28 2005-09-17 16:01:46 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.29 2005-09-18 19:51:24 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,7 +32,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-09-17</date>
+  <date>2005-09-18</date>
 
   <version>
    <release>1.4.2</release>
