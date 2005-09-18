@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.68 2005-09-18 19:51:24 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.69 2005-09-18 20:55:19 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,11 +30,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <date>2005-09-18</date>
     <state>stable</state>
     <notes><![CDATA[
-* Allow empty <value>'s without <types>'s.  Bug 5315.
+* Make XML_RPC_encode() properly handle dateTime.iso8601.  Request 5117.
     ]]></notes>
 
     <filelist>
@@ -59,6 +59,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.4.2</version>
+      <date>2005-09-18</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Allow empty <value>'s without <types>'s.  Bug 5315.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.4.1</version>

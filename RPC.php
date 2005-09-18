@@ -1886,7 +1886,7 @@ function XML_RPC_decode($XML_RPC_val)
 function XML_RPC_encode($php_val)
 {
     global $XML_RPC_Boolean, $XML_RPC_Int, $XML_RPC_Double, $XML_RPC_String,
-           $XML_RPC_Array, $XML_RPC_Struct;
+           $XML_RPC_Array, $XML_RPC_Struct, $XML_RPC_DateTime;
 
     $type = gettype($php_val);
     $XML_RPC_val = new XML_RPC_Value;
@@ -1926,7 +1926,11 @@ function XML_RPC_encode($php_val)
 
     case 'string':
     case 'NULL':
-        $XML_RPC_val->addScalar($php_val, $XML_RPC_String);
+        if(ereg('^[0-9]{8}\T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$', $php_val)) {
+            $XML_RPC_val->addScalar($php_val, $XML_RPC_DateTime);
+        } else {
+            $XML_RPC_val->addScalar($php_val, $XML_RPC_String);
+        }
         break;
 
     case 'boolean':

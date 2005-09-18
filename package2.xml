@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.29 2005-09-18 19:51:24 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.30 2005-09-18 20:55:19 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -35,7 +35,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <date>2005-09-18</date>
 
   <version>
-   <release>1.4.2</release>
+   <release>1.4.3</release>
    <api>1.4.0</api>
   </version>
   <stability>
@@ -45,7 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Allow empty <value>'s without <types>'s.  Bug 5315.
+* Make XML_RPC_encode() properly handle dateTime.iso8601.  Request 5117.
   ]]></notes>
 
   <contents>
@@ -82,7 +82,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <name>PEAR</name>
    <channel>pear.php.net</channel>
    <min>1.4.0a1</min>
-   <max>1.4.0a14</max>
+   <max>1.4.0</max>
   </compatible>
 
   <dependencies>
@@ -99,6 +99,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   </release>
+    <version>
+     <release>1.4.2</release>
+     <api>1.4.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-09-18</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Allow empty <value>'s without <types>'s.  Bug 5315.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
