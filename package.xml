@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.70 2005-09-24 18:19:40 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.71 2005-10-15 20:29:44 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,11 +30,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.4.3</version>
-    <date>2005-09-24</date>
+    <version>1.4.4</version>
+    <date>2005-10-15</date>
     <state>stable</state>
     <notes><![CDATA[
-* Make XML_RPC_encode() properly handle dateTime.iso8601.  Request 5117.
+* Properly deal with empty values in struct's.
     ]]></notes>
 
     <filelist>
@@ -48,10 +48,21 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
         <replace from="@package_version@" to="version" type="package-info" />
       </file>
       <dir name="tests" role="test">
+        <file name="allgot.inc">
+        </file>
+        <file name="empty-value-struct.php">
+          <replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="empty-value.php">
+          <replace from="@package_version@" to="version" type="package-info"/>
+        </file>
         <file name="protoport.php">
           <replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="test_Dump.php">
+          <replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="types.php">
           <replace from="@package_version@" to="version" type="package-info"/>
         </file>
       </dir>
@@ -59,6 +70,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.4.3</version>
+      <date>2005-09-24</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Make XML_RPC_encode() properly handle dateTime.iso8601.  Request 5117.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.4.2</version>

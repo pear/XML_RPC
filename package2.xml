@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.32 2005-09-24 18:21:31 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.33 2005-10-15 20:29:44 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-09-24</date>
+  <date>2005-10-15</date>
 
   <version>
-   <release>1.4.3</release>
+   <release>1.4.4</release>
    <api>1.4.0</api>
   </version>
   <stability>
@@ -45,34 +45,40 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Make XML_RPC_encode() properly handle dateTime.iso8601.  Request 5117.
+* Properly deal with empty values in struct's.
   ]]></notes>
 
   <contents>
    <dir name="/">
 
     <dir name="tests">
+     <file name="allgot.inc" role="test">
+     </file>
+     <file name="empty-value-struct.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file name="empty-value.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file name="protoport.php" role="test">
-      <tasks:replace from="@package_version@" to="version"
-       type="package-info" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file name="test_Dump.php" role="test">
-      <tasks:replace from="@package_version@" to="version"
-       type="package-info" />
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file name="types.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
     </dir>
 
     <file baseinstalldir="XML/RPC" name="Dump.php" role="php">
-     <tasks:replace from="@package_version@" to="version"
-      type="package-info" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="XML" name="RPC.php" role="php">
-     <tasks:replace from="@package_version@" to="version"
-      type="package-info" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="XML/RPC" name="Server.php" role="php">
-     <tasks:replace from="@package_version@" to="version"
-      type="package-info" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
 
    </dir>
@@ -99,6 +105,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.3</release>
+     <api>1.4.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-09-24</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Make XML_RPC_encode() properly handle dateTime.iso8601.  Request 5117.
+    ]]></notes>
+   </release>
 
    <release>
     <version>

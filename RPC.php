@@ -446,13 +446,13 @@ function XML_RPC_ee($parser_resource, $name)
         break;
 
     case 'VALUE':
-        // deal with a string value
-        if (strlen($XML_RPC_xh[$parser]['ac']) > 0 &&
-            $XML_RPC_xh[$parser]['vt'] == $XML_RPC_String) {
-            $XML_RPC_xh[$parser]['value'] = $XML_RPC_xh[$parser]['ac'];
-        } elseif ($XML_RPC_xh[$parser]['lv'] == 1) {
-            // The <value> element was empty.
-            $XML_RPC_xh[$parser]['value'] = '';
+        if ($XML_RPC_xh[$parser]['vt'] == $XML_RPC_String) {
+            if (strlen($XML_RPC_xh[$parser]['ac']) > 0) {
+                $XML_RPC_xh[$parser]['value'] = $XML_RPC_xh[$parser]['ac'];
+            } elseif ($XML_RPC_xh[$parser]['lv'] == 1) {
+                // The <value> element was empty.
+                $XML_RPC_xh[$parser]['value'] = '';
+            }
         }
 
         $temp = new XML_RPC_Value($XML_RPC_xh[$parser]['value'], $XML_RPC_xh[$parser]['vt']);
