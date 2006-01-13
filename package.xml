@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.71 2005-10-15 20:29:44 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.72 2006-01-13 23:05:03 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,11 +30,11 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.4.4</version>
-    <date>2005-10-15</date>
+    <version>1.4.5</version>
+    <date>2006-01-14</date>
     <state>stable</state>
     <notes><![CDATA[
-* Properly deal with empty values in struct's.
+* Have server send headers individualy as opposed to sending them all at once. Necessary due to changes PHP 4.4.2.
     ]]></notes>
 
     <filelist>
@@ -70,6 +70,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.4.4</version>
+      <date>2005-10-15</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Properly deal with empty values in struct's.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.4.3</version>

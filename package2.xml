@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.34 2005-10-15 20:33:54 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.35 2006-01-13 23:05:03 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2005-10-15</date>
+  <date>2006-01-14</date>
 
   <version>
-   <release>1.4.4</release>
+   <release>1.4.5</release>
    <api>1.4.0</api>
   </version>
   <stability>
@@ -45,7 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Properly deal with empty values in struct's.
+* Have server send headers individualy as opposed to sending them all at once. Necessary due to changes PHP 4.4.2. 
   ]]></notes>
 
   <contents>
@@ -88,7 +88,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <name>PEAR</name>
    <channel>pear.php.net</channel>
    <min>1.4.0a1</min>
-   <max>1.4.2</max>
+   <max>1.4.6</max>
   </compatible>
 
   <dependencies>
@@ -105,6 +105,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.4</release>
+     <api>1.4.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2005-10-15</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Properly deal with empty values in struct's.
+    ]]></notes>
+   </release>
 
    <release>
     <version>

@@ -391,7 +391,13 @@ class XML_RPC_Server
         if (!$this->server_headers) {
             $this->createServerHeaders();
         }
-        header($this->server_headers);
+
+        $headers = preg_split("/[\r\n]+[ \t]*/", $this->server_headers);
+        foreach ($headers as $header)
+        {
+            header($header);
+        }
+
         print $this->server_payload;
     }
 
