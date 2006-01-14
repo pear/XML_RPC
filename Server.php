@@ -392,7 +392,9 @@ class XML_RPC_Server
             $this->createServerHeaders();
         }
 
-        $headers = preg_split("/[\r\n]+[ \t]*/", $this->server_headers);
+        $this->server_headers = preg_replace("/[\r\n]+[ \t]+/", ' ',
+                                             trim($this->server_headers));
+        $headers = preg_split("/[\r\n]+/", $this->server_headers);
         foreach ($headers as $header)
         {
             header($header);
