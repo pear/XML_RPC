@@ -392,6 +392,14 @@ class XML_RPC_Server
             $this->createServerHeaders();
         }
 
+        /*
+         * $server_headers needs to remain a string for compatibility with
+         * old scripts using this package, but PHP 4.4.2 no longer allows
+         * line breaks in header() calls.  So, we split each header into
+         * an individual call.  The initial replace handles the off chance
+         * that someone composed a single header with multiple lines, which
+         * the RFCs allow.
+         */
         $this->server_headers = preg_replace("/[\r\n]+[ \t]+/", ' ',
                                              trim($this->server_headers));
         $headers = preg_split("/[\r\n]+/", $this->server_headers);
