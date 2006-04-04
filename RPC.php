@@ -1144,6 +1144,13 @@ class XML_RPC_Message extends XML_RPC_Base
     var $payload = '';
 
     /**
+     * The XML response from the remote server
+     * @var string
+     */
+    var $response_payload = '';
+
+
+    /**
      * @return void
      */
     function XML_RPC_Message($meth, $pars = 0)
@@ -1389,6 +1396,7 @@ class XML_RPC_Message extends XML_RPC_Base
          * thanks to Luca Mariano <luca.mariano@email.it>
          */
         $data = substr($data, 0, strpos($data, "</methodResponse>") + 17);
+        $this->response_payload = $data;
 
         if (!xml_parse($parser_resource, $data, sizeof($data))) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
