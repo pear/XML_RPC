@@ -1144,6 +1144,12 @@ class XML_RPC_Message extends XML_RPC_Base
     var $payload = '';
 
     /**
+     * Should extra line breaks be removed from the payload?
+     * @var boolean
+     */
+    var $remove_extra_lines = true;
+
+    /**
      * The XML response from the remote server
      * @var string
      */
@@ -1194,6 +1200,11 @@ class XML_RPC_Message extends XML_RPC_Base
     }
 
     /**
+     * Fills the XML_RPC_Message::$payload property
+     *
+     * Part of the process makes sure all line endings are in DOS format
+     * (CRLF), which is probably required by specifications.
+     *
      * @return void
      *
      * @uses XML_RPC_Message::xml_header(), XML_RPC_Message::xml_footer()
@@ -1209,7 +1220,11 @@ class XML_RPC_Message extends XML_RPC_Base
         }
         $this->payload .= "</params>\n";
         $this->payload .= $this->xml_footer();
-        $this->payload = ereg_replace("[\r\n]+", "\r\n", $this->payload);
+        if ($this->remove_extra_lines) {
+            $this->payload = ereg_replace("[\r\n]+", "\r\n", $this->payload);
+        } else {
+            $this->payload = ereg_replace("\r\n|\n|\r|\n\r", "\r\n", $this->payload);
+        }
     }
 
     /**
