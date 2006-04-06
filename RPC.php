@@ -1145,12 +1145,14 @@ class XML_RPC_Message extends XML_RPC_Base
 
     /**
      * Should extra line breaks be removed from the payload?
+     * @since Property available since Release 1.4.6
      * @var boolean
      */
     var $remove_extra_lines = true;
 
     /**
      * The XML response from the remote server
+     * @since Property available since Release 1.4.6
      * @var string
      */
     var $response_payload = '';
