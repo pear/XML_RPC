@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.72 2006-01-13 23:05:03 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.73 2006-04-07 14:59:54 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,11 +30,12 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.4.5</version>
-    <date>2006-01-14</date>
+    <version>1.4.6</version>
+    <date>2006-04-07</date>
     <state>stable</state>
     <notes><![CDATA[
-* Have server send headers individualy as opposed to sending them all at once. Necessary due to changes PHP 4.4.2.
+* Add XML_RPC_Message::$remove_extra_lines property. Defaults to true. If set to false, extra lines are left in place. Bug 7088.
+* Add XML_RPC_Message::$response_payload property. Makes logging responses easy.
     ]]></notes>
 
     <filelist>
@@ -56,6 +57,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
         <file name="empty-value.php">
           <replace from="@package_version@" to="version" type="package-info"/>
         </file>
+        <file name="extra-lines.php">
+          <replace from="@package_version@" to="version" type="package-info"/>
+        </file>
         <file name="protoport.php">
           <replace from="@package_version@" to="version" type="package-info"/>
         </file>
@@ -70,6 +74,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.4.5</version>
+      <date>2006-01-14</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Have server send headers individualy as opposed to sending them all at once. Necessary due to changes PHP 4.4.2.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.4.4</version>
