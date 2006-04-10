@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.36 2006-04-07 14:59:54 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.37 2006-04-10 20:04:07 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-04-07</date>
+  <date>2006-04-10</date>
 
   <version>
-   <release>1.4.6</release>
+   <release>1.4.7</release>
    <api>1.4.6</api>
   </version>
   <stability>
@@ -45,8 +45,8 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Add XML_RPC_Message::$remove_extra_lines property. Defaults to true. If set to false, extra lines are left in place. Bug 7088.
-* Add XML_RPC_Message::$response_payload property. Makes logging responses easy.
+* Add include_once for PEAR if need to load xml extension.  Bug 7358.
+* Add dependency for xml extension in package file.  Bug 7358.
   ]]></notes>
 
   <contents>
@@ -100,6 +100,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
     <php>
      <min>4.2.0</min>
     </php>
+    <extension>
+     <name>xml</name>
+    </extension>
     <pearinstaller>
      <min>1.4.0a1</min>
     </pearinstaller>
@@ -109,6 +112,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.6</release>
+     <api>1.4.6</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2006-04-07</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Add XML_RPC_Message::$remove_extra_lines property. Defaults to true. If set to false, extra lines are left in place. Bug 7088.
+* Add XML_RPC_Message::$response_payload property. Makes logging responses easy.
+    ]]></notes>
+   </release>
 
    <release>
     <version>

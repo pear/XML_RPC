@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.73 2006-04-07 14:59:54 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.74 2006-04-10 20:04:07 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -30,12 +30,12 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <release>
 
-    <version>1.4.6</version>
-    <date>2006-04-07</date>
+    <version>1.4.7</version>
+    <date>2006-04-10</date>
     <state>stable</state>
     <notes><![CDATA[
-* Add XML_RPC_Message::$remove_extra_lines property. Defaults to true. If set to false, extra lines are left in place. Bug 7088.
-* Add XML_RPC_Message::$response_payload property. Makes logging responses easy.
+* Add include_once for PEAR if need to load xml extension.  Bug 7358.
+* Add dependency for xml extension in package file.  Bug 7358.
     ]]></notes>
 
     <filelist>
@@ -71,9 +71,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
         </file>
       </dir>
     </filelist>
+    <deps>
+      <dep type="php" rel="ge" version="4.2.0" />
+      <dep type="ext" rel="has">xml</dep>
+    </deps>
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.4.6</version>
+      <date>2006-04-07</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Add XML_RPC_Message::$remove_extra_lines property. Defaults to true. If set to false, extra lines are left in place. Bug 7088.
+* Add XML_RPC_Message::$response_payload property. Makes logging responses easy.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.4.5</version>
