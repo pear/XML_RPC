@@ -38,6 +38,7 @@
 
 
 if (!function_exists('xml_parser_create')) {
+    include_once 'PEAR.php';
     PEAR::loadExtension('xml');
 }
 
