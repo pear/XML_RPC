@@ -249,7 +249,8 @@ $GLOBALS['XML_RPC_xh'] = array();
  */
 function XML_RPC_se($parser_resource, $name, $attrs)
 {
-    global $XML_RPC_xh, $XML_RPC_DateTime, $XML_RPC_String, $XML_RPC_valid_parents;
+    global $XML_RPC_xh, $XML_RPC_valid_parents;
+
     $parser = (int) $parser_resource;
 
     // if invalid xmlrpc already detected, skip all processing
@@ -314,7 +315,7 @@ function XML_RPC_se($parser_resource, $name, $attrs)
 
     case 'VALUE':
         $XML_RPC_xh[$parser]['lv'] = 1;
-        $XML_RPC_xh[$parser]['vt'] = $XML_RPC_String;
+        $XML_RPC_xh[$parser]['vt'] = $GLOBALS['XML_RPC_String'];
         $XML_RPC_xh[$parser]['ac'] = '';
         $XML_RPC_xh[$parser]['qt'] = 0;
         // look for a value: if this is still 1 by the
@@ -335,7 +336,7 @@ function XML_RPC_se($parser_resource, $name, $attrs)
             $XML_RPC_xh[$parser]['qt'] = 1;
 
             if ($name == 'DATETIME.ISO8601') {
-                $XML_RPC_xh[$parser]['vt'] = $XML_RPC_DateTime;
+                $XML_RPC_xh[$parser]['vt'] = $GLOBALS['XML_RPC_DateTime'];
             }
 
         } elseif ($name == 'BASE64') {
@@ -377,7 +378,8 @@ function XML_RPC_se($parser_resource, $name, $attrs)
  */
 function XML_RPC_ee($parser_resource, $name)
 {
-    global $XML_RPC_xh, $XML_RPC_Types, $XML_RPC_String;
+    global $XML_RPC_xh;
+
     $parser = (int) $parser_resource;
 
     if ($XML_RPC_xh[$parser]['isf'] >= 2) {
@@ -447,7 +449,7 @@ function XML_RPC_ee($parser_resource, $name)
         break;
 
     case 'VALUE':
-        if ($XML_RPC_xh[$parser]['vt'] == $XML_RPC_String) {
+        if ($XML_RPC_xh[$parser]['vt'] == $GLOBALS['XML_RPC_String']) {
             if (strlen($XML_RPC_xh[$parser]['ac']) > 0) {
                 $XML_RPC_xh[$parser]['value'] = $XML_RPC_xh[$parser]['ac'];
             } elseif ($XML_RPC_xh[$parser]['lv'] == 1) {
@@ -501,7 +503,7 @@ function XML_RPC_ee($parser_resource, $name)
     }
 
     // if it's a valid type name, set the type
-    if (isset($XML_RPC_Types[strtolower($name)])) {
+    if (isset($GLOBALS['XML_RPC_Types'][strtolower($name)])) {
         $XML_RPC_xh[$parser]['vt'] = strtolower($name);
     }
 }
@@ -514,6 +516,7 @@ function XML_RPC_ee($parser_resource, $name)
 function XML_RPC_cd($parser_resource, $data)
 {
     global $XML_RPC_xh, $XML_RPC_backslash;
+
     $parser = (int) $parser_resource;
 
     if ($XML_RPC_xh[$parser]['lv'] != 3) {
@@ -1187,6 +1190,7 @@ class XML_RPC_Message extends XML_RPC_Base
     function xml_header()
     {
         global $XML_RPC_defencoding;
+
         if (!$this->send_encoding) {
             $this->send_encoding = $XML_RPC_defencoding;
         }
@@ -1489,21 +1493,20 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function XML_RPC_Value($val = -1, $type = '')
     {
-        global $XML_RPC_Types;
         $this->me = array();
         $this->mytype = 0;
         if ($val != -1 || $type != '') {
             if ($type == '') {
                 $type = 'string';
             }
-            if (!array_key_exists($type, $XML_RPC_Types)) {
+            if (!array_key_exists($type, $GLOBALS['XML_RPC_Types'])) {
                 // XXX
                 // need some way to report this error
-            } elseif ($XML_RPC_Types[$type] == 1) {
+            } elseif ($GLOBALS['XML_RPC_Types'][$type] == 1) {
                 $this->addScalar($val, $type);
-            } elseif ($XML_RPC_Types[$type] == 2) {
+            } elseif ($GLOBALS['XML_RPC_Types'][$type] == 2) {
                 $this->addArray($val);
-            } elseif ($XML_RPC_Types[$type] == 3) {
+            } elseif ($GLOBALS['XML_RPC_Types'][$type] == 3) {
                 $this->addStruct($val);
             }
         }
@@ -1514,21 +1517,19 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function addScalar($val, $type = 'string')
     {
-        global $XML_RPC_Types, $XML_RPC_Boolean;
-
         if ($this->mytype == 1) {
             $this->raiseError('Scalar can have only one value',
                               XML_RPC_ERROR_INVALID_TYPE);
             return 0;
         }
-        $typeof = $XML_RPC_Types[$type];
+        $typeof = $GLOBALS['XML_RPC_Types'][$type];
         if ($typeof != 1) {
             $this->raiseError("Not a scalar type (${typeof})",
                               XML_RPC_ERROR_INVALID_TYPE);
             return 0;
         }
 
-        if ($type == $XML_RPC_Boolean) {
+        if ($type == $GLOBALS['XML_RPC_Boolean']) {
             if (strcasecmp($val, 'true') == 0
                 || $val == 1
                 || ($val == true && strcasecmp($val, 'false')))
@@ -1557,14 +1558,13 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function addArray($vals)
     {
-        global $XML_RPC_Types;
         if ($this->mytype != 0) {
             $this->raiseError(
                     'Already initialized as a [' . $this->kindOf() . ']',
                     XML_RPC_ERROR_ALREADY_INITIALIZED);
             return 0;
         }
-        $this->mytype = $XML_RPC_Types['array'];
+        $this->mytype = $GLOBALS['XML_RPC_Types']['array'];
         $this->me['array'] = $vals;
         return 1;
     }
@@ -1574,14 +1574,13 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function addStruct($vals)
     {
-        global $XML_RPC_Types;
         if ($this->mytype != 0) {
             $this->raiseError(
                     'Already initialized as a [' . $this->kindOf() . ']',
                     XML_RPC_ERROR_ALREADY_INITIALIZED);
             return 0;
         }
-        $this->mytype = $XML_RPC_Types['struct'];
+        $this->mytype = $GLOBALS['XML_RPC_Types']['struct'];
         $this->me['struct'] = $vals;
         return 1;
     }
@@ -1628,13 +1627,12 @@ class XML_RPC_Value extends XML_RPC_Base
     function serializedata($typ, $val)
     {
         $rs = '';
-        global $XML_RPC_Types, $XML_RPC_Base64, $XML_RPC_String, $XML_RPC_Boolean;
-        if (!array_key_exists($typ, $XML_RPC_Types)) {
+        if (!array_key_exists($typ, $GLOBALS['XML_RPC_Types'])) {
             // XXX
             // need some way to report this error
             return;
         }
-        switch ($XML_RPC_Types[$typ]) {
+        switch ($GLOBALS['XML_RPC_Types'][$typ]) {
         case 3:
             // struct
             $rs .= "<struct>\n";
@@ -1658,13 +1656,13 @@ class XML_RPC_Value extends XML_RPC_Base
 
         case 1:
             switch ($typ) {
-            case $XML_RPC_Base64:
+            case $GLOBALS['XML_RPC_Base64']:
                 $rs .= "<${typ}>" . base64_encode($val) . "</${typ}>";
                 break;
-            case $XML_RPC_Boolean:
+            case $GLOBALS['XML_RPC_Boolean']:
                 $rs .= "<${typ}>" . ($val ? '1' : '0') . "</${typ}>";
                 break;
-            case $XML_RPC_String:
+            case $GLOBALS['XML_RPC_String']:
                 $rs .= "<${typ}>" . htmlspecialchars($val). "</${typ}>";
                 break;
             default:
@@ -1726,7 +1724,6 @@ class XML_RPC_Value extends XML_RPC_Base
     function getval()
     {
         // UNSTABLE
-        global $XML_RPC_BOOLEAN, $XML_RPC_Base64;
 
         reset($this->me);
         $b = current($this->me);
@@ -1762,7 +1759,6 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function scalarval()
     {
-        global $XML_RPC_Boolean, $XML_RPC_Base64;
         reset($this->me);
         return current($this->me);
     }
@@ -1772,11 +1768,10 @@ class XML_RPC_Value extends XML_RPC_Base
      */
     function scalartyp()
     {
-        global $XML_RPC_I4, $XML_RPC_Int;
         reset($this->me);
         $a = key($this->me);
-        if ($a == $XML_RPC_I4) {
-            $a = $XML_RPC_Int;
+        if ($a == $GLOBALS['XML_RPC_I4']) {
+            $a = $GLOBALS['XML_RPC_Int'];
         }
         return $a;
     }
@@ -1911,9 +1906,6 @@ function XML_RPC_decode($XML_RPC_val)
  */
 function XML_RPC_encode($php_val)
 {
-    global $XML_RPC_Boolean, $XML_RPC_Int, $XML_RPC_Double, $XML_RPC_String,
-           $XML_RPC_Array, $XML_RPC_Struct, $XML_RPC_DateTime;
-
     $type = gettype($php_val);
     $XML_RPC_val = new XML_RPC_Value;
 
@@ -1943,19 +1935,19 @@ function XML_RPC_encode($php_val)
         break;
 
     case 'integer':
-        $XML_RPC_val->addScalar($php_val, $XML_RPC_Int);
+        $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_Int']);
         break;
 
     case 'double':
-        $XML_RPC_val->addScalar($php_val, $XML_RPC_Double);
+        $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_Double']);
         break;
 
     case 'string':
     case 'NULL':
         if(ereg('^[0-9]{8}\T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$', $php_val)) {
-            $XML_RPC_val->addScalar($php_val, $XML_RPC_DateTime);
+            $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_DateTime']);
         } else {
-            $XML_RPC_val->addScalar($php_val, $XML_RPC_String);
+            $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_String']);
         }
         break;
 
@@ -1963,7 +1955,7 @@ function XML_RPC_encode($php_val)
         // Add support for encoding/decoding of booleans, since they
         // are supported in PHP
         // by <G_Giunta_2001-02-29>
-        $XML_RPC_val->addScalar($php_val, $XML_RPC_Boolean);
+        $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_Boolean']);
         break;
 
     case 'unknown type':
