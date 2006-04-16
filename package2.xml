@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.38 2006-04-10 20:11:00 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.39 2006-04-16 15:08:58 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-04-10</date>
+  <date>2006-04-16</date>
 
   <version>
-   <release>1.4.7</release>
+   <release>1.4.8</release>
    <api>1.4.6</api>
   </version>
   <stability>
@@ -45,8 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
   <notes><![CDATA[
-* Add include_once for PEAR if need to load xml extension.  Bug 7358.
-* Add dependency for xml extension in package file.  Bug 7358.
+* Characters other than alpha-numeric, punctuation, SP, TAB, LF and CR break the XML parser, encode value via Base 64.  Bug 7376.
   ]]></notes>
 
   <contents>
@@ -112,6 +111,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.7</release>
+     <api>1.4.6</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2006-04-10</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Add include_once for PEAR if need to load xml extension.  Bug 7358.
+* Add dependency for xml extension in package file.  Bug 7358.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
