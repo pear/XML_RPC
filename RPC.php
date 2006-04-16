@@ -1944,7 +1944,7 @@ function XML_RPC_encode($php_val)
 
     case 'string':
     case 'NULL':
-        if(ereg('^[0-9]{8}\T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$', $php_val)) {
+        if (ereg('^[0-9]{8}\T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$', $php_val)) {
             $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_DateTime']);
         } elseif (preg_match('/[^\x20-\x7E\x09\x0A\x0D]/', $php_val)) {
             // Characters other than alpha-numeric, punctuation, SP, TAB,
