@@ -433,3 +433,5 @@ $x = array(
 $c = new XML_RPC_Client('thepath', 'theserver', 0,
                         'ssl://theproxy', 6565);
 compare($x, $c, 'port 443 no protocol and proxy port 443 no protocol');
+
+echo "\nIf no other output was produced, these tests passed.\n";
