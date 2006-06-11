@@ -221,6 +221,14 @@ if (function_exists('mb_ereg')) {
 
 
 /**
+ * Should we automatically base64 encode strings that contain characters
+ * which cause PHP's SAX-based XML parser to break?
+ * @global boolean $GLOBALS['XML_RPC_auto_base64']
+ */
+$GLOBALS['XML_RPC_auto_base64'] = false;
+
+
+/**
  * Valid parents of XML elements
  * @global array $GLOBALS['XML_RPC_valid_parents']
  */
@@ -824,6 +832,23 @@ class XML_RPC_Client extends XML_RPC_Base {
             $this->debug = 1;
         } else {
             $this->debug = 0;
+        }
+    }
+
+    /**
+     * Sets whether strings that contain characters which cause PHP's
+     * SAX-based XML parser to break should be automatically base64 encoded
+     *
+     * @param int $in  where 1 = on, 0 = off
+     *
+     * @return void
+     */
+    function setAutoBase64($in)
+    {
+        if ($in) {
+            $GLOBALS['XML_RPC_auto_base64'] = true;
+        } else {
+            $GLOBALS['XML_RPC_auto_base64'] = false;
         }
     }
 
@@ -1967,7 +1992,9 @@ function XML_RPC_encode($php_val)
     case 'NULL':
         if ($GLOBALS['XML_RPC_func_ereg']('^[0-9]{8}\T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$', $php_val)) {
             $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_DateTime']);
-        } elseif ($GLOBALS['XML_RPC_func_ereg']("[^ -~\t\r\n]", $php_val)) {
+        } elseif ($GLOBALS['XML_RPC_auto_base64']
+                  && $GLOBALS['XML_RPC_func_ereg']("[^ -~\t\r\n]", $php_val))
+        {
             // Characters other than alpha-numeric, punctuation, SP, TAB,
             // LF and CR break the XML parser, encode value via Base 64.
             $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_Base64']);
