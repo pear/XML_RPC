@@ -18,7 +18,7 @@
  * @category   Web Services
  * @package    XML_RPC
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  2005 The PHP Group
+ * @copyright  2005-2006 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License
  * @version    CVS: $Id$
  * @link       http://pear.php.net/package/XML_RPC
