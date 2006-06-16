@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.40 2006-06-16 01:31:04 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.41 2006-06-16 16:00:54 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -45,8 +45,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
-* Provide complete multi-byte string support for systems with the mbstring extension enabled.
-* Turn off the default of automatically base64 encoding strings that generate fatal errors in PHP's SAX parser. The automatic base64 encoding can be turned on via the new XML_RPC_Client::setAutoBase64() method. (The default encoding was added in the prior release, 1.4.8, and caused problems for users who don't control the receiving end of the requests.)
+* Provide complete multi-byte string support for systems with the mbstring extension enabled. Bug 7837.
+* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the payload matches the intended encoding. This is a better resolution of Bug 7376.
+* Turn off the default of automatically base64 encoding strings that can generate fatal errors in PHP's SAX parser. The automatic base64 encoding can be turned on via the new XML_RPC_Client::setAutoBase64() method. The auto-encoding is a workaround for systems that don't have PHP's mbstring extension available. (The automatic base64 encoding was added in the prior release, 1.4.8, and caused problems for users who don't control the receiving end of the requests.) Bug 7837.
   ]]></notes>
 
   <contents>

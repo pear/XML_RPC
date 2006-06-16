@@ -222,7 +222,7 @@ if (function_exists('mb_ereg')) {
 
 /**
  * Should we automatically base64 encode strings that contain characters
- * which cause PHP's SAX-based XML parser to break?
+ * which can cause PHP's SAX-based XML parser to break?
  * @global boolean $GLOBALS['XML_RPC_auto_base64']
  */
 $GLOBALS['XML_RPC_auto_base64'] = false;
@@ -836,8 +836,11 @@ class XML_RPC_Client extends XML_RPC_Base {
     }
 
     /**
-     * Sets whether strings that contain characters which cause PHP's
+     * Sets whether strings that contain characters which may cause PHP's
      * SAX-based XML parser to break should be automatically base64 encoded
+     *
+     * This is is a workaround for systems that don't have PHP's mbstring
+     * extension available.
      *
      * @param int $in  where 1 = on, 0 = off
      *
@@ -1258,9 +1261,15 @@ class XML_RPC_Message extends XML_RPC_Base
      * Part of the process makes sure all line endings are in DOS format
      * (CRLF), which is probably required by specifications.
      *
+     * If PHP's mbstring extension is enabled, the mb_convert_encoding()
+     * function is used to ensure the payload matches the encoding set in the
+     * XML declaration.  The encoding type can be manually set via
+     * XML_RPC_Message::setSendEncoding().
+     *
      * @return void
      *
      * @uses XML_RPC_Message::xml_header(), XML_RPC_Message::xml_footer()
+     * @see XML_RPC_Message::setSendEncoding(), $GLOBALS['XML_RPC_defencoding']
      */
     function createPayload()
     {
@@ -1277,6 +1286,9 @@ class XML_RPC_Message extends XML_RPC_Base
             $this->payload = $GLOBALS['XML_RPC_func_ereg_replace']("[\r\n]+", "\r\n", $this->payload);
         } else {
             $this->payload = $GLOBALS['XML_RPC_func_ereg_replace']("\r\n|\n|\r|\n\r", "\r\n", $this->payload);
+        }
+        if (function_exists('mb_convert_encoding')) {
+            $this->payload = mb_convert_encoding($this->payload, $this->send_encoding);
         }
     }
 
