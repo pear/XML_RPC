@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.39 2006-04-16 15:08:58 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.40 2006-06-16 01:31:04 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,20 +32,21 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-04-16</date>
+  <date>2006-06-16</date>
 
   <version>
-   <release>1.4.8</release>
-   <api>1.4.6</api>
+   <release>1.5.0RC1</release>
+   <api>1.5.0</api>
   </version>
   <stability>
-   <release>stable</release>
-   <api>stable</api>
+   <release>beta</release>
+   <api>beta</api>
   </stability>
 
-  <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+  <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
-* Characters other than alpha-numeric, punctuation, SP, TAB, LF and CR break the XML parser, encode value via Base 64.  Bug 7376.
+* Provide complete multi-byte string support for systems with the mbstring extension enabled.
+* Turn off the default of automatically base64 encoding strings that generate fatal errors in PHP's SAX parser. The automatic base64 encoding can be turned on via the new XML_RPC_Client::setAutoBase64() method. (The default encoding was added in the prior release, 1.4.8, and caused problems for users who don't control the receiving end of the requests.)
   ]]></notes>
 
   <contents>
@@ -111,6 +112,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.4.8</release>
+     <api>1.4.6</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2006-04-16</date>
+    <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+    <notes><![CDATA[
+* Characters other than alpha-numeric, punctuation, SP, TAB, LF and CR break the XML parser, encode value via Base 64.  Bug 7376.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
