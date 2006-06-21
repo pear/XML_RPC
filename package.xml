@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.77 2006-06-16 16:00:54 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.78 2006-06-21 12:17:27 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -29,13 +29,13 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </maintainers>
 
   <release>
-    <version>1.5.0RC1</version>
-    <date>2006-06-16</date>
+    <version>1.5.0RC2</version>
+    <date>2006-06-21</date>
+    <!-- happy solstice -->
+
     <state>beta</state>
     <notes><![CDATA[
-* Provide complete multi-byte string support for systems with the mbstring extension enabled. Bug 7837.
-* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the payload matches the intended encoding. This is a better resolution of Bug 7376.
-* Turn off the default of automatically base64 encoding strings that can generate fatal errors in PHP's SAX parser. The automatic base64 encoding can be turned on via the new XML_RPC_Client::setAutoBase64() method. The auto-encoding is a workaround for systems that don't have PHP's mbstring extension available. (The automatic base64 encoding was added in the prior release, 1.4.8, and caused problems for users who don't control the receiving end of the requests.) Bug 7837.
+* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the server payload matches the intended encoding.
     ]]></notes>
 
     <filelist>
@@ -78,6 +78,17 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.5.0RC1</version>
+      <date>2006-06-16</date>
+      <state>beta</state>
+      <notes><![CDATA[
+* Provide complete multi-byte string support for systems with the mbstring extension enabled. Bug 7837.
+* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the client payload matches the intended encoding. This is a better resolution of Bug 7376.
+* Turn off the default of automatically base64 encoding strings that can generate fatal errors in PHP's SAX parser. The automatic base64 encoding can be turned on via the new XML_RPC_Client::setAutoBase64() method. The auto-encoding is a workaround for systems that don't have PHP's mbstring extension available. (The automatic base64 encoding was added in the prior release, 1.4.8, and caused problems for users who don't control the receiving end of the requests.) Bug 7837.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.4.8</version>

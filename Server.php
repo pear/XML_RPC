@@ -426,6 +426,10 @@ class XML_RPC_Server
                               . $this->encoding . '"?>' . "\n"
                               . $this->serializeDebug()
                               . $r->serialize();
+        if (function_exists('mb_convert_encoding')) {
+            $this->server_payload = mb_convert_encoding($this->server_payload,
+                                                        $this->encoding);
+        }
     }
 
     /**
