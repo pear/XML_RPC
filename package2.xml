@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.42 2006-06-21 12:17:27 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.43 2006-07-12 00:07:20 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,21 +32,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-06-21</date>
-  <!-- happy solstice -->
+  <date>2006-07-11</date>
 
   <version>
-   <release>1.5.0RC2</release>
+   <release>1.5.0</release>
    <api>1.5.0</api>
   </version>
   <stability>
-   <release>beta</release>
-   <api>beta</api>
+   <release>stable</release>
+   <api>stable</api>
   </stability>
 
   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
-* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the server payload matches the intended encoding.
+No changes from 1.5.0RC2.
+
+The primary change from 1.4.8 is improved multi-byte support.  See the change log for complete information.
   ]]></notes>
 
   <contents>
@@ -112,6 +113,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.5.0RC2</release>
+     <api>1.5.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2006-06-21</date>
+    <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
+    <notes><![CDATA[
+* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the server payload matches the intended encoding.
+    ]]></notes>
+   </release>
 
    <release>
     <version>

@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.78 2006-06-21 12:17:27 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.79 2006-07-12 00:07:20 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -29,13 +29,14 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </maintainers>
 
   <release>
-    <version>1.5.0RC2</version>
-    <date>2006-06-21</date>
-    <!-- happy solstice -->
+    <version>1.5.0</version>
+    <date>2006-07-11</date>
 
-    <state>beta</state>
+    <state>stable</state>
     <notes><![CDATA[
-* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the server payload matches the intended encoding.
+No changes from 1.5.0RC2.
+
+The primary change from 1.4.8 is improved multi-byte support.  See the change log for complete information.
     ]]></notes>
 
     <filelist>
@@ -78,6 +79,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.5.0RC2</version>
+      <date>2006-06-21</date>
+      <state>beta</state>
+      <notes><![CDATA[
+* If PHP's mbstring extension is enabled, use mb_convert_encoding() to ensure the server payload matches the intended encoding.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.5.0RC1</version>
