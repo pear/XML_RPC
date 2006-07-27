@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.79 2006-07-12 00:07:20 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.80 2006-07-27 12:46:46 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -29,14 +29,12 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </maintainers>
 
   <release>
-    <version>1.5.0</version>
-    <date>2006-07-11</date>
+    <version>1.5.1</version>
+    <date>2006-07-xx</date>
 
     <state>stable</state>
     <notes><![CDATA[
-No changes from 1.5.0RC2.
-
-The primary change from 1.4.8 is improved multi-byte support.  See the change log for complete information.
+* Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
     ]]></notes>
 
     <filelist>
@@ -79,6 +77,17 @@ The primary change from 1.4.8 is improved multi-byte support.  See the change lo
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.5.0</version>
+      <date>2006-07-11</date>
+      <state>stable</state>
+      <notes><![CDATA[
+No changes from 1.5.0RC2.
+
+The primary change from 1.4.8 is improved multi-byte support.  See the change log for complete information.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.5.0RC2</version>

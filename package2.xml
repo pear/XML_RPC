@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.43 2006-07-12 00:07:20 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.44 2006-07-27 12:46:46 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-07-11</date>
+  <date>2006-07-xx</date>
 
   <version>
-   <release>1.5.0</release>
+   <release>1.5.1</release>
    <api>1.5.0</api>
   </version>
   <stability>
@@ -45,9 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
-No changes from 1.5.0RC2.
-
-The primary change from 1.4.8 is improved multi-byte support.  See the change log for complete information.
+* Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
   ]]></notes>
 
   <contents>
@@ -113,6 +111,24 @@ The primary change from 1.4.8 is improved multi-byte support.  See the change lo
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.5.0</release>
+     <api>1.5.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2006-07-11</date>
+    <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
+    <notes><![CDATA[
+No changes from 1.5.0RC2.
+
+The primary change from 1.4.8 is improved multi-byte support.  See the change log for complete information.
+    ]]></notes>
+   </release>
 
    <release>
     <version>

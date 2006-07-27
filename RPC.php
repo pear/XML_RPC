@@ -1513,7 +1513,6 @@ class XML_RPC_Message extends XML_RPC_Base
                                       $XML_RPC_str['invalid_return']);
         } else {
             $v = $XML_RPC_xh[$parser]['value'];
-            $allOK=1;
             if ($XML_RPC_xh[$parser]['isf']) {
                 $f = $v->structmem('faultCode');
                 $fs = $v->structmem('faultString');
@@ -1813,12 +1812,17 @@ class XML_RPC_Value extends XML_RPC_Base
     }
 
     /**
-     * @return mixed
+     * @return mixed  the current element's scalar value.  If the value is
+     *                 not scalar, FALSE is returned.
      */
     function scalarval()
     {
         reset($this->me);
-        return current($this->me);
+        $v = current($this->me);
+        if (!is_scalar($v)) {
+            $v = false;
+        }
+        return $v;
     }
 
     /**
