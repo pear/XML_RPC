@@ -276,6 +276,15 @@ function XML_RPC_Server_debugmsg($m)
 class XML_RPC_Server
 {
     /**
+     * Should the payload's content be passed through mb_convert_encoding()?
+     *
+     * @see XML_RPC_Server::setConvertPayloadEncoding()
+     * @since Property available since Release 1.5.1
+     * @var boolean
+     */
+    var $convert_payload_encoding = false;
+
+    /**
      * The dispatch map, listing the methods this server provides.
      * @var array
      */
@@ -373,6 +382,28 @@ class XML_RPC_Server
     }
 
     /**
+     * Sets whether the payload's content gets passed through
+     * mb_convert_encoding()
+     *
+     * Returns PEAR_ERROR object if mb_convert_encoding() isn't available.
+     *
+     * @param int $in  where 1 = on, 0 = off
+     *
+     * @return void
+     *
+     * @see XML_RPC_Message::getEncoding()
+     * @since Method available since Release 1.5.1
+     */
+    function setConvertPayloadEncoding($in)
+    {
+        if ($in && !function_exists('mb_convert_encoding')) {
+            return $this->raiseError('mb_convert_encoding() is not available',
+                              XML_RPC_ERROR_PROGRAMMING);
+        }
+        $this->convert_payload_encoding = $in;
+    }
+
+    /**
      * Sends the response
      *
      * The encoding and content-type are determined by
@@ -414,10 +445,17 @@ class XML_RPC_Server
     /**
      * Generates the payload and puts it in the $server_payload property
      *
+     * If XML_RPC_Server::setConvertPayloadEncoding() was set to true,
+     * the payload gets passed through mb_convert_encoding()
+     * to ensure the payload matches the encoding set in the
+     * XML declaration.  The encoding type can be manually set via
+     * XML_RPC_Message::setSendEncoding().
+     *
      * @return void
      *
      * @uses XML_RPC_Server::parseRequest(), XML_RPC_Server::$encoding,
      *       XML_RPC_Response::serialize(), XML_RPC_Server::serializeDebug()
+     * @see  XML_RPC_Server::setConvertPayloadEncoding()
      */
     function createServerPayload()
     {
@@ -426,7 +464,7 @@ class XML_RPC_Server
                               . $this->encoding . '"?>' . "\n"
                               . $this->serializeDebug()
                               . $r->serialize();
-        if (function_exists('mb_convert_encoding')) {
+        if ($this->convert_payload_encoding) {
             $this->server_payload = mb_convert_encoding($this->server_payload,
                                                         $this->encoding);
         }

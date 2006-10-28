@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.44 2006-07-27 12:46:46 danielc Exp $ -->
+  <!-- $Id: package2.xml,v 1.45 2006-10-28 16:42:34 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
@@ -32,7 +32,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-07-xx</date>
+  <date>2006-10-28</date>
 
   <version>
    <release>1.5.1</release>
@@ -45,6 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
+* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() to turn it on.  Bug 8632.
 * Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
   ]]></notes>
 
