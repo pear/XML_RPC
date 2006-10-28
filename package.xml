@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 
-  <!-- $Id: package.xml,v 1.81 2006-10-28 16:42:34 danielc Exp $ -->
+  <!-- $Id: package.xml,v 1.82 2006-10-28 16:44:35 danielc Exp $ -->
 
   <name>XML_RPC</name>
   <summary>PHP implementation of the XML-RPC protocol</summary>
@@ -34,7 +34,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
     <state>stable</state>
     <notes><![CDATA[
-* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() to turn it on.  Bug 8632.
+* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() and XML_RPC_Server::setConvertPayloadEncoding() to turn it on.  Bug 8632.
 * Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
     ]]></notes>
 
