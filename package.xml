@@ -29,13 +29,12 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </maintainers>
 
   <release>
-    <version>1.5.1</version>
-    <date>2006-10-28</date>
+    <version>1.5.2</version>
+    <date>2009-08-18</date>
 
     <state>stable</state>
     <notes><![CDATA[
-* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() and XML_RPC_Server::setConvertPayloadEncoding() to turn it on.  Bug 8632.
-* Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
+* Change license in empty-value-struct.php from PHP 3.0 to 3.01.
     ]]></notes>
 
     <filelist>
@@ -78,6 +77,16 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.5.1</version>
+      <date>2006-10-28</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() and XML_RPC_Server::setConvertPayloadEncoding() to turn it on.  Bug 8632.
+* Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.5.0</version>

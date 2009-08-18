@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2006-10-28</date>
+  <date>2009-08-18</date>
 
   <version>
-   <release>1.5.1</release>
+   <release>1.5.2</release>
    <api>1.5.0</api>
   </version>
   <stability>
@@ -45,8 +45,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
-* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() and XML_RPC_Server::setConvertPayloadEncoding() to turn it on.  Bug 8632.
-* Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
+* Change license in empty-value-struct.php from PHP 3.0 to 3.01.
   ]]></notes>
 
   <contents>
@@ -112,6 +111,23 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.5.1</release>
+     <api>1.5.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2006-10-28</date>
+    <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
+    <notes><![CDATA[
+* Turn passing payload through mb_convert_encoding() off by default.  Use new XML_RPC_Message::setConvertPayloadEncoding() and XML_RPC_Server::setConvertPayloadEncoding() to turn it on.  Bug 8632.
+* Have XML_RPC_Value::scalarval() return FALSE if value is not a scalar.  Bug 8251.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
