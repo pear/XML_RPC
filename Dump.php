@@ -11,6 +11,7 @@
  * @category   Web Services
  * @package    XML_RPC
  * @author     Christian Weiske <cweiske@php.net>
+ * @license    http://www.php.net/license/3_01.txt  PHP License
  * @version    SVN: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -42,6 +43,7 @@ function XML_RPC_Dump($value)
  * @category   Web Services
  * @package    XML_RPC
  * @author     Christian Weiske <cweiske@php.net>
+ * @license    http://www.php.net/license/3_01.txt  PHP License
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
