@@ -922,6 +922,12 @@ class XML_RPC_Client extends XML_RPC_Base {
         $op  = $this->headers . "\r\n\r\n";
         $op .= $msg->payload;
 
+        if ($this->debug) {
+            print "\n<pre>---SENT---\n";
+            print $op;
+            print "\n---END---</pre>\n";
+        }
+
         /*
          * If we're using a proxy open a socket to the proxy server
          * instead to the xml-rpc server
