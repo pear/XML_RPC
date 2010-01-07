@@ -31,8 +31,8 @@
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
- * @version    CVS: $Id$
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
+ * @version    SVN: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  */
 
@@ -578,7 +578,7 @@ function XML_RPC_cd($parser_resource, $data)
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -623,7 +623,7 @@ class XML_RPC_Base {
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -1065,7 +1065,7 @@ class XML_RPC_Client extends XML_RPC_Base {
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -1156,7 +1156,7 @@ class XML_RPC_Response extends XML_RPC_Base
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */
@@ -1569,7 +1569,7 @@ class XML_RPC_Message extends XML_RPC_Base
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */

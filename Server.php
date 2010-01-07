@@ -31,8 +31,8 @@
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
- * @version    CVS: $Id$
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
+ * @version    SVN: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  */
 
@@ -269,7 +269,7 @@ function XML_RPC_Server_debugmsg($m)
  * @author     Stig Bakken <stig@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1999-2001 Edd Dumbill, 2001-2006 The PHP Group
+ * @copyright  1999-2001 Edd Dumbill, 2001-2010 The PHP Group
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/XML_RPC
  */

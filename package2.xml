@@ -8,7 +8,7 @@
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
 
-  <!-- $Id: package2.xml,v 1.46 2006-10-28 16:44:35 danielc Exp $ -->
+  <!-- $Id$ -->
 
   <name>XML_RPC</name>
   <channel>pear.php.net</channel>
