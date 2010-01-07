@@ -920,6 +920,20 @@ class XML_RPC_Client extends XML_RPC_Base {
     function sendPayloadHTTP10($msg, $server, $port, $timeout = 0,
                                $username = '', $password = '')
     {
+        // Pre-emptive BC hacks for fools calling sendPayloadHTTP10() directly
+        if ($username != $this->username) {
+            $this->setCredentials($username, $password);
+        }
+
+        // Only create the payload if it was not created previously
+        if (empty($msg->payload)) {
+            $msg->createPayload();
+        }
+        $this->createHeaders($msg);
+
+        $op  = $this->headers . "\r\n\r\n";
+        $op .= $msg->payload;
+
         /*
          * If we're using a proxy open a socket to the proxy server
          * instead to the xml-rpc server
@@ -977,20 +991,6 @@ class XML_RPC_Client extends XML_RPC_Base {
              */
             socket_set_timeout($fp, $timeout);
         }
-
-        // Pre-emptive BC hacks for fools calling sendPayloadHTTP10() directly
-        if ($username != $this->username) {
-            $this->setCredentials($username, $password);
-        }
-
-        // Only create the payload if it was not created previously
-        if (empty($msg->payload)) {
-            $msg->createPayload();
-        }
-        $this->createHeaders($msg);
-
-        $op  = $this->headers . "\r\n\r\n";
-        $op .= $msg->payload;
 
         if (!fputs($fp, $op, strlen($op))) {
             $this->errstr = 'Write error';
