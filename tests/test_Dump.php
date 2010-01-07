@@ -7,7 +7,7 @@
  * installed version of XML_RPC which should be in the include path.
  * 
  * If the version has not been substituted in the if() expression,
- * this file has likely come from a CVS checkout or a .tar file.
+ * this file has likely come from a SVN checkout or a .tar file.
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */

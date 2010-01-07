@@ -4,7 +4,7 @@
  * Tests how the XML_RPC server handles a parameter with an empty struct without
  * any spaces in the XML after the empty value.
  *
- * If you are running this test from a CVS checkout, you must rename the working
+ * If you are running this test from a SVN checkout, you must rename the working
  * directory from "XML_RPC" to "XML".
  *
  * PHP versions 4 and 5
@@ -18,9 +18,9 @@
  * @category   Web Services
  * @package    XML_RPC
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  2005-2006 The PHP Group
+ * @copyright  2005-2010 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License
- * @version    CVS: $Id$
+ * @version    SVN: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  * @since      File available since Release 1.4.4
  */
@@ -32,7 +32,7 @@
  * installed version of XML_RPC which should be in the include path.
  * 
  * If the version has not been substituted in the if() expression,
- * this file has likely come from a CVS checkout or a .tar file.
+ * this file has likely come from a SVN checkout or a .tar file.
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ * Parses the "return" value from some of our test scripts.
  *
  * PHP versions 4 and 5
  *
@@ -14,9 +14,9 @@
  * @category   Web Services
  * @package    XML_RPC
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  2005-2006 The PHP Group
+ * @copyright  2005-2010 The PHP Group
  * @license    http://www.php.net/license/3_01.txt  PHP License
- * @version    CVS: $Id$
+ * @version    SVN: $Id$
  * @link       http://pear.php.net/package/XML_RPC
  * @since      File available since Release 1.4.4
  */
