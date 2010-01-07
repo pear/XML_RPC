@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * Actually performs an XML_RPC request.
+ *
+ * If you are running this test from a SVN checkout, you must rename the working
+ * directory from "XML_RPC" to "XML".
+ *
+ * PHP versions 4 and 5
+ *
+ * @category   Web Services
+ * @package    XML_RPC
+ * @author     Daniel Convissor <danielc@php.net>
+ * @copyright  2005-2010 The PHP Group
+ * @license    http://www.php.net/license/3_01.txt  PHP License
+ * @version    SVN: $Id$
+ * @link       http://pear.php.net/package/XML_RPC
+ */
+
 /*
  * If the package version number is found in the left hand
  * portion of the if() expression below, that means this file has
