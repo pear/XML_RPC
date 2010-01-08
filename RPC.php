@@ -1735,8 +1735,8 @@ class XML_RPC_Value extends XML_RPC_Base
         case 2:
             // array
             $rs .= "<array>\n<data>\n";
-            for ($i = 0; $i < sizeof($val); $i++) {
-                $rs .= $this->serializeval($val[$i]);
+            foreach ($val as $value) {
+                $rs .= $this->serializeval($value);
             }
             $rs .= "</data>\n</array>";
             break;
