@@ -57,11 +57,11 @@ $debug = 0;
 $params = array(
     new XML_RPC_Value('php.net', 'string'),
 );
-$msg =& new XML_RPC_Message('domquery', $params);
-$client =& new XML_RPC_Client('/api/xmlrpc', 'www.adamsnames.com');
+$msg = new XML_RPC_Message('domquery', $params);
+$client = new XML_RPC_Client('/api/xmlrpc', 'www.adamsnames.com');
 $client->setDebug($debug);
 
-$resp =& $client->send($msg);
+$resp = $client->send($msg);
 if (!$resp) {
     echo 'Communication error: ' . $client->errstr;
     exit(1);
