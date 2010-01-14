@@ -29,12 +29,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </maintainers>
 
   <release>
-    <version>1.5.2</version>
-    <date>2009-08-18</date>
+    <version>1.5.3</version>
+    <date>2010-01-14</date>
 
     <state>stable</state>
     <notes><![CDATA[
-* Change license in empty-value-struct.php from PHP 3.0 to 3.01.
+* Make licenses consistent.  Bug 12575.
+* Fix serializedata() for non-sequentially indexed arrays.  Bug 16780.
+* Show request information in debug mode.  Request 8240.
+* Creating the payload before opening a socket connection.  Request 11981.
     ]]></notes>
 
     <filelist>
@@ -48,12 +51,18 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
         <replace from="@package_version@" to="version" type="package-info" />
       </file>
       <dir name="tests" role="test">
+        <file name="actual-request.php">
+          <replace from="@package_version@" to="version" type="package-info"/>
+        </file>
         <file name="allgot.inc">
         </file>
         <file name="empty-value-struct.php">
           <replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="empty-value.php">
+          <replace from="@package_version@" to="version" type="package-info"/>
+        </file>
+        <file name="encode.php">
           <replace from="@package_version@" to="version" type="package-info"/>
         </file>
         <file name="extra-lines.php">
@@ -77,6 +86,15 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+      <version>1.5.2</version>
+      <date>2009-08-18</date>
+      <state>stable</state>
+      <notes><![CDATA[
+* Change license in empty-value-struct.php from PHP 3.0 to 3.01.
+      ]]></notes>
+    </release>
 
     <release>
       <version>1.5.1</version>

@@ -32,10 +32,10 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
    <active>yes</active>
   </lead>
 
-  <date>2009-08-18</date>
+  <date>2010-01-14</date>
 
   <version>
-   <release>1.5.2</release>
+   <release>1.5.3</release>
    <api>1.5.0</api>
   </version>
   <stability>
@@ -45,19 +45,28 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
 
   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
   <notes><![CDATA[
-* Change license in empty-value-struct.php from PHP 3.0 to 3.01.
+* Make licenses consistent.  Bug 12575.
+* Fix serializedata() for non-sequentially indexed arrays.  Bug 16780.
+* Show request information in debug mode.  Request 8240.
+* Creating the payload before opening a socket connection.  Request 11981.
   ]]></notes>
 
   <contents>
    <dir name="/">
 
     <dir name="tests">
+     <file name="actual-request.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file name="allgot.inc" role="test">
      </file>
      <file name="empty-value-struct.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file name="empty-value.php" role="test">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
+     <file name="encode.php" role="test">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file name="extra-lines.php" role="test">
@@ -111,6 +120,22 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   <phprelease />
 
   <changelog>
+
+   <release>
+    <version>
+     <release>1.5.2</release>
+     <api>1.5.0</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <date>2009-08-18</date>
+    <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
+    <notes><![CDATA[
+* Change license in empty-value-struct.php from PHP 3.0 to 3.01.
+    ]]></notes>
+   </release>
 
    <release>
     <version>
