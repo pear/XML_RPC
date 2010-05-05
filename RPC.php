@@ -1725,7 +1725,7 @@ class XML_RPC_Value extends XML_RPC_Base
             $rs .= "<struct>\n";
             reset($val);
             foreach ($val as $key2 => $val2) {
-                $rs .= "<member><name>${key2}</name>\n";
+                $rs .= "<member><name>" . htmlspecialchars($key2) . "</name>\n";
                 $rs .= $this->serializeval($val2);
                 $rs .= "</member>\n";
             }
