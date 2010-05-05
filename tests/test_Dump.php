@@ -22,23 +22,13 @@
  * portion of the if() expression below, that means this file has
  * come from the PEAR installer.  Therefore, let's test the
  * installed version of XML_RPC which should be in the include path.
- * 
+ *
  * If the version has not been substituted in the if() expression,
  * this file has likely come from a SVN checkout or a .tar file.
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */
-if ('@package_version@' != '@'.'package_version'.'@') {
-    /**
-     * Get the needed class from the PEAR installation
-     */
-    require_once 'XML/RPC/Dump.php';
-} else {
-    /**
-     * Get the needed class from the parent directory
-     */
-    require_once '../Dump.php';
-}
+require_once 'XML/RPC/Dump.php';
 
 $val = new XML_RPC_Value(array(
     'title'    =>new XML_RPC_Value('das ist der Titel', 'string'),

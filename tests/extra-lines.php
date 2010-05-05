@@ -23,33 +23,13 @@
  * portion of the if() expression below, that means this file has
  * come from the PEAR installer.  Therefore, let's test the
  * installed version of XML_RPC which should be in the include path.
- * 
+ *
  * If the version has not been substituted in the if() expression,
  * this file has likely come from a SVN checkout or a .tar file.
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */
-if ('@package_version@' != '@'.'package_version'.'@') {
-    /**
-     * Get the needed class from the PEAR installation
-     */
-    require_once 'XML/RPC.php';
-} else {
-    if (substr(dirname(__FILE__), -9, -6) != 'XML') {
-        echo "The parent directory must be named 'XML'.\n";
-        exit;
-    }
-
-    ini_set('include_path', '../../'
-            . PATH_SEPARATOR . '.' . PATH_SEPARATOR
-            . ini_get('include_path')
-    );
-
-    /**
-     * Get the needed class from the parent directory
-     */
-    require_once '../RPC.php';
-}
+require_once 'XML/RPC.php';
 
 $input = "First lfs\n\nSecond crlfs\r\n\r\nThird crs\r\rFourth line";
 

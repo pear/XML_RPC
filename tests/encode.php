@@ -29,27 +29,7 @@
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */
-if ('@package_version@' != '@'.'package_version'.'@') {
-    /**
-     * Get the needed class from the PEAR installation
-     */
-    require_once 'XML/RPC.php';
-} else {
-    if (substr(dirname(__FILE__), -9, -6) != 'XML') {
-        echo "The parent directory must be named 'XML'.\n";
-        exit;
-    }
-
-    ini_set('include_path', '../../'
-            . PATH_SEPARATOR . '.' . PATH_SEPARATOR
-            . ini_get('include_path')
-    );
-
-    /**
-     * Get the needed class from the parent directory
-     */
-    require_once '../RPC.php';
-}
+require_once 'XML/RPC.php';
 
 $input = array(10, 11, 12);
 
