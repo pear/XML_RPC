@@ -37,37 +37,9 @@ require_once 'XML/RPC.php';
 
 $input = "First lfs\n\nSecond crlfs\r\n\r\nThird crs\r\rFourth line";
 
-$expect_removed = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<methodCall>
-<methodName>nada</methodName>
-<params>
-<param>
-<value><string>First lfs
-Second crlfs
-Third crs
-Fourth line</string></value>
-</param>
-</params>
-</methodCall>
-";
+$expect_removed = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodCall>\r\n<methodName>nada</methodName>\r\n<params>\r\n<param>\r\n<value><string>First lfs\r\nSecond crlfs\r\nThird crs\r\nFourth line</string></value>\r\n</param>\r\n</params>\r\n</methodCall>\r\n";
 
-$expect_not_removed = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<methodCall>
-<methodName>nada</methodName>
-<params>
-<param>
-<value><string>First lfs
-
-Second crlfs
-
-Third crs
-
-Fourth line</string></value>
-</param>
-</params>
-</methodCall>
-";
-
+$expect_not_removed = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<methodCall>\r\n<methodName>nada</methodName>\r\n<params>\r\n<param>\r\n<value><string>First lfs\r\n\r\nSecond crlfs\r\n\r\nThird crs\r\n\r\nFourth line</string></value>\r\n</param>\r\n</params>\r\n</methodCall>\r\n";
 
 $msg = new XML_RPC_Message('nada', array(XML_RPC_encode($input)));
 $msg->createPayload();
