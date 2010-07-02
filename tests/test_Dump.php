@@ -3,9 +3,6 @@
 /**
  * Actually performs an XML_RPC request.
  *
- * If you are running this test from a SVN checkout, you must rename the working
- * directory from "XML_RPC" to "XML".
- *
  * PHP versions 4 and 5
  *
  * @category   Web Services
@@ -28,7 +25,14 @@
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */
+if ('@package_version@' == '@'.'package_version'.'@') {
+    ini_set('include_path', '../'
+            . PATH_SEPARATOR . '.' . PATH_SEPARATOR
+            . ini_get('include_path')
+    );
+}
 require_once 'XML/RPC/Dump.php';
+
 
 $val = new XML_RPC_Value(array(
     'title'    =>new XML_RPC_Value('das ist der Titel', 'string'),

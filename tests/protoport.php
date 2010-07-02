@@ -32,7 +32,14 @@
  * Therefore, we'll assume the tests should use the version of
  * XML_RPC that has come from there as well.
  */
+if ('@package_version@' == '@'.'package_version'.'@') {
+    ini_set('include_path', '../'
+            . PATH_SEPARATOR . '.' . PATH_SEPARATOR
+            . ini_get('include_path')
+    );
+}
 require_once 'XML/RPC.php';
+
 
 /**
  * Compare the test result to the expected result
