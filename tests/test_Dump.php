@@ -38,7 +38,6 @@ $val = new XML_RPC_Value(array(
     'title'    =>new XML_RPC_Value('das ist der Titel', 'string'),
     'startDate'=>new XML_RPC_Value(mktime(0,0,0,13,11,2004), 'dateTime.iso8601'),
     'endDate'  =>new XML_RPC_Value(mktime(0,0,0,15,11,2004), 'dateTime.iso8601'),
-    'error'    =>'string',
     'arkey'    => new XML_RPC_Value( array(
         new XML_RPC_Value('simple string'),
         new XML_RPC_Value(12345, 'int')
@@ -59,3 +58,13 @@ XML_RPC_Dump($val3);
 echo '==============' . "\r\n";
 $val4 = new XML_RPC_Value(true, 'boolean');
 XML_RPC_Dump($val4);
+
+echo '==============' . "\r\n";
+echo 'Next we will test the error handling...' . "\r\n";
+$val5 = new XML_RPC_Value(array(
+    'foo' => 'bar'
+    ), 'struct');
+XML_RPC_Dump($val5);
+
+echo '==============' . "\r\n";
+echo 'DONE' . "\r\n";

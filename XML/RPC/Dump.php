@@ -71,7 +71,7 @@ class XML_RPC_Dump
      */
     function generateDump($value, $nLevel = 0)
     {
-        if (!is_object($value) && get_class($value) != 'xml_rpc_value') {
+        if (!is_object($value) || strtolower(get_class($value)) != 'xml_rpc_value') {
             require_once 'PEAR.php';
             PEAR::raiseError('Tried to dump non-XML_RPC_Value variable' . "\r\n",
                              0, PEAR_ERROR_PRINT);
