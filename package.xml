@@ -18,10 +18,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.</descriptio
   <email>danielc@php.net</email>
   <active>no</active>
  </lead>
- <date>2010-05-05</date>
- <time>23:23:21</time>
+ <date>2010-07-02</date>
  <version>
-  <release>1.5.3</release>
+  <release>1.5.4</release>
   <api>1.5.0</api>
  </version>
  <stability>
@@ -30,41 +29,39 @@ It has support for HTTP/HTTPS transport, proxies and authentication.</descriptio
  </stability>
  <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
  <notes>
-* Make licenses consistent.  Bug 12575.
-* Fix serializedata() for non-sequentially indexed arrays.  Bug 16780.
-* Show request information in debug mode.  Request 8240.
-* Creating the payload before opening a socket connection.  Request 11981.
+* Change ereg functions to preg due to deprecation (Request 17546 and then some.)
+* Fix bugs in XML_RPC_Dump error detection process.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <file baseinstalldir="/" md5sum="9d5eea281076bfc729fa79c447816c79" name="tests/actual-request.php" role="test">
+   <file baseinstalldir="/" name="tests/actual-request.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="6c43453a36a2c9648beb72681bde4e46" name="tests/allgot.inc" role="test" />
-   <file baseinstalldir="/" md5sum="51fffde379173507b58a3a7f9521994e" name="tests/empty-value-struct.php" role="test">
+   <file baseinstalldir="/" name="tests/allgot.inc" role="test" />
+   <file baseinstalldir="/" name="tests/empty-value-struct.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="398cb562efbfb2e926f5fa8d7fd0de44" name="tests/empty-value.php" role="test">
+   <file baseinstalldir="/" name="tests/empty-value.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="2e843b559553ed8b28a7fcd276c08cfd" name="tests/encode.php" role="test">
+   <file baseinstalldir="/" name="tests/encode.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="c369d726dad2384c233a95d1fe71b465" name="tests/extra-lines.php" role="test">
+   <file baseinstalldir="/" name="tests/extra-lines.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="e3d283a76b4410a554a050e9b584bba6" name="tests/protoport.php" role="test">
+   <file baseinstalldir="/" name="tests/protoport.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="a71a9dad09b991e2670d3d5ade69b41d" name="tests/test_Dump.php" role="test">
+   <file baseinstalldir="/" name="tests/test_Dump.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="10a9a8caea1274b4ccec6ed1c8cb1734" name="tests/types.php" role="test">
+   <file baseinstalldir="/" name="tests/types.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
    </file>
-   <file baseinstalldir="/" md5sum="102c421b7ef62e3ade64f0ca737b7caa" name="XML/RPC.php" role="php" />
-   <file baseinstalldir="/" md5sum="dbde0f882b06ce7a81edd71ea9342b43" name="XML/RPC/Dump.php" role="php" />
-   <file baseinstalldir="/" md5sum="fb4c086b0bb42e8ff8b1e934f1454ada" name="XML/RPC/Server.php" role="php" />
+   <file baseinstalldir="/" name="XML/RPC.php" role="php" />
+   <file baseinstalldir="/" name="XML/RPC/Dump.php" role="php" />
+   <file baseinstalldir="/" name="XML/RPC/Server.php" role="php" />
   </dir>
  </contents>
  <compatible>
@@ -87,6 +84,7 @@ It has support for HTTP/HTTPS transport, proxies and authentication.</descriptio
   </required>
  </dependencies>
  <phprelease />
+
  <changelog>
   <release>
    <version>
@@ -713,6 +711,22 @@ The primary change from 1.4.8 is improved multi-byte support.  See the change lo
 * Fix serializedata() for non-sequentially indexed arrays.  Bug 16780.
 * Show request information in debug mode.  Request 8240.
 * Creating the payload before opening a socket connection.  Request 11981.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.4</release>
+    <api>1.5.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-07-02</date>
+   <license uri="http://www.php.net/license/3_0.txt">PHP License</license>
+   <notes>
+* Change ereg functions to preg due to deprecation (Request 17546 and then some.)
+* Fix bugs in XML_RPC_Dump error detection process.
    </notes>
   </release>
  </changelog>
