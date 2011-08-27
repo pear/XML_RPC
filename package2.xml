@@ -18,9 +18,9 @@ It has support for HTTP/HTTPS transport, proxies and authentication.</descriptio
   <email>danielc@php.net</email>
   <active>no</active>
  </lead>
- <date>2010-07-03</date>
+ <date>2011-08-27</date>
  <version>
-  <release>1.5.4</release>
+  <release>1.5.5</release>
   <api>1.5.0</api>
  </version>
  <stability>
@@ -29,9 +29,8 @@ It has support for HTTP/HTTPS transport, proxies and authentication.</descriptio
  </stability>
  <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
  <notes>
-* Change ereg functions to preg due to deprecation (Request 17546 and then some.)
-* Fix bugs in XML_RPC_Dump error detection process.
-* Escape XML special characters in key names of struct elements. Bug 17368.
+* Adjust is_a() usage due to change in PHP 5.3.7.
+* Fix error populating headers. Bug 18653.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -729,6 +728,22 @@ The primary change from 1.4.8 is improved multi-byte support.  See the change lo
 * Change ereg functions to preg due to deprecation (Request 17546 and then some.)
 * Fix bugs in XML_RPC_Dump error detection process.
 * Escape XML special characters in key names of struct elements. Bug 17368.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.5.5</release>
+    <api>1.5.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-08-27</date>
+   <license uri="http://www.php.net/license/3_01.txt">PHP License</license>
+   <notes>
+* Adjust is_a() usage due to change in PHP 5.3.7.
+* Fix error populating headers. Bug 18653.
    </notes>
   </release>
  </changelog>
