@@ -27,14 +27,13 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </maintainers>
 
   <release>
-    <version>1.5.4</version>
-    <date>2010-07-03</date>
+    <version>1.5.5</version>
+    <date>2011-08-27</date>
 
     <state>stable</state>
     <notes><![CDATA[
-* Change ereg functions to preg due to deprecation (Request 17546 and then some.)
-* Fix bugs in XML_RPC_Dump error detection process.
-* Escape XML special characters in key names of struct elements. Bug 17368.
+* Adjust is_a() usage due to change in PHP 5.3.7.
+* Fix error populating headers. Bug 18653.
     ]]></notes>
 
     <filelist>
@@ -83,6 +82,17 @@ It has support for HTTP/HTTPS transport, proxies and authentication.
   </release>
 
   <changelog>
+
+    <release>
+     <version>1.5.4</version>
+     <date>2010-07-03</date>
+     <state>stable</state>
+     <notes><![CDATA[
+* Change ereg functions to preg due to deprecation (Request 17546 and then some.)
+* Fix bugs in XML_RPC_Dump error detection process.
+* Escape XML special characters in key names of struct elements. Bug 17368.
+    ]]></notes>
+    </release>
 
     <release>
      <version>1.5.3</version>
