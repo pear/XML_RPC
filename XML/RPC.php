@@ -1486,7 +1486,7 @@ class XML_RPC_Message extends XML_RPC_Base
         $data = substr($data, 0, strpos($data, "</methodResponse>") + 17);
         $this->response_payload = $data;
 
-        if (!xml_parse($parser_resource, $data, sizeof($data))) {
+        if (!xml_parse($parser_resource, $data, strlen($data))) {
             // thanks to Peter Kocks <peter.kocks@baygate.com>
             if (xml_get_current_line_number($parser_resource) == 1) {
                 $errstr = 'XML error at line 1, check URL';
@@ -2015,7 +2015,7 @@ function XML_RPC_encode($php_val)
 
     case 'string':
     case 'NULL':
-        if (preg_match('@^[0-9]{8}\T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$@', $php_val)) {
+        if (preg_match('@^[0-9]{8}T{1}[0-9]{2}\:[0-9]{2}\:[0-9]{2}$@', $php_val)) {
             $XML_RPC_val->addScalar($php_val, $GLOBALS['XML_RPC_DateTime']);
         } elseif ($GLOBALS['XML_RPC_auto_base64']
                   && preg_match("@[^ -~\t\r\n]@", $php_val))
